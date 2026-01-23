@@ -265,7 +265,7 @@ p:last-child {
 }
 
 .case-studies .container {
-  padding-left: var(--spacing-md);
+  max-width: 900px;
 }
 
 .portfolio-nav {
@@ -337,6 +337,10 @@ p:last-child {
 .about {
   padding: var(--spacing-3xl) 0;
   background-color: var(--color-white);
+}
+
+.about .container {
+  max-width: 900px;
 }
 
 .about-content {
