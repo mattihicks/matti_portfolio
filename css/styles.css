@@ -836,24 +836,11 @@ p:last-child {
 }
 
 /* Before and after section - left-aligned title with centered smaller image */
-.before-after-section > * {
-  max-width: var(--max-width-full) !important;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: var(--spacing-md) !important;
-  padding-right: var(--spacing-md) !important;
-}
-
-.before-after-section > h3 {
-  margin-left: var(--spacing-md) !important;
-  margin-right: auto;
-}
-
 .before-after-section .content-image {
   max-width: 800px !important;
   margin: 0 auto;
-  padding-left: 0;
-  padding-right: 0;
+  padding-left: var(--spacing-md);
+  padding-right: var(--spacing-md);
 }
 
 .before-after-section .content-image img {
@@ -906,6 +893,7 @@ p:last-child {
   justify-content: center;
   gap: var(--spacing-xl);
   margin: 0 auto;
+  max-width: 800px;
   padding-left: 0;
   padding-right: 0;
 }
@@ -913,7 +901,7 @@ p:last-child {
 .video-comparison .content-video {
   margin: 0;
   width: 100%;
-  max-width: 300px;
+  max-width: 350px;
 }
 
 .video-comparison .content-video video {
