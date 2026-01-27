@@ -833,6 +833,9 @@ p:last-child {
 
 .content-image.full-width-design img {
   border-radius: var(--radius-md);
+  max-width: 800px;
+  margin: 0 auto;
+  display: block;
 }
 
 /* Where we started image - pulled in by 48px (narrower than other sections) */
