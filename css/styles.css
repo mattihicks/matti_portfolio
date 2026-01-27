@@ -833,9 +833,33 @@ p:last-child {
 
 .content-image.full-width-design img {
   border-radius: var(--radius-md);
-  max-width: 800px;
+}
+
+/* Before and after section - left-aligned title with centered smaller image */
+.before-after-section > * {
+  max-width: var(--max-width-full) !important;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--spacing-md) !important;
+  padding-right: var(--spacing-md) !important;
+}
+
+.before-after-section > h3 {
+  margin-left: var(--spacing-md) !important;
+  margin-right: auto;
+}
+
+.before-after-section .content-image {
+  max-width: 800px !important;
   margin: 0 auto;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.before-after-section .content-image img {
   display: block;
+  width: 100%;
+  border-radius: var(--radius-md);
 }
 
 /* Where we started image - pulled in by 48px (narrower than other sections) */
