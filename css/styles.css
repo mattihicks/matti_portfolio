@@ -44,7 +44,7 @@
   --color-text-secondary: #4a4a4a;
   --color-accent: #2c2c2c;
   --color-white: #ffffff;
-  --color-overview-bg: #faf9f8;
+  --color-overview-bg: #ffffff;
   --color-border: #e0ddd9;
   --color-link: #1a1a1a;
   --color-link-hover: #666666;
@@ -847,6 +847,15 @@ p:last-child {
   display: block;
   width: 100%;
   border-radius: var(--radius-md);
+}
+
+/* Concept titles - left-aligned */
+.concept-title {
+  max-width: var(--max-width-full) !important;
+  padding-left: var(--spacing-md) !important;
+  padding-right: var(--spacing-md) !important;
+  margin-left: 0 !important;
+  text-align: left;
 }
 
 /* Where we started image - pulled in by 48px (narrower than other sections) */
