@@ -1,286 +1,323 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="UX case study: Designing an intuitive booking experience for language programs abroad that enables students and parents to book confidently online.">
-  <meta name="author" content="Matti Hicks">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Overhauling EF's Booking Flow - Matti Hicks</title>
+    <meta name="description" content="Designing an intuitive booking experience for language programs abroad that doubled online bookings for EF Education First.">
+    <meta name="author" content="Matti Hicks">
 
-  <title>Overhauling EF's Booking Flow - Matti Hicks</title>
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://mattihicks.com/case-studies/ef_booking.html">
+    <meta property="og:title" content="Overhauling EF's Booking Flow - Matti Hicks">
+    <meta property="og:description" content="Designing an intuitive booking experience for language programs abroad that doubled online bookings for EF Education First.">
+    <meta property="og:image" content="https://mattihicks.com/images/matthewPic-og.jpg">
 
-  <!-- Canonical URL -->
-  <link rel="canonical" href="https://mattihicks.com/case-studies/ef_booking.html">
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://mattihicks.com/case-studies/ef_booking.html">
+    <meta property="twitter:title" content="Overhauling EF's Booking Flow - Matti Hicks">
+    <meta property="twitter:description" content="Designing an intuitive booking experience for language programs abroad that doubled online bookings for EF Education First.">
+    <meta property="twitter:image" content="https://mattihicks.com/images/matthewPic-og.jpg">
 
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="article">
-  <meta property="og:url" content="https://mattihicks.com/case-studies/ef_booking.html">
-  <meta property="og:title" content="Overhauling EF's Booking Flow - Matti Hicks">
-  <meta property="og:description" content="UX case study: Designing an intuitive booking experience for language programs abroad that enables students and parents to book confidently online.">
-  <meta property="og:image" content="https://mattihicks.com/images/bookingflow.jpg">
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://mattihicks.com/case-studies/ef_booking.html">
 
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:url" content="https://mattihicks.com/case-studies/ef_booking.html">
-  <meta property="twitter:title" content="Overhauling EF's Booking Flow - Matti Hicks">
-  <meta property="twitter:description" content="UX case study: Designing an intuitive booking experience for language programs abroad that enables students and parents to book confidently online.">
-  <meta property="twitter:image" content="https://mattihicks.com/images/bookingflow.jpg">
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        @keyframes circular {
+            0% {
+                transform: translate(0, 0);
+            }
+            25% {
+                transform: translate(10px, -10px);
+            }
+            50% {
+                transform: translate(0, -20px);
+            }
+            75% {
+                transform: translate(-10px, -10px);
+            }
+            100% {
+                transform: translate(0, 0);
+            }
+        }
 
-  <!-- Stylesheet -->
-  <link rel="stylesheet" href="../css/styles.css">
+        .magnifying-glass {
+            transition: opacity 0.3s ease;
+        }
 
-  <!-- Privacy-friendly analytics by Plausible -->
-  <script async src="https://plausible.io/js/pa-cWSyCL7wm6lDB-hJYYUTQ.js"></script>
-  <script>
-    window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
-    plausible.init()
-  </script>
-
-  <!-- Schema.org structured data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "headline": "Overhauling EF's Booking Flow",
-    "description": "UX case study: Designing an intuitive booking experience for language programs abroad that enables students and parents to book confidently online.",
-    "image": "https://mattihicks.com/images/bookingflow.jpg",
-    "author": {
-      "@type": "Person",
-      "name": "Matti Hicks",
-      "url": "https://mattihicks.com"
-    },
-    "publisher": {
-      "@type": "Person",
-      "name": "Matti Hicks"
-    },
-    "datePublished": "2026-01-21",
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": "https://mattihicks.com/case-studies/ef_booking.html"
-    }
-  }
-  </script>
+        .magnifying-glass:hover {
+            animation: circular 2s ease-in-out infinite;
+            opacity: 0.5 !important;
+        }
+    </style>
 </head>
 <body>
-
-  <!-- Header -->
-  <header class="header" id="header">
-    <div class="header-container">
-      <a href="/" class="logo">Matti Hicks</a>
-      <nav>
-        <a href="/" class="nav-link">Home</a>
-      </nav>
-    </div>
-  </header>
-
-  <!-- Case Study Header -->
-  <section class="case-study-header">
-    <h2 class="case-study-title">Overhauling EF's Booking Flow</h2>
-
-    <div class="case-study-meta">
-      <span>EF Education First</span>
-      <span class="meta-divider">|</span>
-      <span>Zürich, Switzerland</span>
-    </div>
-  </section>
-
-  <!-- Full-Width Overview Boxes -->
-  <section class="overview-section">
-    <div class="overview-boxes">
-
-      <div class="overview-box">
-        <h3>Goal</h3>
-        <p>
-          To drive measurable business impact by overhauling the booking flow that enables students and parents to confidently book a language course abroad online.
-        </p>
-      </div>
-
-      <div class="overview-box">
-        <h3>My role</h3>
-        <p>
-          I led the design process, including research, wireframing, prototyping, and collaborating closely with developers, product, and a UX writer to launch the updated flow.
-        </p>
-      </div>
-
-      <div class="overview-box">
-        <h3>Impact</h3>
-        <p>
-          One year post-launch, a key market doubled the number of online bookings compared to the previous year.
-        </p>
-        <p>
-          Senior leadership was convinced to go in a bold new digital direction, and asked us to launch the booking flow redesign in a second key market.
-        </p>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Case Study Content -->
-  <div class="case-study-content">
-
-    <!-- Before and After Section -->
-    <section class="content-section beige-bg before-after-section">
-      <h3>Before and after</h3>
-      <figure class="content-image">
-        <img src="../images/Before_after.png" alt="Booking flow before and after redesign comparison">
-      </figure>
-    </section>
-
-    <!-- Where we started Section -->
-    <section class="content-section two-column-section">
-      <div class="two-column-container">
-        <div class="column-text">
-          <h3>Where we started</h3>
-          <p>The booking flow was buried in the hamburger menu and cluttered with dropdowns, leading to confusion and high drop-off rates.</p>
-
-          <h3>Our first steps</h3>
-          <ul>
-            <li>Assess current sales and analytics data to establish clear goals and metrics.</li>
-            <li>Understand key markets and their current sales strategies and pain points.</li>
-            <li>Gain a deeper understanding of the needs of kids and parents when booking online.</li>
-          </ul>
+    <main>
+        <div class="container">
+            <a href="../index.html" class="back-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Back to portfolio
+            </a>
         </div>
 
-        <div class="column-image">
-          <figure class="content-image-side">
-            <img src="../images/hidden_book_now.gif" alt="Hidden booking flow in hamburger menu" style="width: 68%;">
-          </figure>
-        </div>
-      </div>
-    </section>
+        <!-- Hero Section -->
+        <section class="case-hero">
+            <div class="container">
+                <h1 class="case-title">Overhauling EF's Booking Flow</h1>
+                <p class="case-subtitle">EF Education First | Zürich, Switzerland</p>
 
-    <!-- Discovery Section -->
-    <section class="content-section two-column-section beige-bg">
-      <div class="two-column-container">
-        <div class="column-text">
-          <h3>Discovery</h3>
-          <p>In research, I set aside all of our technical and political constraints and asked simply: when the student is ready to book, what does she want to do first?</p>
+                <div class="meta-grid">
+                    <div class="meta-card">
+                        <div class="meta-label">My Role</div>
+                        <div class="meta-value">Designer, researcher, code prototyper, UX writer</div>
+                    </div>
+                    <div class="meta-card">
+                        <div class="meta-label">Team</div>
+                        <div class="meta-value">Creative director, designers, developers, product manager, UX writers</div>
+                    </div>
+                    <div class="meta-card">
+                        <div class="meta-label">Impact</div>
+                        <div class="meta-value">One year post-launch, a key market <strong>doubled the number of online bookings</strong> compared to the previous year. Senior leadership was convinced to go in a bold new digital direction, and asked us to launch the booking flow redesign in a <strong>second key market</strong></div>
+                    </div>
+                </div>
 
-          <p>Here's what I did:</p>
-          <ul>
-            <li><strong>Benchmarking:</strong> Analyzed competitor booking flows to identify best practices.</li>
-            <li><strong>User testing:</strong> Conducted interviews and concept testing with students and parents throughout the design process, and iterated on the design based on the feedback.</li>
-          </ul>
+                <!-- Icon Image -->
+                <div style="text-align: center; margin: 48px 0 24px 0;">
+                    <img src="../images/end_to_end_home_3.png" alt="EF Booking Icon" style="max-width: 240px; height: auto; cursor: pointer; transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);" onmouseover="this.style.transform='translateY(-12px) scale(1.08) rotate(-8deg)'" onmouseout="this.style.transform='translateY(0) scale(1) rotate(0deg)'">
+                </div>
+            </div>
+        </section>
 
-          <p>This question and further research led me through several sketches and booking flow iterations, three of which I prototyped and tested.</p>
-        </div>
+        <!-- Goal Section -->
+        <section class="section" style="padding-top: 0; padding-bottom: 48px;">
+            <div class="container-narrow">
+                <div style="background: var(--bg-card); border-radius: var(--radius-xl); padding: 40px; box-shadow: var(--shadow-soft);">
+                    <div class="goal-container">
+                        <h3>Goal</h3>
+                        <p>To drive measurable business impact by overhauling the booking flow that enables students and parents to confidently book a language course abroad online.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <div class="column-image">
-          <figure class="content-image-side" style="max-width: none;">
-            <img src="../images/booking_sketches.jpg" alt="Booking flow sketches">
-            <figcaption class="image-caption">Sketches from brainstorming sessions</figcaption>
-          </figure>
-        </div>
-      </div>
+        <!-- Before and After Section -->
+        <section class="section">
+            <div class="container-narrow">
+                <h2 class="section-title">Before and after</h2>
+                <img src="../images/Before_after.png" alt="Booking flow before and after redesign comparison" class="zoomable" style="width: 100%; height: auto; display: block; cursor: pointer;">
+            </div>
+        </section>
 
-      <p class="concept-title" style="margin-top: 60px;"><strong>Concept 1:</strong> Choosing course dates via a calendar, then selecting a course</p>
-      <figure class="content-image full-width-design">
-        <img src="../images/concept_one_booking_ef.jpeg" alt="Concept 1: Calendar-first booking flow">
-      </figure>
+        <!-- Where We Started Section -->
+        <section class="section">
+            <div class="container-narrow">
+                <h2 class="section-title">Where we started</h2>
 
-      <p class="concept-title" style="margin-top: 60px;"><strong>Concept 2:</strong> Choosing a course, then selecting dates via a calendar</p>
-      <figure class="content-image full-width-design">
-        <img src="../images/concept_two_booking_ef.jpeg" alt="Concept 2: Course-first booking flow with calendar">
-      </figure>
+                <div class="two-col" style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start;">
+                    <div>
+                        <p style="font-size: 16px; color: var(--text-gray); line-height: 1.7; margin-bottom: 24px;">The booking flow was buried in the hamburger menu and cluttered with dropdowns, leading to confusion and high drop-off rates.</p>
+                        <div class="magnifying-glass" style="font-size: 72px; opacity: 0.3; text-align: center; margin-top: 32px; cursor: pointer;">🔍</div>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: center;">
+                        <img src="../images/hidden_book_now.gif" alt="Hidden booking flow in hamburger menu" style="width: 68%; height: auto; display: block;">
+                    </div>
+                </div>
 
-      <p class="concept-title" style="margin-top: 60px;"><strong>Concept 3:</strong> Month-level date selection via buttons instead of calendar, then selecting a course</p>
-      <figure class="content-image full-width-design">
-        <img src="../images/concept_three_booking_ef.jpeg" alt="Concept 3: Button-based date selection">
-      </figure>
-    </section>
+                <h2 class="section-title" style="margin-top: 48px;">First steps</h2>
 
-    <!-- Rationale Section -->
-    <section class="content-section beige-bg centered-list-section">
-      <p>We moved forward with a combination of <strong>Concept 2</strong> and <strong>Concept 3</strong>, as they best balanced user needs and business constraints:</p>
-      <ul class="impact-list">
-        <li><strong>Ease of Implementation (Concept 2):</strong> Concept 2 leveraged EF's existing API, avoiding costly redevelopment.</li>
-        <li><strong>User Preference for Course Selection (Concept 2):</strong> Users preferred starting with course selection. As one participant noted: "I want to pick my course first, then figure out the dates."</li>
-        <li><strong>Ease of Date Selection (Concept 3):</strong> Concept 3's button-based date selection was clearer and easier to use compared to the more rigid and confusing calendar inputs in Concepts 1 and 2. One participant shared: "It's easier to choose my options this way."</li>
-      </ul>
-    </section>
+                <div class="content-card">
+                    <ul>
+                        <li>Assess current sales and analytics data to establish clear goals and metrics.</li>
+                        <li>Understand key markets and their current sales strategies and pain points.</li>
+                        <li>Gain a deeper understanding of the needs of kids and parents when booking online.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
 
-    <!-- Final Design Section -->
-    <section class="content-section white-bg final-design-section">
-      <h3>Final design</h3>
-      <figure class="content-image full-width-design">
-        <img src="../images/booking_final.png" alt="Final design of the booking flow">
-      </figure>
-    </section>
+        <!-- Discovery Section -->
+        <section class="section">
+            <div class="container-narrow">
+                <h2 class="section-title">Discovery</h2>
 
-    <!-- Impact Section -->
-    <section class="content-section beige-bg centered-list-section">
-      <h3>Impact</h3>
-      <ul class="impact-list">
-        <li>The redesigned booking flow delivered significant improvements: Users completed bookings faster with fewer drop-offs, doubling conversion rates.</li>
-        <li>Replacing dropdown menus with tappable buttons improved usability and minimized booking mistakes.</li>
-        <li>Moving the booking flow from the menu to destination pages reduced friction and simplified navigation.</li>
-        <li>Strong sales data convinced leadership to expand the new booking flow to a second key market.</li>
-      </ul>
-    </section>
+                <p style="font-size: 16px; color: var(--text-gray); line-height: 1.7; margin-bottom: 48px;">In research, I set aside all of our technical and political constraints and asked simply: when the student is ready to book, what does she want to do first?</p>
 
-  </div>
+                <p style="font-size: 16px; color: var(--text-gray); line-height: 1.7; margin-bottom: 24px;"><strong>Here's what I did:</strong></p>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <a href="ef_design.html" class="next-case-link" style="align-items: flex-start;">
-        <span class="next-title">← Previous</span>
-      </a>
-      <div class="footer-content">
-        <a href="https://medium.com/@mattihicks" class="social-link" aria-label="Medium" target="_blank" rel="noopener noreferrer">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/>
-          </svg>
-        </a>
-        <a href="#" class="social-link email-link" aria-label="Email" data-user="xxih.ittam" data-domain="moc.liamg">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-            <polyline points="22,6 12,13 2,6"/>
-          </svg>
-        </a>
-        <a href="https://linkedin.com/in/mattihicks" class="social-link" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-          </svg>
-        </a>
-        <a href="https://github.com/mattihicks" class="social-link" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-          </svg>
-        </a>
-      </div>
-      <a href="../index.html" class="next-case-link">
-        <span class="next-title">Next →</span>
-      </a>
+                <div class="content-card">
+                    <ul>
+                        <li><strong>Benchmarking:</strong> Analyzed competitor booking flows to identify best practices.</li>
+                        <li><strong>User testing:</strong> Conducted interviews and concept testing with students and parents throughout the design process, and iterated on the design based on the feedback.</li>
+                    </ul>
+                </div>
+
+                <p style="font-size: 16px; color: var(--text-gray); line-height: 1.7; margin: 48px 0;">This question and further research led me through several sketches and booking flow iterations, three of which I prototyped and tested.</p>
+
+                <img src="../images/booking_sketches.jpg" alt="Booking flow sketches" class="zoomable" style="width: 100%; height: auto; display: block; cursor: pointer; margin-bottom: 8px;">
+                <p style="text-align: center; font-size: 14px; color: var(--text-gray); margin: 0 0 48px 0;">Sketches from brainstorming sessions</p>
+
+                <!-- Concept 1 -->
+                <div style="margin-top: 80px;">
+                    <p style="font-size: 16px; font-weight: 600; color: var(--text-body); margin-bottom: 24px;"><strong>Concept 1:</strong> Choosing course dates via a calendar, then selecting a course</p>
+                    <p style="text-align: center; font-size: 14px; color: var(--text-gray); margin: 0 0 16px 0; font-style: italic;">Click to zoom</p>
+                    <img src="../images/bookingEF_concept1.png" alt="Concept 1: Calendar-first booking flow" class="zoomable" style="width: 100%; height: auto; display: block; cursor: pointer;">
+                </div>
+
+                <!-- Concept 2 -->
+                <div style="margin-top: 80px;">
+                    <p style="font-size: 16px; font-weight: 600; color: var(--text-body); margin-bottom: 24px;"><strong>Concept 2:</strong> Choosing a course, then selecting dates via a calendar</p>
+                    <p style="text-align: center; font-size: 14px; color: var(--text-gray); margin: 0 0 16px 0; font-style: italic;">Click to zoom</p>
+                    <img src="../images/bookingEF_concept2.png" alt="Concept 2: Course-first booking flow with calendar" class="zoomable" style="width: 100%; height: auto; display: block; cursor: pointer;">
+                </div>
+
+                <!-- Concept 3 -->
+                <div style="margin-top: 80px;">
+                    <p style="font-size: 16px; font-weight: 600; color: var(--text-body); margin-bottom: 24px;"><strong>Concept 3:</strong> Month-level date selection via buttons instead of calendar, then selecting a course</p>
+                    <p style="text-align: center; font-size: 14px; color: var(--text-gray); margin: 0 0 16px 0; font-style: italic;">Click to zoom</p>
+                    <img src="../images/bookingEF_concept3.png" alt="Concept 3: Button-based date selection" class="zoomable" style="width: 100%; height: auto; display: block; cursor: pointer;">
+                </div>
+
+                <!-- Rationale -->
+                <div style="margin-top: 80px;">
+                    <p style="font-size: 16px; color: var(--text-gray); line-height: 1.7; margin-bottom: 24px;">We moved forward with a combination of <strong>Concept 2</strong> and <strong>Concept 3</strong>, as they best balanced user needs and business constraints:</p>
+
+                    <div class="content-card">
+                        <ul>
+                            <li><strong>Ease of Implementation (Concept 2):</strong> Concept 2 leveraged EF's existing API, avoiding costly redevelopment.</li>
+                            <li><strong>User Preference for Course Selection (Concept 2):</strong> Users preferred starting with course selection. As one participant noted: "I want to pick my course first, then figure out the dates."</li>
+                            <li><strong>Ease of Date Selection (Concept 3):</strong> Concept 3's button-based date selection was clearer and easier to use compared to the more rigid and confusing calendar inputs in Concepts 1 and 2. One participant shared: "It's easier to choose my options this way."</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final Design -->
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">Final design</h2>
+
+                <div style="display: flex; justify-content: space-around; max-width: 100%; margin: 0 auto 8px auto;">
+                    <p style="text-align: center; font-size: 14px; color: var(--text-gray); margin: 0; flex: 1;">Home</p>
+                    <p style="text-align: center; font-size: 14px; color: var(--text-gray); margin: 0; flex: 1;">Date and course selection</p>
+                    <p style="text-align: center; font-size: 14px; color: var(--text-gray); margin: 0; flex: 1;">Trip summary</p>
+                    <p style="text-align: center; font-size: 14px; color: var(--text-gray); margin: 0; flex: 1;">Payment</p>
+                    <p style="text-align: center; font-size: 14px; color: var(--text-gray); margin: 0; flex: 1;">Success</p>
+                </div>
+                <img src="../images/booking_final.png" alt="Final design of the booking flow" class="zoomable" style="width: 100%; height: auto; display: block; cursor: pointer;">
+            </div>
+        </section>
+
+        <!-- Impact Section -->
+        <section class="section">
+            <div class="container-narrow">
+                <div class="impact-list">
+                    <h3>Impact</h3>
+                    <ul>
+                        <li>The redesigned booking flow delivered significant improvements: Users completed bookings faster with fewer drop-offs, doubling conversion rates.</li>
+                        <li>Replacing dropdown menus with tappable buttons improved usability and minimized booking mistakes.</li>
+                        <li>Moving the booking flow from the menu to destination pages reduced friction and simplified navigation.</li>
+                        <li>Strong sales data convinced leadership to expand the new booking flow to a second key market.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer Navigation -->
+        <footer class="case-footer">
+            <div class="container">
+                <div class="footer-nav">
+                    <a href="financial_wellness.html" class="footer-link secondary">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 12H5M12 19l-7-7 7-7"/>
+                        </svg>
+                        Previous project
+                    </a>
+                    <a href="../index.html" class="footer-link secondary">
+                        View all work
+                    </a>
+                    <a href="banking_revamp.html" class="footer-link">
+                        Next project
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- Image Zoom Modal -->
+    <div id="imageModal" style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.9); align-items: center; justify-content: center;">
+        <span id="closeModal" style="position: absolute; top: 32px; right: 48px; color: #fff; font-size: 48px; font-weight: 300; cursor: pointer; line-height: 1; transition: opacity 0.2s;">&times;</span>
+        <img id="modalImage" style="max-width: 90%; max-height: 90%; object-fit: contain; border-radius: 8px;">
     </div>
-  </footer>
 
-  <!-- Optional: Add scroll behavior for sticky header -->
-  <script>
-    // Add 'scrolled' class to header on scroll
-    window.addEventListener('scroll', function() {
-      const header = document.getElementById('header');
-      if (window.scrollY > 50) {
-        header.classList.add('scrolled');
-      } else {
-        header.classList.remove('scrolled');
-      }
-    });
+    <script>
+        // Image zoom functionality
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const closeBtn = document.getElementById('closeModal');
+        const zoomableImages = document.querySelectorAll('.zoomable');
+        let currentImageIndex = 0;
 
-    // Email obfuscation
-    document.addEventListener('DOMContentLoaded', function() {
-      const emailLinks = document.querySelectorAll('.email-link');
-      emailLinks.forEach(function(link) {
-        const user = link.getAttribute('data-user').split('').reverse().join('');
-        const domain = link.getAttribute('data-domain').split('').reverse().join('');
-        link.href = 'mailto:' + user + '@' + domain;
-      });
-    });
-  </script>
+        function showImage(index) {
+            if (index >= 0 && index < zoomableImages.length) {
+                currentImageIndex = index;
+                modalImg.src = zoomableImages[index].src;
+                modalImg.alt = zoomableImages[index].alt;
+            }
+        }
 
+        zoomableImages.forEach((img, index) => {
+            img.addEventListener('click', function() {
+                modal.style.display = 'flex';
+                showImage(index);
+            });
+        });
+
+        closeBtn.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        closeBtn.addEventListener('mouseenter', function() {
+            this.style.opacity = '0.7';
+        });
+
+        closeBtn.addEventListener('mouseleave', function() {
+            this.style.opacity = '1';
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (modal.style.display === 'flex') {
+                if (e.key === 'Escape') {
+                    modal.style.display = 'none';
+                } else if (e.key === 'ArrowRight') {
+                    showImage(currentImageIndex + 1);
+                } else if (e.key === 'ArrowLeft') {
+                    showImage(currentImageIndex - 1);
+                }
+            }
+        });
+    </script>
 </body>
 </html>

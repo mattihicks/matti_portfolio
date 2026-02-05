@@ -2,37 +2,31 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://mattihicks.com/</loc>
-    <lastmod>2026-01-21</lastmod>
+    <lastmod>2026-02-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://mattihicks.com/case-studies/banking-redesign.html</loc>
-    <lastmod>2026-01-21</lastmod>
+    <loc>https://mattihicks.com/case-studies/banking_revamp.html</loc>
+    <lastmod>2026-02-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mattihicks.com/case-studies/financial-wellness.html</loc>
-    <lastmod>2026-01-21</lastmod>
+    <loc>https://mattihicks.com/case-studies/ef_design_end_to_end.html</loc>
+    <lastmod>2026-02-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mattihicks.com/case-studies/ef_design.html</loc>
-    <lastmod>2026-01-21</lastmod>
+    <loc>https://mattihicks.com/case-studies/financial_wellness.html</loc>
+    <lastmod>2026-02-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://mattihicks.com/case-studies/ef_booking.html</loc>
-    <lastmod>2026-01-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://mattihicks.com/case-studies/sustainability.html</loc>
-    <lastmod>2026-01-21</lastmod>
+    <lastmod>2026-02-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

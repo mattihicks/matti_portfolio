@@ -5,9 +5,5 @@ Allow: /
 # Sitemap location
 Sitemap: https://mattihicks.com/sitemap.xml
 
-# Disallow indexing of generate-favicon.html (utility file)
-Disallow: /generate-favicon.html
-
-# Disallow indexing of template and sample files
-Disallow: /case-studies/case-study-template.html
-Disallow: /case-studies/sample-project.html
+# Disallow indexing of template files
+Disallow: /case-study-template.html
