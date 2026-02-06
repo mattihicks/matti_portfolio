@@ -136,6 +136,24 @@ header {
     color: var(--text-dark);
 }
 
+/* Scroll Indicator
+   ========================================================================== */
+
+.scroll-indicator {
+    display: none; /* Hidden by default */
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+        opacity: 0.4;
+    }
+    50% {
+        transform: translateY(8px);
+        opacity: 0.8;
+    }
+}
+
 /* Credentials Row
    ========================================================================== */
 
@@ -818,6 +836,14 @@ footer {
    ========================================================================== */
 
 @media (max-width: 768px) {
+    .scroll-indicator {
+        display: flex;
+        justify-content: center;
+        margin-top: 32px;
+        color: var(--text-light);
+        animation: bounce 2s ease-in-out infinite;
+    }
+
     .hero-greeting {
         font-size: 32px;
     }
