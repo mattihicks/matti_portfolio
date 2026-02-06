@@ -839,9 +839,15 @@ footer {
     .scroll-indicator {
         display: flex;
         justify-content: center;
-        margin-top: 32px;
+        margin-top: 56px;
         color: var(--text-light);
         animation: bounce 2s ease-in-out infinite;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .scroll-indicator:active {
+        opacity: 0.5;
     }
 
     .hero-greeting {
