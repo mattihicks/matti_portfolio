@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debt payoff strategies - First Bank</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-brand: #295EFF;
+            --color-foreground: #061223;
+            --color-border: #E5E8EC;
+            --color-secondary-text: #5A6A7F;
+            --color-tertiary-text: #3A495D;
+            --font-heading: 'Libre Franklin', sans-serif;
+            --font-body: 'Libre Franklin', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: #F5F7FA;
+            color: var(--color-foreground);
+            line-height: 1.5;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            box-shadow: 0 4px 9px rgba(16, 47, 67, 0.12);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 120px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 72px;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--color-foreground);
+        }
+
+        nav {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-item {
+            color: #3A495D;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 24px 0;
+            border-bottom: 2px solid transparent;
+            transition: color 0.2s;
+        }
+
+        .nav-item:hover {
+            color: var(--color-brand);
+        }
+
+        .nav-item.active {
+            color: var(--color-brand);
+            border-bottom-color: var(--color-brand);
+        }
+
+        .header-right {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .notification-btn {
+            width: 44px;
+            height: 44px;
+            border: 1px solid transparent;
+            background: transparent;
+            border-radius: 99px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--color-brand);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .user-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-name {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .user-login {
+            font-size: 14px;
+            color: var(--color-secondary-text);
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 120px;
+        }
+
+        .back-link {
+            color: var(--color-brand);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .page-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 40px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .card h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+
+        .progress-section {
+            margin-bottom: 24px;
+        }
+
+        .progress-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .progress-labels span:first-child {
+            color: #6B7A8F;
+        }
+
+        .progress-labels span:last-child {
+            color: var(--color-foreground);
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #E5E8EC;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--color-brand);
+            border-radius: 4px;
+        }
+
+        .progress-text {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #3A495D;
+            margin-bottom: 24px;
+        }
+
+        .info-box {
+            background: #F5F7FA;
+            border-radius: 8px;
+            padding: 16px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #3A495D;
+        }
+
+        .strategy-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .strategy-item {
+            background: #F5F7FA;
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .strategy-item:hover {
+            background: #E5E8EC;
+        }
+
+        .strategy-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 20px;
+        }
+
+        .strategy-icon.pink {
+            background: #FFF0F8;
+        }
+
+        .strategy-icon.green {
+            background: #E8F5F0;
+        }
+
+        .strategy-icon.blue {
+            background: #E8F0FF;
+        }
+
+        .strategy-content {
+            flex: 1;
+        }
+
+        .strategy-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--color-foreground);
+            margin-bottom: 4px;
+        }
+
+        .strategy-description {
+            font-size: 14px;
+            color: var(--color-secondary-text);
+        }
+
+        .full-width-card {
+            grid-column: 1 / -1;
+        }
+
+        .other-strategies {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .other-strategy-item {
+            background: #F5F7FA;
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .other-strategy-item:hover {
+            background: #E5E8EC;
+        }
+
+        .other-strategy-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 20px;
+        }
+
+        .other-strategy-icon.pink {
+            background: #FFF0F8;
+        }
+
+        .other-strategy-icon.green {
+            background: #E8F5F0;
+        }
+
+        .other-strategy-icon.orange {
+            background: #FFF4E8;
+        }
+
+        .other-strategy-content {
+            flex: 1;
+        }
+
+        .other-strategy-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--color-foreground);
+            margin-bottom: 4px;
+        }
+
+        .other-strategy-description {
+            font-size: 14px;
+            color: var(--color-secondary-text);
+        }
+
+        /* Focus states for accessibility */
+        button:focus,
+        a:focus,
+        input:focus {
+            outline: 3px solid #295EFF;
+            outline-offset: 2px;
+        }
+
+        .notification-btn:hover {
+            background: #F3F6F9;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                padding: 0 20px;
+            }
+
+            main {
+                padding: 20px;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo" style="font-style: italic;">First Bank</div>
+            
+            <nav role="navigation" aria-label="Main navigation">
+                <a href="#" class="nav-item">Dashboard</a>
+                <a href="#" class="nav-item">Transfers</a>
+                <a href="#" class="nav-item">Accounts</a>
+                <a href="#" class="nav-item active">Insights</a>
+                <a href="#" class="nav-item">Products</a>
+                <a href="#" class="nav-item">Self service</a>
+            </nav>
+
+            <div class="header-right">
+                <button class="notification-btn" aria-label="View notifications">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                        <title>Notifications</title>
+                        <path d="M15 6.66669C15 5.34061 14.4732 4.06883 13.5355 3.13115C12.5979 2.19347 11.3261 1.66669 10 1.66669C8.67392 1.66669 7.40215 2.19347 6.46447 3.13115C5.52678 4.06883 5 5.34061 5 6.66669C5 12.5 2.5 14.1667 2.5 14.1667H17.5C17.5 14.1667 15 12.5 15 6.66669Z" stroke="#3A495D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M11.4417 17.5C11.2952 17.7526 11.0849 17.9622 10.8319 18.1079C10.5789 18.2537 10.292 18.3304 10 18.3304C9.70802 18.3304 9.42113 18.2537 9.16814 18.1079C8.91515 17.9622 8.70484 17.7526 8.55835 17.5" stroke="#3A495D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                
+                <div class="user-info">
+                    <div class="user-avatar">RG</div>
+                    <div class="user-details">
+                        <div class="user-name">Robin Green</div>
+                        <div class="user-login">Last login: 12:00, Nov 21</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <a href="financial-insights-dashboard.html" class="back-link">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Back to Insights
+        </a>
+
+        <h1 class="page-title">Debt payoff strategies</h1>
+
+        <div class="content-grid">
+            <!-- Tackling your debt -->
+            <div class="card">
+                <h2>Tackling your debt</h2>
+                
+                <div class="progress-section">
+                    <div class="progress-labels">
+                        <span>Progress</span>
+                        <span>35% paid off</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 35%"></div>
+                    </div>
+                    <p class="progress-text">You've reduced your total debt by $250 this month!</p>
+                </div>
+                
+                <div class="info-box">
+                    Your highest interest rate debt is Credit Card A with a balance of $2800. Paying an extra $50/month could save you $325 in interest every year.
+                </div>
+            </div>
+
+            <!-- Recommended strategies -->
+            <div class="card">
+                <h2>Recommended strategies</h2>
+                
+                <div class="strategy-list">
+                    <div class="strategy-item">
+                        <div class="strategy-icon pink">📈</div>
+                        <div class="strategy-content">
+                            <div class="strategy-title">Pay highest interest first</div>
+                            <div class="strategy-description">Escape the debt avalanche</div>
+                        </div>
+                    </div>
+                    
+                    <div class="strategy-item">
+                        <div class="strategy-icon green">💰</div>
+                        <div class="strategy-content">
+                            <div class="strategy-title">Pay smallest balances first</div>
+                            <div class="strategy-description">Avoid feeling overwhelmed</div>
+                        </div>
+                    </div>
+                    
+                    <div class="strategy-item">
+                        <div class="strategy-icon blue">🔄</div>
+                        <div class="strategy-content">
+                            <div class="strategy-title">Balance transfer</div>
+                            <div class="strategy-description">0% APR options available</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other strategies to consider -->
+            <div class="card full-width-card">
+                <h2>Other strategies to consider</h2>
+                
+                <div class="other-strategies">
+                    <div class="other-strategy-item">
+                        <div class="other-strategy-icon pink">🏦</div>
+                        <div class="other-strategy-content">
+                            <div class="other-strategy-title">Debt consolidation loan</div>
+                            <div class="other-strategy-description">Combine multiple debts into one</div>
+                        </div>
+                    </div>
+                    
+                    <div class="other-strategy-item">
+                        <div class="other-strategy-icon green">🏡</div>
+                        <div class="other-strategy-content">
+                            <div class="other-strategy-title">Home equity line of credit</div>
+                            <div class="other-strategy-description">Use home equity for lower interest rates</div>
+                        </div>
+                    </div>
+                    
+                    <div class="other-strategy-item">
+                        <div class="other-strategy-icon orange">🤝</div>
+                        <div class="other-strategy-content">
+                            <div class="other-strategy-title">Debt settlement</div>
+                            <div class="other-strategy-description">Negotiate with creditors to reduce balances</div>
+                        </div>
+                    </div>
+                    
+                    <div class="other-strategy-item">
+                        <div class="other-strategy-icon green">💼</div>
+                        <div class="other-strategy-content">
+                            <div class="other-strategy-title">401(k) Loan</div>
+                            <div class="other-strategy-description">Borrow from your retirement savings (use wisely)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

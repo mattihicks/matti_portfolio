@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Managing variable income - First Bank</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-brand: #295EFF;
+            --color-foreground: #061223;
+            --color-border: #E5E8EC;
+            --color-secondary-text: #5A6A7F;
+            --color-tertiary-text: #3A495D;
+            --font-heading: 'Libre Franklin', sans-serif;
+            --font-body: 'Libre Franklin', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: #F5F7FA;
+            color: var(--color-foreground);
+            line-height: 1.5;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            box-shadow: 0 4px 9px rgba(16, 47, 67, 0.12);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 120px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 72px;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--color-foreground);
+        }
+
+        nav {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-item {
+            color: #3A495D;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 24px 0;
+            border-bottom: 2px solid transparent;
+            transition: color 0.2s;
+        }
+
+        .nav-item:hover {
+            color: var(--color-brand);
+        }
+
+        .nav-item.active {
+            color: var(--color-brand);
+            border-bottom-color: var(--color-brand);
+        }
+
+        .header-right {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .notification-btn {
+            width: 44px;
+            height: 44px;
+            border: 1px solid transparent;
+            background: transparent;
+            border-radius: 99px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--color-brand);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .user-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-name {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .user-login {
+            font-size: 14px;
+            color: var(--color-secondary-text);
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 120px;
+        }
+
+        .back-link {
+            color: var(--color-brand);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .page-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+
+        .intro-box {
+            background: #E8F0FF;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 32px;
+            display: flex;
+            gap: 16px;
+        }
+
+        .intro-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--color-brand);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: white;
+            font-size: 20px;
+        }
+
+        .intro-content h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .intro-content p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--color-tertiary-text);
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .card h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+
+        .buffer-amount {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--color-brand);
+            margin-bottom: 12px;
+        }
+
+        .buffer-description {
+            font-size: 14px;
+            color: var(--color-secondary-text);
+            margin-bottom: 32px;
+        }
+
+        .input-section h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: var(--font-body);
+            margin-bottom: 12px;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--color-brand);
+        }
+
+        .input-help {
+            font-size: 14px;
+            color: var(--color-secondary-text);
+            line-height: 1.5;
+        }
+
+        .action-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .action-item {
+            background: #F5F7FA;
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .action-item:hover {
+            background: #E5E8EC;
+        }
+
+        .action-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 20px;
+        }
+
+        .action-icon.pink {
+            background: #FFF0F8;
+        }
+
+        .action-icon.green {
+            background: #E8F5F0;
+        }
+
+        .action-icon.blue {
+            background: #E8F0FF;
+        }
+
+        .action-content {
+            flex: 1;
+        }
+
+        .action-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--color-foreground);
+            margin-bottom: 4px;
+        }
+
+        .action-description {
+            font-size: 14px;
+            color: var(--color-secondary-text);
+        }
+
+        /* Focus states for accessibility */
+        button:focus,
+        a:focus,
+        input:focus {
+            outline: 3px solid #295EFF;
+            outline-offset: 2px;
+        }
+
+        .notification-btn:hover {
+            background: #F3F6F9;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                padding: 0 20px;
+            }
+
+            main {
+                padding: 20px;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .buffer-amount {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo" style="font-style: italic;">First Bank</div>
+            
+            <nav role="navigation" aria-label="Main navigation">
+                <a href="#" class="nav-item">Dashboard</a>
+                <a href="#" class="nav-item">Transfers</a>
+                <a href="#" class="nav-item">Accounts</a>
+                <a href="#" class="nav-item active">Insights</a>
+                <a href="#" class="nav-item">Products</a>
+                <a href="#" class="nav-item">Self service</a>
+            </nav>
+
+            <div class="header-right">
+                <button class="notification-btn" aria-label="View notifications">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                        <title>Notifications</title>
+                        <path d="M15 6.66669C15 5.34061 14.4732 4.06883 13.5355 3.13115C12.5979 2.19347 11.3261 1.66669 10 1.66669C8.67392 1.66669 7.40215 2.19347 6.46447 3.13115C5.52678 4.06883 5 5.34061 5 6.66669C5 12.5 2.5 14.1667 2.5 14.1667H17.5C17.5 14.1667 15 12.5 15 6.66669Z" stroke="#3A495D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M11.4417 17.5C11.2952 17.7526 11.0849 17.9622 10.8319 18.1079C10.5789 18.2537 10.292 18.3304 10 18.3304C9.70802 18.3304 9.42113 18.2537 9.16814 18.1079C8.91515 17.9622 8.70484 17.7526 8.55835 17.5" stroke="#3A495D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                
+                <div class="user-info">
+                    <div class="user-avatar">RG</div>
+                    <div class="user-details">
+                        <div class="user-name">Robin Green</div>
+                        <div class="user-login">Last login: 12:00, Nov 21</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <a href="financial-insights-dashboard.html" class="back-link">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Back to Insights
+        </a>
+
+        <h1 class="page-title">Managing variable income</h1>
+
+        <div class="intro-box">
+            <div class="intro-icon">💡</div>
+            <div class="intro-content">
+                <h3>Why you're here</h3>
+                <p>Your income analysis shows fluctuating earnings. Let's create a plan to manage these variations effectively and build lasting financial stability.</p>
+            </div>
+        </div>
+
+        <div class="content-grid">
+            <!-- Recommended buffer target -->
+            <div class="card">
+                <h2>Recommended buffer target</h2>
+                
+                <div class="buffer-amount">$14,000</div>
+                <p class="buffer-description">Based on $3,500 monthly essential expenses</p>
+                
+                <div class="input-section">
+                    <h3>Adjust your monthly essentials</h3>
+                    <input type="number" class="input-field" value="3500" />
+                    <p class="input-help">Includes rent, utilities, groceries, insurance, minimum debt payments</p>
+                </div>
+            </div>
+
+            <!-- Create an income buffer -->
+            <div class="card">
+                <h2>Create an income buffer</h2>
+                
+                <div class="action-list">
+                    <div class="action-item">
+                        <div class="action-icon pink">💰</div>
+                        <div class="action-content">
+                            <div class="action-title">Create savings pocket</div>
+                            <div class="action-description">Put money aside for rainy days</div>
+                        </div>
+                    </div>
+                    
+                    <div class="action-item">
+                        <div class="action-icon green">🔗</div>
+                        <div class="action-content">
+                            <div class="action-title">Link savings account</div>
+                            <div class="action-description">Understand what you have</div>
+                        </div>
+                    </div>
+                    
+                    <div class="action-item">
+                        <div class="action-icon blue">🔄</div>
+                        <div class="action-content">
+                            <div class="action-title">Automate transfers</div>
+                            <div class="action-description">Stop thinking about it</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
