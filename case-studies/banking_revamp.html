@@ -54,7 +54,7 @@
                 <div class="meta-grid">
                     <div class="meta-card">
                         <div class="meta-label">My Role</div>
-                        <div class="meta-value">Led UX design and research</div>
+                        <div class="meta-value">Co-led design and research</div>
                     </div>
                     <div class="meta-card">
                         <div class="meta-label">Team</div>
@@ -112,7 +112,7 @@
         <!-- What We Built Section -->
         <section class="section">
             <div class="container">
-                <h2 class="section-title">What we built</h2>
+                <h2 class="section-title">What we built <a href="#final-screens" style="font-weight: 400; font-size: 0.6em; color: var(--text-gray); text-decoration: none; border-bottom: 1px solid var(--text-gray); transition: opacity 0.2s;" onmouseover="this.style.opacity='0.6'" onmouseout="this.style.opacity='1'">(all screens below)</a></h2>
 
                 <div style="display: flex; justify-content: space-around; max-width: 100%; margin: 0 auto 8px auto;">
                     <p style="text-align: center; font-size: 14px; color: var(--text-gray); margin: 0; flex: 1;">Home</p>
@@ -129,26 +129,22 @@
             <div class="container-narrow">
                 <h2 class="section-title">How we got there</h2>
 
-                <div class="content-card">
-                    <p>To address the challenges and align Backbase's digital retail app with both client and business needs, we:</p>
-                    <ul>
-                        <li>Facilitated alignment between product and engineering teams on feature integration priorities and collaboration.</li>
-                        <li>Analyzed sales data with product to set clear goals and identify key markets.</li>
-                        <li>Attended quarterly business reviews to understand communication and get buy-in.</li>
-                        <li>Conducted interviews with clients and client customers.</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- Presenting Findings Section -->
-        <section class="section">
-            <div class="container-narrow">
-                <div style="max-width: 500px; margin: 0 auto;">
-                    <div class="image-container" style="margin-bottom: 8px;">
-                        <img src="../images/Matti-developers-revamp.jpg" alt="Presenting findings to engineering directors">
+                <div class="content-card" style="display: flex; gap: 32px; align-items: flex-start;">
+                    <div style="flex: 1; min-width: 0;">
+                        <p>To address the challenges and align Backbase's digital retail app with both client and business needs, we:</p>
+                        <ul>
+                            <li>Facilitated alignment between product and engineering teams on feature integration priorities and collaboration.</li>
+                            <li>Analyzed sales data with product to set clear goals and identify key markets.</li>
+                            <li>Attended quarterly business reviews to understand communication and get buy-in.</li>
+                            <li>Conducted interviews with clients and client customers.</li>
+                        </ul>
                     </div>
-                    <p style="text-align: center; font-size: 14px; color: var(--text-gray); margin: 0;">Presenting findings to engineering directors</p>
+                    <div style="flex: 0 0 220px;">
+                        <div class="image-container" style="margin-bottom: 8px;">
+                            <img src="../images/Matti-developers-revamp.jpg" alt="Presenting findings to engineering directors" style="border-radius: var(--radius-md);">
+                        </div>
+                        <p style="text-align: center; font-size: 13px; color: var(--text-gray); margin: 0;">Presenting findings to engineering directors</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -185,23 +181,11 @@
                         <li>Identified 'best practice' navigation patterns</li>
                         <li>Benchmarked against apps that had solved similar dashboard and information architecture challenges</li>
                     </ul>
-                </div>
-            </div>
-        </section>
 
-        <!-- IA Images Section -->
-        <section class="section">
-            <div class="container-narrow">
-                <div class="image-container" style="margin-bottom: 8px;">
-                    <img src="../images/Competitive_review_image.jpeg" alt="Competitive review dashboard layouts">
-                </div>
-                <p style="text-align: center; font-size: 14px; color: var(--text-gray); margin: 0 0 48px 0;">Competitive review: dashboard layouts</p>
-
-                <div style="max-width: 400px; margin: 0 auto;">
-                    <div class="image-container" style="margin-bottom: 8px;">
-                        <img src="../images/IA_revamp.jpeg" alt="IA diagram from content audit">
+                    <div class="image-container" style="margin-top: 24px; margin-bottom: 8px;">
+                        <img src="../images/Competitive_review_image.jpeg" alt="Competitive review dashboard layouts">
                     </div>
-                    <p style="text-align: center; font-size: 14px; color: var(--text-gray); margin: 0;">IA diagram from content audit: shown smaller to protect internal details</p>
+                    <p style="text-align: center; font-size: 14px; color: var(--text-gray); margin: 0;">Competitive review: dashboard layouts</p>
                 </div>
             </div>
         </section>
@@ -224,17 +208,12 @@
                         <li><strong>Sketched potential solutions,</strong> shared with PM and engineers.</li>
                         <li><strong>2 rounds of concept testing:</strong> Conducted concept testing with client customers throughout the design process, and iterated on the design based on the feedback.</li>
                     </ul>
-                </div>
-            </div>
-        </section>
 
-        <!-- Navigation Sketches Section -->
-        <section class="section">
-            <div class="container-narrow">
-                <div class="image-container" style="margin-bottom: 8px;">
-                    <img src="../images/nav-explorations-ramp.jpeg" alt="Navigation sketches">
+                    <div class="image-container" style="margin-top: 24px; margin-bottom: 8px;">
+                        <img src="../images/nav-explorations-ramp.jpeg" alt="Navigation sketches" style="border-radius: var(--radius-md);">
+                    </div>
+                    <p style="text-align: center; font-size: 13px; color: var(--text-gray); margin: 0;">Navigation brainstorm</p>
                 </div>
-                <p style="text-align: center; font-size: 14px; color: var(--text-gray); margin: 0;">Navigation sketches</p>
             </div>
         </section>
 
@@ -247,7 +226,14 @@
 
                 <div class="content-card">
                     <p><strong>Concept 1:</strong> Category-based organization (mental model: "I want to check my account balance.")</p>
+                    <div class="image-container" style="margin: 16px 0 40px 0; cursor: pointer;">
+                        <img src="../images/Category-based-concept.png" alt="Concept 1: Category-based" class="zoomable">
+                    </div>
+
                     <p><strong>Concept 2:</strong> Task-based organization (mental model: "How much can I spend this month?")</p>
+                    <div class="image-container" style="margin: 16px 0 24px 0; cursor: pointer;">
+                        <img src="../images/Task-based-concept.png" alt="Concept 2: Task-based" class="zoomable">
+                    </div>
 
                     <p>We moved forward with a combination of Concept 1 and Concept 2, as they best balanced user needs and business constraints:</p>
                     <ul>
@@ -255,27 +241,6 @@
                         <li><strong>Financial task focus (Concept 2):</strong> Users wanted immediate answers to questions like spending and financial goals</li>
                         <li><strong>Hybrid approach (Concept 1 + 2):</strong> The final design needed to serve both user mental models within a scalable navigation framework</li>
                     </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- Concept Images Section -->
-        <section class="section">
-            <div class="container">
-                <p style="text-align: center; font-size: 14px; color: var(--text-gray); margin: 0 0 24px 0; font-style: italic;">Click to zoom</p>
-                <div class="two-col">
-                    <div>
-                        <div class="image-container" style="margin-bottom: 8px; cursor: pointer;">
-                            <img src="../images/Category-based-concept.png" alt="Concept 1: Category-based" class="zoomable">
-                        </div>
-                        <p style="text-align: center; font-size: 14px; color: var(--text-gray); margin: 0;">Concept 1: Category-based</p>
-                    </div>
-                    <div>
-                        <div class="image-container" style="margin-bottom: 8px; cursor: pointer;">
-                            <img src="../images/Task-based-concept.png" alt="Concept 2: Task-based" class="zoomable">
-                        </div>
-                        <p style="text-align: center; font-size: 14px; color: var(--text-gray); margin: 0;">Concept 2: Task-based</p>
-                    </div>
                 </div>
             </div>
         </section>
@@ -291,16 +256,16 @@
                     <p>However, our research had a blind spot: several clients still insisted on keeping the "More" tab in the bottom navigation, fearing that users wouldn't be able to find essential functions like settings and logout without it.</p>
 
                     <p>So, we developed a hybrid approach: we kept the "More" tab to address client concerns, but established a roadmap to phase it out over time.</p>
-                </div>
 
-                <h4 style="margin-top: 32px;">Evolution of the More section</h4>
-                <div style="max-width: 600px; margin: 16px auto 0 auto;">
-                    <div style="display: flex; justify-content: space-around; margin: 0 auto 8px auto;">
-                        <p style="text-align: center; font-size: 14px; color: var(--text-gray); margin: 0; flex: 1;">More as a features catch-all</p>
-                        <p style="text-align: center; font-size: 14px; color: var(--text-gray); margin: 0; flex: 1;">More in tab bar</p>
-                        <p style="text-align: center; font-size: 14px; color: var(--text-gray); margin: 0; flex: 1;">More in Profile section</p>
+                    <h4 style="margin-top: 32px;">Evolution of the More section</h4>
+                    <div style="max-width: 600px; margin: 16px auto 0 auto;">
+                        <div style="display: flex; justify-content: space-around; margin: 0 auto 8px auto;">
+                            <p style="text-align: center; font-size: 14px; color: var(--text-gray); margin: 0; flex: 1;">More as a features catch-all</p>
+                            <p style="text-align: center; font-size: 14px; color: var(--text-gray); margin: 0; flex: 1;">More in tab bar</p>
+                            <p style="text-align: center; font-size: 14px; color: var(--text-gray); margin: 0; flex: 1;">More in Profile section</p>
+                        </div>
+                        <img src="../images/More_button_evolution.png" alt="Evolution of the More section" class="zoomable" style="width: 100%; height: auto; display: block; border-radius: 0; cursor: pointer;">
                     </div>
-                    <img src="../images/More_button_evolution.png" alt="Evolution of the More section" class="zoomable" style="width: 100%; height: auto; display: block; border-radius: 0; cursor: pointer;">
                 </div>
             </div>
         </section>
@@ -317,6 +282,39 @@
                         <li>This project not only transformed the retail banking experience but also set new standards for cross-team collaboration and user-centered design at Backbase. Looking forward, I aim to continue leading projects that fuse creativity with insights to drive impactful user experiences.</li>
                     </ul>
                 </div>
+            </div>
+        </section>
+
+        <!-- Final Screens Section -->
+        <section class="section" id="final-screens">
+            <div class="container">
+                <h2 class="section-title">Final screens</h2>
+
+                <h3 style="text-align: center; margin-bottom: 16px; font-weight: 500;">Dashboard</h3>
+                <div style="display: flex; justify-content: space-around; max-width: 100%; margin: 0 auto 8px auto;">
+                    <p style="text-align: center; font-size: 14px; color: var(--text-gray); margin: 0; flex: 1;">Home</p>
+                    <p style="text-align: center; font-size: 14px; color: var(--text-gray); margin: 0; flex: 1;">Insights</p>
+                    <p style="text-align: center; font-size: 14px; color: var(--text-gray); margin: 0; flex: 1;">Cards</p>
+                    <p style="text-align: center; font-size: 14px; color: var(--text-gray); margin: 0; flex: 1;">Help</p>
+                </div>
+                <img src="../images/final-design-revamp.png" alt="Final design screens" class="zoomable" style="width: 100%; height: auto; display: block; border-radius: 0; cursor: pointer;">
+
+                <h3 style="text-align: center; margin: 64px 0 16px 0; font-weight: 500;">Move Money</h3>
+                <div style="display: flex; justify-content: space-around; max-width: 100%; margin: 0 auto 8px auto;">
+                    <p style="text-align: center; font-size: 14px; color: var(--text-gray); margin: 0; flex: 1;">Transfer</p>
+                    <p style="text-align: center; font-size: 14px; color: var(--text-gray); margin: 0; flex: 1;">Scheduled</p>
+                    <p style="text-align: center; font-size: 14px; color: var(--text-gray); margin: 0; flex: 1;">History</p>
+                    <p style="text-align: center; font-size: 14px; color: var(--text-gray); margin: 0; flex: 1;">Contacts</p>
+                </div>
+                <img src="../images/move_money_revamp.png" alt="Move Money screens" class="zoomable" style="width: 100%; height: auto; display: block; border-radius: 0; cursor: pointer;">
+
+                <h3 style="text-align: center; margin: 64px 0 16px 0; font-weight: 500;">Accounts</h3>
+                <div style="display: flex; justify-content: space-around; max-width: 75%; margin: 0 auto 8px auto;">
+                    <p style="text-align: center; font-size: 14px; color: var(--text-gray); margin: 0; flex: 1;">Account list</p>
+                    <p style="text-align: center; font-size: 14px; color: var(--text-gray); margin: 0; flex: 1;">Pockets</p>
+                    <p style="text-align: center; font-size: 14px; color: var(--text-gray); margin: 0; flex: 1;">Statements</p>
+                </div>
+                <img src="../images/accounts_revamp.png" alt="Accounts screens" class="zoomable" style="width: 75%; height: auto; display: block; border-radius: 0; cursor: pointer; margin: 0 auto;">
             </div>
         </section>
 
