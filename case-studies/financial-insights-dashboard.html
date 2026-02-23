@@ -799,6 +799,164 @@
             justify-content: flex-end;
             margin-top: 24px;
         }
+        /* ==============================
+           Hamburger button (hidden on desktop)
+           ============================== */
+        .hamburger-btn {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            color: var(--color-foreground);
+        }
+
+        /* ==============================
+           Mobile Responsive — 768px
+           ============================== */
+        @media (max-width: 768px) {
+            /* 1. Hamburger menu */
+            .hamburger-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            header nav {
+                display: none;
+                position: absolute;
+                top: 72px;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                gap: 0;
+                padding: 8px 0;
+                box-shadow: 0 4px 12px rgba(16, 47, 67, 0.12);
+                z-index: 99;
+            }
+
+            header nav.mobile-open {
+                display: flex;
+            }
+
+            header nav .nav-item {
+                padding: 14px 24px;
+                border-bottom: none;
+                width: 100%;
+            }
+
+            header nav .nav-item:hover,
+            header nav .nav-item.active {
+                background: #F3F6F9;
+                border-bottom: none;
+            }
+
+            .header-content {
+                justify-content: flex-start;
+                gap: 0;
+            }
+
+            .header-right {
+                gap: 8px;
+                margin-left: auto;
+            }
+
+            .hamburger-btn {
+                margin-left: 8px;
+            }
+
+            .user-profile {
+                padding: 0;
+            }
+
+            .user-profile svg {
+                display: none;
+            }
+
+            /* 2. Smaller card titles */
+            .card h2 {
+                font-size: 18px;
+                line-height: 26px;
+            }
+
+            /* 3. Stacked buttons */
+            .button-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .button-group .btn-primary,
+            .button-group .btn-secondary,
+            .button-group .btn-link {
+                width: 100%;
+                text-align: center;
+            }
+
+            /* 4. AI expertise section fixes */
+            .ai-suggestions {
+                display: none;
+            }
+
+            .ai-input-container {
+                max-width: 100%;
+                width: 100%;
+            }
+
+            .ai-content {
+                padding: 24px 16px;
+            }
+
+            .ai-content h2 {
+                font-size: 18px;
+                text-align: center;
+            }
+
+            /* 5. Always show hover icons on mobile */
+            .card-hover-icon-btn {
+                opacity: 1;
+            }
+
+            /* 6. Grid layouts collapse to single column */
+            .two-column,
+            .three-column,
+            .tips-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            /* 7. Reduce padding */
+            .header-content {
+                padding: 0 16px;
+            }
+
+            main {
+                padding: 24px 16px;
+            }
+
+            /* Extra mobile polish */
+            h1 {
+                font-size: 24px;
+                margin-bottom: 24px;
+            }
+
+            .card {
+                padding: 24px;
+            }
+
+            .amount-large {
+                font-size: 28px;
+            }
+
+            .spending-content {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .spending-legend {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -808,7 +966,7 @@
     <header>
         <div class="header-content">
             <div class="logo" style="font-style: italic;">First Bank</div>
-            
+
             <nav role="navigation" aria-label="Main navigation">
                 <a href="#" class="nav-item">Dashboard</a>
                 <a href="#" class="nav-item">Transfers</a>
@@ -839,6 +997,12 @@
                     </svg>
                 </div>
             </div>
+
+            <button class="hamburger-btn" aria-label="Toggle navigation menu" aria-expanded="false" onclick="toggleMobileMenu()">
+                <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
         </div>
     </header>
 
@@ -1410,6 +1574,24 @@
     </div>
 
     <script>
+        // Mobile hamburger menu toggle
+        function toggleMobileMenu() {
+            const nav = document.querySelector('header nav');
+            const btn = document.querySelector('.hamburger-btn');
+            const isOpen = nav.classList.toggle('mobile-open');
+            btn.setAttribute('aria-expanded', isOpen);
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const nav = document.querySelector('header nav');
+            const btn = document.querySelector('.hamburger-btn');
+            if (!nav.contains(e.target) && !btn.contains(e.target)) {
+                nav.classList.remove('mobile-open');
+                btn.setAttribute('aria-expanded', 'false');
+            }
+        });
+
         // Toggle AI dropdown menu
         function toggleAIDropdown(event) {
             event.stopPropagation();
