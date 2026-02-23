@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Expertise - Financial Dashboard</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: #F8F9FB;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ai-chat-header {
+      background: white;
+      padding: 24px 32px;
+      border-bottom: 1px solid #E5E8EC;
+    }
+
+    .back-link {
+      color: #295EFF;
+      text-decoration: none;
+      font-size: 14px;
+      display: inline-block;
+      margin-bottom: 16px;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    .ai-chat-title {
+      font-size: 28px;
+      font-weight: 600;
+      color: #1A1D1F;
+      margin: 0;
+    }
+
+    .ai-chat-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      max-width: 900px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .ai-chat-welcome {
+      text-align: center;
+      margin: 60px 0 40px 0;
+    }
+
+    .ai-sparkle-large {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 24px;
+    }
+
+    .ai-chat-welcome h2 {
+      font-size: 40px;
+      font-weight: 600;
+      color: #1A1D1F;
+      margin: 0 0 12px 0;
+    }
+
+    .ai-chat-welcome p {
+      font-size: 18px;
+      color: #5A6A7F;
+      margin: 0;
+    }
+
+    .suggestion-chips {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .suggestion-chip {
+      background: white;
+      border: 1px solid #E5E8EC;
+      border-radius: 8px;
+      padding: 16px 20px;
+      font-size: 14px;
+      color: #3A495D;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .suggestion-chip:hover {
+      background: #F0F4FF;
+      border-color: #295EFF;
+      color: #295EFF;
+    }
+    
+    /* Focus states for accessibility */
+    button:focus,
+    a:focus,
+    input:focus {
+      outline: 3px solid #295EFF;
+      outline-offset: 2px;
+    }
+
+    .chat-messages {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .chat-message {
+      display: flex;
+      gap: 12px;
+      animation: messageSlideIn 0.3s ease;
+    }
+
+    @keyframes messageSlideIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .chat-message.user {
+      flex-direction: row-reverse;
+    }
+
+    .message-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .message-avatar.user {
+      background: #295EFF;
+      color: white;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .message-avatar.ai {
+      background: white;
+      border: 1px solid #E5E8EC;
+    }
+
+    .message-avatar.ai img {
+      width: 24px;
+      height: 24px;
+    }
+
+    .message-bubble {
+      background: white;
+      border-radius: 12px;
+      padding: 12px 16px;
+      max-width: 70%;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+
+    .card-screenshot {
+      max-width: 280px;
+      border-radius: 8px;
+      border: 1px solid #E5E8EC;
+      margin-bottom: 8px;
+    }
+
+    .card-context-label {
+      font-size: 13px;
+      color: #5A6A7F;
+      margin: 0;
+    }
+
+    .chat-message.user .message-bubble {
+      background: #295EFF;
+      color: white;
+    }
+
+    .ai-chat-input-container {
+      background: white;
+      border-top: 1px solid #E5E8EC;
+      padding: 16px 32px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      max-width: 900px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .input-icon-btn {
+      background: transparent;
+      border: none;
+      color: #6B7280;
+      cursor: pointer;
+      padding: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s;
+    }
+
+    .input-icon-btn:hover {
+      color: #295EFF;
+    }
+
+    .ai-chat-input {
+      flex: 1;
+      border: 1px solid #E5E8EC;
+      border-radius: 24px;
+      padding: 12px 20px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .ai-chat-input:focus {
+      border-color: #295EFF;
+    }
+
+    .send-btn {
+      background: #295EFF;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .send-btn:hover {
+      background: #1E4ED8;
+    }
+
+    @media (max-width: 768px) {
+      .ai-chat-header {
+        padding: 20px;
+      }
+
+      .ai-chat-content {
+        padding: 20px;
+      }
+
+      .ai-chat-input-container {
+        padding: 16px 20px;
+      }
+
+      .suggestion-chips {
+        grid-template-columns: 1fr;
+      }
+
+      .message-bubble {
+        max-width: 85%;
+      }
+
+      .ai-chat-welcome h2 {
+        font-size: 32px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="ai-chat-header">
+    <a href="financial-insights-dashboard.html" class="back-link">← Back to Insights Dashboard</a>
+    <h1 class="ai-chat-title">AI Expertise on your finances</h1>
+  </div>
+
+  <div class="ai-chat-content">
+    <div class="ai-chat-welcome">
+      <svg class="ai-sparkle-large" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="40" cy="40" r="40" fill="#F0F4FF"/><path d="M40 20l2.5 14.5L57 37l-14.5 2.5L40 54l-2.5-14.5L23 37l14.5-2.5L40 20z" fill="#295EFF"/><path d="M55 22l1.2 6.8L63 30l-6.8 1.2L55 38l-1.2-6.8L47 30l6.8-1.2L55 22z" fill="#295EFF" opacity="0.5"/></svg>
+      <h2>Just ask</h2>
+      <p>Private, fast, and secured</p>
+    </div>
+
+    <div class="suggestion-chips">
+      <button class="suggestion-chip" onclick="handleSuggestionClick('Recalculate my spending')">Recalculate my spending</button>
+      <button class="suggestion-chip" onclick="handleSuggestionClick('What items are in my Other category?')">What items are in my 'Other' category?</button>
+      <button class="suggestion-chip" onclick="handleSuggestionClick('Show spending in a different graph')">Show spending in a different graph</button>
+      <button class="suggestion-chip" onclick="handleSuggestionClick('How does this compare to my spending from last month?')">How does this compare to my spending from last month?</button>
+    </div>
+
+    <div id="chatMessages" class="chat-messages"></div>
+  </div>
+
+  <div class="ai-chat-input-container">
+    <button class="input-icon-btn" title="Voice input" aria-label="Voice input">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <title>Voice input</title>
+        <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+        <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+        <line x1="12" y1="19" x2="12" y2="23"></line>
+        <line x1="8" y1="23" x2="16" y2="23"></line>
+      </svg>
+    </button>
+    <button class="input-icon-btn" title="Attach image" aria-label="Attach image">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <title>Attach image</title>
+        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+        <polyline points="21 15 16 10 5 21"></polyline>
+      </svg>
+    </button>
+    <input 
+      type="text" 
+      id="aiChatInput" 
+      class="ai-chat-input" 
+      placeholder="Ask anything about your spending"
+      aria-label="Ask AI about your finances"
+      onkeypress="if(event.key === 'Enter') sendMessage()"
+    />
+    <button class="send-btn" onclick="sendMessage()" aria-label="Send message">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <title>Send message</title>
+        <line x1="22" y1="2" x2="11" y2="13"></line>
+        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+      </svg>
+    </button>
+  </div>
+
+  <script>
+    function sendMessage() {
+      const input = document.getElementById('aiChatInput');
+      const message = input.value.trim();
+      
+      if (!message) return;
+      
+      // Add user message
+      addMessage(message, 'user');
+      
+      // Clear input
+      input.value = '';
+      
+      // Simulate AI response with delay
+      setTimeout(() => {
+        addMessage('This is just a user test - the AI functionality is not yet implemented. In the real version, I would analyze your financial data and provide personalized insights!', 'ai');
+      }, 800);
+    }
+
+    function handleSuggestionClick(suggestion) {
+      addMessage(suggestion, 'user');
+      
+      // Simulate AI response with delay
+      setTimeout(() => {
+        addMessage('This is just a user test - the AI functionality is not yet implemented. In the real version, I would analyze your financial data and provide personalized insights!', 'ai');
+      }, 800);
+    }
+
+    function addMessage(text, sender, imageUrl) {
+      const chatMessages = document.getElementById('chatMessages');
+
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `chat-message ${sender}`;
+
+      const avatarDiv = document.createElement('div');
+      avatarDiv.className = `message-avatar ${sender}`;
+
+      if (sender === 'user') {
+        avatarDiv.textContent = 'RG';
+      } else {
+        avatarDiv.innerHTML = '<svg width="24" height="24" viewBox="0 0 80 80" fill="none" aria-hidden="true"><path d="M40 20l2.5 14.5L57 37l-14.5 2.5L40 54l-2.5-14.5L23 37l14.5-2.5L40 20z" fill="#295EFF"/></svg>';
+      }
+
+      const bubbleDiv = document.createElement('div');
+      bubbleDiv.className = 'message-bubble';
+
+      if (imageUrl) {
+        const img = document.createElement('img');
+        img.src = imageUrl;
+        img.alt = 'Card screenshot for context';
+        img.className = 'card-screenshot';
+        bubbleDiv.appendChild(img);
+      }
+
+      if (text) {
+        const textNode = document.createElement('p');
+        textNode.style.margin = '0';
+        textNode.textContent = text;
+        bubbleDiv.appendChild(textNode);
+      }
+
+      messageDiv.appendChild(avatarDiv);
+      messageDiv.appendChild(bubbleDiv);
+
+      chatMessages.appendChild(messageDiv);
+
+      // Scroll to bottom
+      const contentArea = document.querySelector('.ai-chat-content');
+      contentArea.scrollTop = contentArea.scrollHeight;
+    }
+
+    // On load: check for card screenshot from the dashboard
+    (function() {
+      const cardImage = localStorage.getItem('aiChatCardImage');
+      const cardTitle = localStorage.getItem('aiChatCardTitle');
+      if (cardImage) {
+        const label = cardTitle ? `Tell me more about "${cardTitle}"` : 'Tell me more about this';
+        addMessage(label, 'user', cardImage);
+
+        // Simulate AI response
+        setTimeout(() => {
+          addMessage('This is just a user test — the AI functionality is not yet implemented. In the real version, I would analyze this card and provide deeper insights!', 'ai');
+        }, 800);
+
+        // Clean up so it doesn't persist on refresh
+        localStorage.removeItem('aiChatCardImage');
+        localStorage.removeItem('aiChatCardTitle');
+      }
+    })();
+
+    // If arriving from a card "Go deeper" click, scroll to input and focus it
+    if (new URLSearchParams(window.location.search).get('from') === 'card') {
+      setTimeout(() => {
+        const input = document.getElementById('aiChatInput');
+        input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        input.focus();
+      }, 200);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,1590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Insights Dashboard - First Bank</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-brand: #295EFF;
+            --color-foreground: #061223;
+            --color-border: #E5E8EC;
+            --color-warning: #8A6A19;
+            --color-secondary-text: #5A6A7F; /* Improved contrast from #6B7A8F */
+            --color-tertiary-text: #3A495D;
+            --color-placeholder: #5A6A7F; /* Improved for WCAG AA contrast */
+            --font-heading: 'Libre Franklin', sans-serif;
+            --font-body: 'Libre Franklin', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: #F5F7FA;
+            color: var(--color-foreground);
+            line-height: 1.5;
+        }
+
+        .skip-nav {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--color-brand);
+            color: white;
+            padding: 8px 16px;
+            z-index: 200;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 0 0 8px 0;
+        }
+
+        .skip-nav:focus {
+            top: 0;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            box-shadow: 0 4px 9px rgba(16, 47, 67, 0.12);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 120px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 72px;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--color-foreground);
+        }
+
+        nav {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-item {
+            color: #3A495D;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 24px 0;
+            border-bottom: 2px solid transparent;
+            transition: color 0.2s;
+        }
+
+        .nav-item:hover {
+            color: var(--color-brand);
+        }
+
+        .nav-item.active {
+            color: var(--color-brand);
+            border-bottom-color: var(--color-brand);
+        }
+
+        .header-right {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .notification-btn {
+            width: 44px;
+            height: 44px;
+            border: 1px solid transparent;
+            background: transparent;
+            border-radius: 99px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .notification-btn:hover {
+            background: #F3F6F9;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--color-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .user-profile {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            padding: 0 16px 0 8px;
+        }
+
+        .user-info h3 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .user-info p {
+            font-size: 14px;
+            color: var(--color-secondary-text);
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 48px 120px;
+        }
+
+        h1 {
+            font-family: var(--font-heading);
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            color: var(--color-foreground);
+        }
+
+        /* Card Styles */
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 4px 9px rgba(16, 47, 67, 0.12);
+            position: relative;
+        }
+        
+        .card-hover-icon-btn {
+            background: none;
+            border: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            width: 44px;
+            height: 44px;
+            padding: 10px;
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-hover-icon {
+            width: 24px;
+            height: 24px;
+        }
+
+        .card:hover .card-hover-icon-btn,
+        .card-hover-icon-btn:focus {
+            opacity: 1;
+        }
+        
+        /* Focus states for accessibility */
+        button:focus,
+        a:focus,
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: 3px solid #295EFF;
+            outline-offset: 2px;
+        }
+        
+        .card-hover-icon-btn:focus {
+            outline: 2px solid #295EFF;
+            outline-offset: 2px;
+        }
+
+        .card-hover-icon-btn:focus:not(:focus-visible) {
+            outline: none;
+        }
+
+        .ai-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .ai-dropdown-menu {
+            display: none;
+            position: absolute;
+            right: auto;
+            left: 100%;
+            top: 0;
+            margin-left: 8px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            min-width: 180px;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .ai-dropdown-menu.active {
+            display: block;
+        }
+
+        .ai-dropdown-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            color: #061223;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        .ai-dropdown-menu a svg {
+            flex-shrink: 0;
+            color: #295EFF;
+        }
+
+        .ai-dropdown-menu a:hover {
+            background: #F3F6F9;
+        }
+
+        .ai-dropdown-menu a:focus {
+            outline: none;
+            background: #F3F6F9;
+        }
+
+        .ai-dropdown-menu a:focus-visible {
+            outline: 2px solid #295EFF;
+            outline-offset: -2px;
+        }
+
+        .card h2 {
+            font-family: 'Libre Franklin', sans-serif;
+            font-style: normal;
+            font-weight: 700;
+            font-size: 24px;
+            line-height: 36px;
+            color: #061223;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 44px;
+            margin-bottom: 40px;
+        }
+
+        .three-column {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 44px;
+            margin-bottom: 40px;
+            align-items: stretch;
+        }
+        
+        .three-column .card {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .three-column .card > *:last-child {
+            margin-top: auto;
+        }
+
+        /* Amount Display */
+        .amount-large {
+            font-size: 36px;
+            font-weight: 400;
+            text-align: center;
+            color: var(--color-foreground);
+        }
+
+        .text-center-small {
+            font-size: 14px;
+            text-align: center;
+            color: var(--color-tertiary-text);
+        }
+
+        /* Trend Indicator */
+        .trend-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .trend-text {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--color-warning);
+        }
+
+        /* Progress Section */
+        .progress-section {
+            margin-top: 0;
+        }
+
+        .progress-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .progress-labels span {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--color-foreground);
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #E9EAEB;
+            border-radius: 100px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--color-brand);
+            border-radius: 100px;
+        }
+
+        .stability-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .stability-badge svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .stability-badge span {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--color-brand);
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background: var(--color-brand);
+            color: white;
+            border: none;
+            padding: 8px 24px;
+            border-radius: 100px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: #1E4FE6;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--color-brand);
+            border: 1px solid var(--color-brand);
+            padding: 8px 24px;
+            border-radius: 100px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background: #F3F6F9;
+        }
+
+        .btn-link {
+            background: transparent;
+            color: var(--color-brand);
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: text-decoration 0.2s;
+        }
+
+        .btn-link:hover {
+            text-decoration: underline;
+        }
+
+        /* AI Card */
+        .ai-card {
+            margin-bottom: 40px;
+            padding: 0;
+            background: none;
+            border-radius: 16px;
+            position: relative;
+        }
+        
+        .ai-content {
+            background: linear-gradient(180deg, #F0F3FF 0%, #FFFFFF 100%);
+            border-radius: 14px;
+            padding: 32px;
+        }
+        
+        .ai-card h2 {
+            color: var(--color-foreground);
+        }
+
+        .ai-content h2 {
+            font-size: 24px;
+            font-weight: 400;
+            margin-bottom: 24px;
+        }
+
+        .ai-input-container {
+            margin-bottom: 16px;
+            max-width: 760px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .ai-input {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid var(--color-border);
+        }
+
+        .ai-input button {
+            background: none;
+            border: none;
+            padding: 4px;
+            cursor: pointer;
+            color: #6B7A8F;
+            display: flex;
+            align-items: center;
+        }
+
+        .ai-input input {
+            flex: 1;
+            border: none;
+            background: none;
+            font-size: 14px;
+            outline: none;
+            color: var(--color-foreground);
+        }
+
+        .ai-input input::placeholder {
+            color: var(--color-placeholder);
+        }
+
+        .ai-suggestions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .suggestion-btn {
+            padding: 8px 16px;
+            background: white;
+            border: 1px solid var(--color-border);
+            border-radius: 100px;
+            font-size: 14px;
+            color: var(--color-foreground);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .suggestion-btn:hover {
+            border-color: var(--color-brand);
+            color: var(--color-brand);
+        }
+
+        /* Spending Chart */
+        .spending-content {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .pie-chart {
+            flex-shrink: 0;
+        }
+
+        .spending-legend {
+            flex: 1;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .legend-label {
+            font-size: 13px;
+            flex: 1;
+        }
+
+        /* Tip Box */
+        .tip-box {
+            background: #F5F7FA;
+            padding: 16px;
+            border-radius: 8px;
+            border-left: 3px solid var(--color-brand);
+        }
+
+        .tip-box p {
+            font-size: 13px;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* Circular Progress */
+        .circular-progress {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+
+        .progress-circle {
+            position: relative;
+            width: 200px;
+            height: 200px;
+        }
+
+        .progress-value {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .progress-value .amount {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--color-brand);
+        }
+
+        .progress-value .goal {
+            font-size: 14px;
+            color: #5A6A7F;
+        }
+
+        /* Tips Section */
+        .tips-section {
+            margin-top: 48px;
+        }
+
+        .tips-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .tip-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 9px rgba(16, 47, 67, 0.12);
+        }
+
+        .tip-card h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .tip-card p {
+            font-size: 13px;
+            color: #5A6A7F;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .tip-card a {
+            color: var(--color-brand);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .tip-card a:hover {
+            text-decoration: underline;
+        }
+
+        .icon-24 {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .header-content,
+            main {
+                padding-left: 40px;
+                padding-right: 40px;
+            }
+
+            .three-column,
+            .tips-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+
+            .user-info {
+                display: none;
+            }
+        }
+
+        /* Report Error Modal */
+        .report-error-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            animation: fadeIn 0.3s ease;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .report-error-modal.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .report-error-container {
+            background: white;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 16px;
+            overflow: hidden;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .report-error-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px;
+            border-bottom: 1px solid #E5E8EC;
+        }
+
+        .report-error-header h2 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1A1D1F;
+            margin: 0;
+        }
+
+        .close-modal-btn {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            color: #6B7A8F;
+            transition: color 0.2s;
+        }
+
+        .close-modal-btn:hover {
+            color: #061223;
+        }
+
+        .report-error-content {
+            padding: 24px;
+        }
+
+        .report-error-description {
+            font-size: 14px;
+            color: #3A495D;
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #061223;
+            margin-bottom: 8px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #E5E8EC;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: 'Libre Franklin', sans-serif;
+            color: #061223;
+            background: white;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #295EFF;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 24px;
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-nav">Skip to main content</a>
+
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo" style="font-style: italic;">First Bank</div>
+            
+            <nav role="navigation" aria-label="Main navigation">
+                <a href="#" class="nav-item">Dashboard</a>
+                <a href="#" class="nav-item">Transfers</a>
+                <a href="#" class="nav-item">Accounts</a>
+                <a href="#" class="nav-item active">Insights</a>
+                <a href="#" class="nav-item">Products</a>
+                <a href="#" class="nav-item">Self service</a>
+                <a href="#" class="nav-item" aria-label="More navigation options">•••</a>
+            </nav>
+            
+            <div class="header-right">
+                <button class="notification-btn" aria-label="View notifications">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <title>Notifications</title>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                    </svg>
+                </button>
+                
+                <div class="avatar">RN</div>
+                
+                <div class="user-profile">
+                    <div class="user-info">
+                        <h3>Robin Green</h3>
+                        <p>Last login: 12:00, Nov 21</p>
+                    </div>
+                    <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M7 10l5 5 5-5z"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <h1>Insights</h1>
+
+        <!-- Row 1: Available to Spend + Avoid Fees -->
+        <div class="two-column">
+            <!-- What's available to spend? -->
+            <div class="card available-spend" style="padding: 32px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                    <h2 style="margin: 0;">What's available to spend?</h2>
+                    <div class="ai-dropdown">
+                        <button class="card-hover-icon-btn" onclick="toggleAIDropdown(event)" aria-label="AI insights menu" aria-haspopup="true" aria-expanded="false"><svg class="card-hover-icon" viewBox="0 0 21.9187 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <title>AI insights</title>
+                            <path d="M13.6533 7.76069C10.9505 6.17538 8.23434 5.32983 6.06121 5.2007C3.8124 5.06707 2.51883 5.69682 2.03522 6.54781C1.55162 7.39879 1.66157 8.85179 2.89988 10.7635C4.09653 12.6109 6.1754 14.5779 8.87818 16.1632C11.581 17.7485 14.2972 18.5941 16.4703 18.7232C18.7191 18.8568 20.0127 18.2271 20.4963 17.3761L21.4951 17.962C19.858 20.8427 13.951 20.4916 8.30152 17.1779C2.65202 13.8642 -0.600675 8.84268 1.03641 5.96196C2.67351 3.08124 8.58046 3.43226 14.23 6.74597C19.8795 10.0597 23.1322 15.0812 21.4951 17.962L20.4963 17.3761C20.9799 16.5251 20.8699 15.0721 19.6316 13.1604C18.435 11.313 16.3561 9.34601 13.6533 7.76069Z" fill="#295EFF"/>
+                            <path d="M13.0405 16.258C15.7433 14.6727 17.8221 12.7057 19.0188 10.8583C20.2571 8.94655 20.3671 7.49355 19.8834 6.64257C19.3998 5.7916 18.1062 5.16184 15.8575 5.29547C13.6843 5.4246 10.9681 6.27015 8.26536 7.85546C5.56258 9.44077 3.4837 11.4078 2.28705 13.2552C1.04875 15.1669 0.93879 16.6199 1.42239 17.4709L0.423582 18.0567C-1.2135 15.176 2.03919 10.1544 7.68869 6.84074C13.3382 3.52703 19.2451 3.17602 20.8823 6.05672C22.5194 8.93744 19.2667 13.959 13.6171 17.2727C7.96764 20.5864 2.06068 20.9374 0.423582 18.0567L1.42239 17.4709C1.906 18.3219 3.19958 18.9516 5.44838 18.818C7.62152 18.6888 10.3377 17.8433 13.0405 16.258Z" fill="#295EFF"/>
+                            <path d="M6.205 12C6.205 15.1706 6.84231 17.9832 7.8188 19.9597C8.82929 22.0051 10.0129 22.8283 10.9801 22.8283C11.9473 22.8283 13.131 22.005 14.1415 19.9597C15.1179 17.9832 15.7553 15.1706 15.7553 12C15.7553 8.82938 15.1179 6.01684 14.1415 4.0403C13.131 1.99495 11.9473 1.17171 10.9801 1.1717V0C14.2543 1.75919e-05 16.9086 5.37259 16.9086 12C16.9086 18.6274 14.2543 24 10.9801 24C7.70592 24 5.05167 18.6274 5.05168 12C5.05168 5.37258 7.70593 -4.25792e-07 10.9801 0V1.1717C10.0129 1.1717 8.82929 1.99494 7.8188 4.0403C6.84231 6.01684 6.205 8.82937 6.205 12Z" fill="#295EFF"/>
+                            <path d="M11.0815 9.1783L11.1986 10.1817C11.3033 11.0779 11.9988 11.7845 12.881 11.8908L13.8687 12.0099L12.881 12.129C11.9988 12.2353 11.3033 12.9419 11.1986 13.8381L11.0815 14.8415L10.9643 13.8381C10.8596 12.9419 10.1641 12.2353 9.28193 12.129L8.29425 12.0099L9.28193 11.8908C10.1641 11.7845 10.8596 11.0779 10.9643 10.1817L11.0815 9.1783Z" fill="#295EFF"/>
+                        </svg></button>
+                        <div class="ai-dropdown-menu" role="menu">
+                            <a href="#" role="menuitem" onclick="handleAIOption('deeper', event)">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 5v14m0 0l7-7m-7 7l-7-7"></path>
+                                </svg>
+                                Go deeper
+                            </a>
+                            <a href="#" role="menuitem" onclick="handleAIOption('report', event)">
+                                <span style="font-size: 16px; font-weight: bold; color: #295EFF; width: 16px; text-align: center;">!</span>
+                                Report error
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="amount-large" style="margin-bottom: 6px;">$237.85</div>
+                
+                <p class="text-center-small" style="margin-bottom: 12px;">You've got enough for essentials until May 31.</p>
+                
+                <div class="trend-indicator" style="margin-bottom: 16px;">
+                    <span style="font-size: 13px; color: black;">6-month trend:</span>
+                    <span class="trend-text">Decreasing</span>
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24" style="color: #8A6A19;">
+                        <path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"/>
+                    </svg>
+                </div>
+                
+                <div class="progress-section">
+                    <div class="progress-labels">
+                        <span>Overall financial health</span>
+                        <span>Building stability</span>
+                    </div>
+                    <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" aria-label="Overall financial health: 70%">
+                        <div class="progress-fill" style="width: 70%"></div>
+                    </div>
+                    <div class="stability-badge">
+                        <svg fill="currentColor" viewBox="0 0 24 24" style="color: #295EFF;">
+                            <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/>
+                        </svg>
+                        <span>You're building stability!</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Your next best step -->
+            <div class="card avoid-fees" style="padding: 32px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                    <h2 style="margin: 0;">Your next best step</h2>
+                    <div class="ai-dropdown">
+                        <button class="card-hover-icon-btn" onclick="toggleAIDropdown(event)" aria-label="AI insights menu" aria-haspopup="true" aria-expanded="false"><svg class="card-hover-icon" viewBox="0 0 21.9187 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <title>AI insights</title>
+                            <path d="M13.6533 7.76069C10.9505 6.17538 8.23434 5.32983 6.06121 5.2007C3.8124 5.06707 2.51883 5.69682 2.03522 6.54781C1.55162 7.39879 1.66157 8.85179 2.89988 10.7635C4.09653 12.6109 6.1754 14.5779 8.87818 16.1632C11.581 17.7485 14.2972 18.5941 16.4703 18.7232C18.7191 18.8568 20.0127 18.2271 20.4963 17.3761L21.4951 17.962C19.858 20.8427 13.951 20.4916 8.30152 17.1779C2.65202 13.8642 -0.600675 8.84268 1.03641 5.96196C2.67351 3.08124 8.58046 3.43226 14.23 6.74597C19.8795 10.0597 23.1322 15.0812 21.4951 17.962L20.4963 17.3761C20.9799 16.5251 20.8699 15.0721 19.6316 13.1604C18.435 11.313 16.3561 9.34601 13.6533 7.76069Z" fill="#295EFF"/>
+                            <path d="M13.0405 16.258C15.7433 14.6727 17.8221 12.7057 19.0188 10.8583C20.2571 8.94655 20.3671 7.49355 19.8834 6.64257C19.3998 5.7916 18.1062 5.16184 15.8575 5.29547C13.6843 5.4246 10.9681 6.27015 8.26536 7.85546C5.56258 9.44077 3.4837 11.4078 2.28705 13.2552C1.04875 15.1669 0.93879 16.6199 1.42239 17.4709L0.423582 18.0567C-1.2135 15.176 2.03919 10.1544 7.68869 6.84074C13.3382 3.52703 19.2451 3.17602 20.8823 6.05672C22.5194 8.93744 19.2667 13.959 13.6171 17.2727C7.96764 20.5864 2.06068 20.9374 0.423582 18.0567L1.42239 17.4709C1.906 18.3219 3.19958 18.9516 5.44838 18.818C7.62152 18.6888 10.3377 17.8433 13.0405 16.258Z" fill="#295EFF"/>
+                            <path d="M6.205 12C6.205 15.1706 6.84231 17.9832 7.8188 19.9597C8.82929 22.0051 10.0129 22.8283 10.9801 22.8283C11.9473 22.8283 13.131 22.005 14.1415 19.9597C15.1179 17.9832 15.7553 15.1706 15.7553 12C15.7553 8.82938 15.1179 6.01684 14.1415 4.0403C13.131 1.99495 11.9473 1.17171 10.9801 1.1717V0C14.2543 1.75919e-05 16.9086 5.37259 16.9086 12C16.9086 18.6274 14.2543 24 10.9801 24C7.70592 24 5.05167 18.6274 5.05168 12C5.05168 5.37258 7.70593 -4.25792e-07 10.9801 0V1.1717C10.0129 1.1717 8.82929 1.99494 7.8188 4.0403C6.84231 6.01684 6.205 8.82937 6.205 12Z" fill="#295EFF"/>
+                            <path d="M11.0815 9.1783L11.1986 10.1817C11.3033 11.0779 11.9988 11.7845 12.881 11.8908L13.8687 12.0099L12.881 12.129C11.9988 12.2353 11.3033 12.9419 11.1986 13.8381L11.0815 14.8415L10.9643 13.8381C10.8596 12.9419 10.1641 12.2353 9.28193 12.129L8.29425 12.0099L9.28193 11.8908C10.1641 11.7845 10.8596 11.0779 10.9643 10.1817L11.0815 9.1783Z" fill="#295EFF"/>
+                        </svg></button>
+                        <div class="ai-dropdown-menu" role="menu">
+                            <a href="#" role="menuitem" onclick="handleAIOption('deeper', event)">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 5v14m0 0l7-7m-7 7l-7-7"></path>
+                                </svg>
+                                Go deeper
+                            </a>
+                            <a href="#" role="menuitem" onclick="handleAIOption('report', event)">
+                                <span style="font-size: 16px; font-weight: bold; color: #295EFF; width: 16px; text-align: center;">!</span>
+                                Report error
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <p style="font-size: 15px; line-height: 26px; margin-bottom: 6px;">
+                    Heads up! Based on your upcoming bills ($395 due on May 25) and your typical spending, your balance might be low.
+                </p>
+                
+                <p style="font-size: 15px; line-height: 26px; margin-bottom: 32px;">
+                    Current balance: $450.00
+                </p>
+                
+                <div class="button-group" style="margin-bottom: 32px;">
+                    <button class="btn-primary">Transfer funds now</button>
+                    <button class="btn-secondary">Review upcoming bills</button>
+                </div>
+                
+                <div style="text-align: center;">
+                    <button class="btn-link" style="margin: 0;">Learn about overdraft protection</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Expertise Card -->
+        <div class="card ai-card">
+            <div class="ai-content">
+                <h2 style="display: flex; align-items: center; gap: 12px;">
+                    <svg width="24" height="24" viewBox="0 0 21.9187 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13.6533 7.76069C10.9505 6.17538 8.23434 5.32983 6.06121 5.2007C3.8124 5.06707 2.51883 5.69682 2.03522 6.54781C1.55162 7.39879 1.66157 8.85179 2.89988 10.7635C4.09653 12.6109 6.1754 14.5779 8.87818 16.1632C11.581 17.7485 14.2972 18.5941 16.4703 18.7232C18.7191 18.8568 20.0127 18.2271 20.4963 17.3761L21.4951 17.962C19.858 20.8427 13.951 20.4916 8.30152 17.1779C2.65202 13.8642 -0.600675 8.84268 1.03641 5.96196C2.67351 3.08124 8.58046 3.43226 14.23 6.74597C19.8795 10.0597 23.1322 15.0812 21.4951 17.962L20.4963 17.3761C20.9799 16.5251 20.8699 15.0721 19.6316 13.1604C18.435 11.313 16.3561 9.34601 13.6533 7.76069Z" fill="#295EFF"/>
+                        <path d="M13.0405 16.258C15.7433 14.6727 17.8221 12.7057 19.0188 10.8583C20.2571 8.94655 20.3671 7.49355 19.8834 6.64257C19.3998 5.7916 18.1062 5.16184 15.8575 5.29547C13.6843 5.4246 10.9681 6.27015 8.26536 7.85546C5.56258 9.44077 3.4837 11.4078 2.28705 13.2552C1.04875 15.1669 0.93879 16.6199 1.42239 17.4709L0.423582 18.0567C-1.2135 15.176 2.03919 10.1544 7.68869 6.84074C13.3382 3.52703 19.2451 3.17602 20.8823 6.05672C22.5194 8.93744 19.2667 13.959 13.6171 17.2727C7.96764 20.5864 2.06068 20.9374 0.423582 18.0567L1.42239 17.4709C1.906 18.3219 3.19958 18.9516 5.44838 18.818C7.62152 18.6888 10.3377 17.8433 13.0405 16.258Z" fill="#295EFF"/>
+                        <path d="M6.205 12C6.205 15.1706 6.84231 17.9832 7.8188 19.9597C8.82929 22.0051 10.0129 22.8283 10.9801 22.8283C11.9473 22.8283 13.131 22.005 14.1415 19.9597C15.1179 17.9832 15.7553 15.1706 15.7553 12C15.7553 8.82938 15.1179 6.01684 14.1415 4.0403C13.131 1.99495 11.9473 1.17171 10.9801 1.1717V0C14.2543 1.75919e-05 16.9086 5.37259 16.9086 12C16.9086 18.6274 14.2543 24 10.9801 24C7.70592 24 5.05167 18.6274 5.05168 12C5.05168 5.37258 7.70593 -4.25792e-07 10.9801 0V1.1717C10.0129 1.1717 8.82929 1.99494 7.8188 4.0403C6.84231 6.01684 6.205 8.82937 6.205 12Z" fill="#295EFF"/>
+                        <path d="M11.0815 9.1783L11.1986 10.1817C11.3033 11.0779 11.9988 11.7845 12.881 11.8908L13.8687 12.0099L12.881 12.129C11.9988 12.2353 11.3033 12.9419 11.1986 13.8381L11.0815 14.8415L10.9643 13.8381C10.8596 12.9419 10.1641 12.2353 9.28193 12.129L8.29425 12.0099L9.28193 11.8908C10.1641 11.7845 10.8596 11.0779 10.9643 10.1817L11.0815 9.1783Z" fill="#295EFF"/>
+                    </svg>
+                    AI expertise on your finances
+                </h2>
+                
+                <div class="ai-input-container">
+                    <div class="ai-input">
+                        <button aria-label="Voice input">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <title>Voice input</title>
+                                <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+                                <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+                            </svg>
+                        </button>
+                        <button aria-label="Attach image">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <title>Attach image</title>
+                                <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+                            </svg>
+                        </button>
+                        <input type="text" placeholder="Ask anything about your spending, savings, or any financial situation..." aria-label="Ask AI about your finances">
+                        <button aria-label="Send message">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24" style="color: #295EFF;" aria-hidden="true">
+                                <title>Send</title>
+                                <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="ai-suggestions">
+                    <button class="suggestion-btn">Why did my spending increase?</button>
+                    <button class="suggestion-btn">How's my financial health?</button>
+                    <button class="suggestion-btn">How can I save more?</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 2: Three Cards -->
+        <div class="three-column">
+            <!-- Your spending -->
+            <div class="card">
+                <div style="flex: 1;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 32px;">
+                        <h2 style="margin: 0;">Your spending</h2>
+                        <div class="ai-dropdown">
+                            <button class="card-hover-icon-btn" onclick="toggleAIDropdown(event)" aria-label="AI insights menu" aria-haspopup="true" aria-expanded="false"><svg class="card-hover-icon" viewBox="0 0 21.9187 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <title>AI insights</title>
+                                <path d="M13.6533 7.76069C10.9505 6.17538 8.23434 5.32983 6.06121 5.2007C3.8124 5.06707 2.51883 5.69682 2.03522 6.54781C1.55162 7.39879 1.66157 8.85179 2.89988 10.7635C4.09653 12.6109 6.1754 14.5779 8.87818 16.1632C11.581 17.7485 14.2972 18.5941 16.4703 18.7232C18.7191 18.8568 20.0127 18.2271 20.4963 17.3761L21.4951 17.962C19.858 20.8427 13.951 20.4916 8.30152 17.1779C2.65202 13.8642 -0.600675 8.84268 1.03641 5.96196C2.67351 3.08124 8.58046 3.43226 14.23 6.74597C19.8795 10.0597 23.1322 15.0812 21.4951 17.962L20.4963 17.3761C20.9799 16.5251 20.8699 15.0721 19.6316 13.1604C18.435 11.313 16.3561 9.34601 13.6533 7.76069Z" fill="#295EFF"/>
+                                <path d="M13.0405 16.258C15.7433 14.6727 17.8221 12.7057 19.0188 10.8583C20.2571 8.94655 20.3671 7.49355 19.8834 6.64257C19.3998 5.7916 18.1062 5.16184 15.8575 5.29547C13.6843 5.4246 10.9681 6.27015 8.26536 7.85546C5.56258 9.44077 3.4837 11.4078 2.28705 13.2552C1.04875 15.1669 0.93879 16.6199 1.42239 17.4709L0.423582 18.0567C-1.2135 15.176 2.03919 10.1544 7.68869 6.84074C13.3382 3.52703 19.2451 3.17602 20.8823 6.05672C22.5194 8.93744 19.2667 13.959 13.6171 17.2727C7.96764 20.5864 2.06068 20.9374 0.423582 18.0567L1.42239 17.4709C1.906 18.3219 3.19958 18.9516 5.44838 18.818C7.62152 18.6888 10.3377 17.8433 13.0405 16.258Z" fill="#295EFF"/>
+                                <path d="M6.205 12C6.205 15.1706 6.84231 17.9832 7.8188 19.9597C8.82929 22.0051 10.0129 22.8283 10.9801 22.8283C11.9473 22.8283 13.131 22.005 14.1415 19.9597C15.1179 17.9832 15.7553 15.1706 15.7553 12C15.7553 8.82938 15.1179 6.01684 14.1415 4.0403C13.131 1.99495 11.9473 1.17171 10.9801 1.1717V0C14.2543 1.75919e-05 16.9086 5.37259 16.9086 12C16.9086 18.6274 14.2543 24 10.9801 24C7.70592 24 5.05167 18.6274 5.05168 12C5.05168 5.37258 7.70593 -4.25792e-07 10.9801 0V1.1717C10.0129 1.1717 8.82929 1.99494 7.8188 4.0403C6.84231 6.01684 6.205 8.82937 6.205 12Z" fill="#295EFF"/>
+                                <path d="M11.0815 9.1783L11.1986 10.1817C11.3033 11.0779 11.9988 11.7845 12.881 11.8908L13.8687 12.0099L12.881 12.129C11.9988 12.2353 11.3033 12.9419 11.1986 13.8381L11.0815 14.8415L10.9643 13.8381C10.8596 12.9419 10.1641 12.2353 9.28193 12.129L8.29425 12.0099L9.28193 11.8908C10.1641 11.7845 10.8596 11.0779 10.9643 10.1817L11.0815 9.1783Z" fill="#295EFF"/>
+                            </svg></button>
+                            <div class="ai-dropdown-menu" role="menu">
+                                <a href="#" role="menuitem" onclick="handleAIOption('deeper', event)">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M12 5v14m0 0l7-7m-7 7l-7-7"></path>
+                                    </svg>
+                                    Go deeper
+                                </a>
+                                <a href="#" role="menuitem" onclick="handleAIOption('report', event)">
+                                    <span style="font-size: 16px; font-weight: bold; color: #295EFF; width: 16px; text-align: center;">!</span>
+                                    Report error
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="spending-content" style="margin-bottom: 48px;">
+                        <img src="https://www.figma.com/api/mcp/asset/dc658eba-1ab4-494c-8823-43171127474e"
+                             crossorigin="anonymous"
+                             alt="Pie chart showing spending breakdown: Housing $850, Groceries $350, Transportation $200, Other $300"
+                             class="pie-chart" 
+                             style="width: 123px; height: 125px; object-fit: cover;">
+                        
+                        <div class="spending-legend">
+                            <div class="legend-item">
+                                <div class="legend-dot" style="background: #000000;"></div>
+                                <span class="legend-label" style="color: black;">Housing</span>
+                                <span class="legend-label" style="color: black;">$850</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-dot" style="background: #F97316;"></div>
+                                <span class="legend-label" style="color: #BC5A0A;">Groceries</span>
+                                <span class="legend-label" style="color: #BC5A0A;">$350</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-dot" style="background: #0EA5E9;"></div>
+                                <span class="legend-label" style="color: #0875A1;">Transportation</span>
+                                <span class="legend-label" style="color: #0875A1;">$200</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-dot" style="background: #8B5CF6;"></div>
+                                <span class="legend-label" style="color: #6D3FD0;">Other</span>
+                                <span class="legend-label" style="color: #6D3FD0;">$300</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p style="font-size: 15px; font-weight: 400; margin: 0 0 24px 0; line-height: 1.5;">
+                        You spent $350 on Groceries this month, which is $41 more than last month
+                    </p>
+                    
+                    <div class="tip-box" style="margin: 0 0 24px 0;">
+                        <p style="font-size: 15px;"><strong>Tip:</strong> Consider packing lunch to save $45 this week.</p>
+                    </div>
+                </div>
+                
+                <div style="text-align: center;">
+                    <button class="btn-secondary">View all categories</button>
+                </div>
+            </div>
+
+            <!-- Your earnings -->
+            <div class="card">
+                <div style="flex: 1;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <h2 style="margin: 0;">Your earnings</h2>
+                        <div class="ai-dropdown">
+                            <button class="card-hover-icon-btn" onclick="toggleAIDropdown(event)" aria-label="AI insights menu" aria-haspopup="true" aria-expanded="false"><svg class="card-hover-icon" viewBox="0 0 21.9187 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <title>AI insights</title>
+                                <path d="M13.6533 7.76069C10.9505 6.17538 8.23434 5.32983 6.06121 5.2007C3.8124 5.06707 2.51883 5.69682 2.03522 6.54781C1.55162 7.39879 1.66157 8.85179 2.89988 10.7635C4.09653 12.6109 6.1754 14.5779 8.87818 16.1632C11.581 17.7485 14.2972 18.5941 16.4703 18.7232C18.7191 18.8568 20.0127 18.2271 20.4963 17.3761L21.4951 17.962C19.858 20.8427 13.951 20.4916 8.30152 17.1779C2.65202 13.8642 -0.600675 8.84268 1.03641 5.96196C2.67351 3.08124 8.58046 3.43226 14.23 6.74597C19.8795 10.0597 23.1322 15.0812 21.4951 17.962L20.4963 17.3761C20.9799 16.5251 20.8699 15.0721 19.6316 13.1604C18.435 11.313 16.3561 9.34601 13.6533 7.76069Z" fill="#295EFF"/>
+                                <path d="M13.0405 16.258C15.7433 14.6727 17.8221 12.7057 19.0188 10.8583C20.2571 8.94655 20.3671 7.49355 19.8834 6.64257C19.3998 5.7916 18.1062 5.16184 15.8575 5.29547C13.6843 5.4246 10.9681 6.27015 8.26536 7.85546C5.56258 9.44077 3.4837 11.4078 2.28705 13.2552C1.04875 15.1669 0.93879 16.6199 1.42239 17.4709L0.423582 18.0567C-1.2135 15.176 2.03919 10.1544 7.68869 6.84074C13.3382 3.52703 19.2451 3.17602 20.8823 6.05672C22.5194 8.93744 19.2667 13.959 13.6171 17.2727C7.96764 20.5864 2.06068 20.9374 0.423582 18.0567L1.42239 17.4709C1.906 18.3219 3.19958 18.9516 5.44838 18.818C7.62152 18.6888 10.3377 17.8433 13.0405 16.258Z" fill="#295EFF"/>
+                                <path d="M6.205 12C6.205 15.1706 6.84231 17.9832 7.8188 19.9597C8.82929 22.0051 10.0129 22.8283 10.9801 22.8283C11.9473 22.8283 13.131 22.005 14.1415 19.9597C15.1179 17.9832 15.7553 15.1706 15.7553 12C15.7553 8.82938 15.1179 6.01684 14.1415 4.0403C13.131 1.99495 11.9473 1.17171 10.9801 1.1717V0C14.2543 1.75919e-05 16.9086 5.37259 16.9086 12C16.9086 18.6274 14.2543 24 10.9801 24C7.70592 24 5.05167 18.6274 5.05168 12C5.05168 5.37258 7.70593 -4.25792e-07 10.9801 0V1.1717C10.0129 1.1717 8.82929 1.99494 7.8188 4.0403C6.84231 6.01684 6.205 8.82937 6.205 12Z" fill="#295EFF"/>
+                                <path d="M11.0815 9.1783L11.1986 10.1817C11.3033 11.0779 11.9988 11.7845 12.881 11.8908L13.8687 12.0099L12.881 12.129C11.9988 12.2353 11.3033 12.9419 11.1986 13.8381L11.0815 14.8415L10.9643 13.8381C10.8596 12.9419 10.1641 12.2353 9.28193 12.129L8.29425 12.0099L9.28193 11.8908C10.1641 11.7845 10.8596 11.0779 10.9643 10.1817L11.0815 9.1783Z" fill="#295EFF"/>
+                            </svg></button>
+                            <div class="ai-dropdown-menu" role="menu">
+                                <a href="#" role="menuitem" onclick="handleAIOption('deeper', event)">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M12 5v14m0 0l7-7m-7 7l-7-7"></path>
+                                    </svg>
+                                    Go deeper
+                                </a>
+                                <a href="#" role="menuitem" onclick="handleAIOption('report', event)">
+                                    <span style="font-size: 16px; font-weight: bold; color: #295EFF; width: 16px; text-align: center;">!</span>
+                                    Report error
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="position: relative; height: 300px; margin-bottom: 0;">
+                        <svg viewBox="0 0 320 220" style="width: 100%; height: 100%;" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Earnings line chart from January to May. Income ranges from about $600 in January, rising to approximately $2,000 in March, then slightly decreasing to around $1,700 in May.">
+                            <!-- Grid lines (horizontal) -->
+                            <line x1="50" y1="10" x2="300" y2="10" stroke="#E5E8EC" stroke-width="1"/>
+                            <line x1="50" y1="60" x2="300" y2="60" stroke="#E5E8EC" stroke-width="1"/>
+                            <line x1="50" y1="110" x2="300" y2="110" stroke="#E5E8EC" stroke-width="1"/>
+                            <line x1="50" y1="160" x2="300" y2="160" stroke="#E5E8EC" stroke-width="1"/>
+                            <line x1="50" y1="200" x2="300" y2="200" stroke="#E5E8EC" stroke-width="1"/>
+                            
+                            <!-- Y-axis labels -->
+                            <text x="5" y="15" font-size="9" fill="#767676" font-family="Inter, sans-serif">$2.4k</text>
+                            <text x="5" y="65" font-size="9" fill="#767676" font-family="Inter, sans-serif">$1.8k</text>
+                            <text x="5" y="115" font-size="9" fill="#767676" font-family="Inter, sans-serif">$1.2k</text>
+                            <text x="5" y="165" font-size="9" fill="#767676" font-family="Inter, sans-serif">$0.6k</text>
+                            <text x="10" y="205" font-size="9" fill="#767676" font-family="Inter, sans-serif">$0k</text>
+                            
+                            <!-- Line chart path -->
+                            <polyline 
+                                points="70,150 120,130 170,60 220,90 270,75" 
+                                fill="none" 
+                                stroke="#295EFF" 
+                                stroke-width="3"
+                                stroke-linejoin="round"
+                                stroke-linecap="round"/>
+                            
+                            <!-- Data points (circles) -->
+                            <circle cx="70" cy="150" r="5" fill="#295EFF"/>
+                            <circle cx="120" cy="130" r="5" fill="#295EFF"/>
+                            <circle cx="170" cy="60" r="5" fill="#295EFF"/>
+                            <circle cx="220" cy="90" r="5" fill="#295EFF"/>
+                            <circle cx="270" cy="75" r="5" fill="#295EFF"/>
+                            
+                            <!-- X-axis labels -->
+                            <text x="63" y="220" font-size="9" fill="#767676" font-family="Inter, sans-serif">Jan</text>
+                            <text x="113" y="220" font-size="9" fill="#767676" font-family="Inter, sans-serif">Feb</text>
+                            <text x="163" y="220" font-size="9" fill="#767676" font-family="Inter, sans-serif">Mar</text>
+                            <text x="213" y="220" font-size="9" fill="#767676" font-family="Inter, sans-serif">Apr</text>
+                            <text x="263" y="220" font-size="9" fill="#767676" font-family="Inter, sans-serif">May</text>
+                        </svg>
+                    </div>
+                    
+                    <p style="font-size: 15px; font-weight: 400; margin: 0 32px 16px; line-height: 1.5;">
+                        Your income has been a little varied lately. We can help you plan for leaner months.
+                    </p>
+                </div>
+                
+                <div style="text-align: center;">
+                    <a href="managing-variable-income.html" class="btn-secondary" style="text-decoration: none; display: inline-block;">Plan for variable income</a>
+                </div>
+            </div>
+
+            <!-- Tackling your debt -->
+            <div class="card">
+                <div style="flex: 1; display: flex; flex-direction: column;">
+                    <div class="card-header" style="display: flex; justify-content: space-between; margin-bottom: 48px;">
+                        <h2 style="margin: 0;">Tackling your debt</h2>
+                        <div class="ai-dropdown">
+                            <button class="card-hover-icon-btn" onclick="toggleAIDropdown(event)" aria-label="AI insights menu" aria-haspopup="true" aria-expanded="false"><svg class="card-hover-icon" viewBox="0 0 21.9187 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <title>AI insights</title>
+                                <path d="M13.6533 7.76069C10.9505 6.17538 8.23434 5.32983 6.06121 5.2007C3.8124 5.06707 2.51883 5.69682 2.03522 6.54781C1.55162 7.39879 1.66157 8.85179 2.89988 10.7635C4.09653 12.6109 6.1754 14.5779 8.87818 16.1632C11.581 17.7485 14.2972 18.5941 16.4703 18.7232C18.7191 18.8568 20.0127 18.2271 20.4963 17.3761L21.4951 17.962C19.858 20.8427 13.951 20.4916 8.30152 17.1779C2.65202 13.8642 -0.600675 8.84268 1.03641 5.96196C2.67351 3.08124 8.58046 3.43226 14.23 6.74597C19.8795 10.0597 23.1322 15.0812 21.4951 17.962L20.4963 17.3761C20.9799 16.5251 20.8699 15.0721 19.6316 13.1604C18.435 11.313 16.3561 9.34601 13.6533 7.76069Z" fill="#295EFF"/>
+                                <path d="M13.0405 16.258C15.7433 14.6727 17.8221 12.7057 19.0188 10.8583C20.2571 8.94655 20.3671 7.49355 19.8834 6.64257C19.3998 5.7916 18.1062 5.16184 15.8575 5.29547C13.6843 5.4246 10.9681 6.27015 8.26536 7.85546C5.56258 9.44077 3.4837 11.4078 2.28705 13.2552C1.04875 15.1669 0.93879 16.6199 1.42239 17.4709L0.423582 18.0567C-1.2135 15.176 2.03919 10.1544 7.68869 6.84074C13.3382 3.52703 19.2451 3.17602 20.8823 6.05672C22.5194 8.93744 19.2667 13.959 13.6171 17.2727C7.96764 20.5864 2.06068 20.9374 0.423582 18.0567L1.42239 17.4709C1.906 18.3219 3.19958 18.9516 5.44838 18.818C7.62152 18.6888 10.3377 17.8433 13.0405 16.258Z" fill="#295EFF"/>
+                                <path d="M6.205 12C6.205 15.1706 6.84231 17.9832 7.8188 19.9597C8.82929 22.0051 10.0129 22.8283 10.9801 22.8283C11.9473 22.8283 13.131 22.005 14.1415 19.9597C15.1179 17.9832 15.7553 15.1706 15.7553 12C15.7553 8.82938 15.1179 6.01684 14.1415 4.0403C13.131 1.99495 11.9473 1.17171 10.9801 1.1717V0C14.2543 1.75919e-05 16.9086 5.37259 16.9086 12C16.9086 18.6274 14.2543 24 10.9801 24C7.70592 24 5.05167 18.6274 5.05168 12C5.05168 5.37258 7.70593 -4.25792e-07 10.9801 0V1.1717C10.0129 1.1717 8.82929 1.99494 7.8188 4.0403C6.84231 6.01684 6.205 8.82937 6.205 12Z" fill="#295EFF"/>
+                                <path d="M11.0815 9.1783L11.1986 10.1817C11.3033 11.0779 11.9988 11.7845 12.881 11.8908L13.8687 12.0099L12.881 12.129C11.9988 12.2353 11.3033 12.9419 11.1986 13.8381L11.0815 14.8415L10.9643 13.8381C10.8596 12.9419 10.1641 12.2353 9.28193 12.129L8.29425 12.0099L9.28193 11.8908C10.1641 11.7845 10.8596 11.0779 10.9643 10.1817L11.0815 9.1783Z" fill="#295EFF"/>
+                            </svg></button>
+                            <div class="ai-dropdown-menu" role="menu">
+                                <a href="#" role="menuitem" onclick="handleAIOption('deeper', event)">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M12 5v14m0 0l7-7m-7 7l-7-7"></path>
+                                    </svg>
+                                    Go deeper
+                                </a>
+                                <a href="#" role="menuitem" onclick="handleAIOption('report', event)">
+                                    <span style="font-size: 16px; font-weight: bold; color: #295EFF; width: 16px; text-align: center;">!</span>
+                                    Report error
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-section" style="margin-top: 0; margin-bottom: 40px;">
+                        <div class="progress-labels">
+                            <span>Progress</span>
+                            <span>35% paid off</span>
+                        </div>
+                        <div class="progress-bar" role="progressbar" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100" aria-label="Debt payoff progress: 35% paid off">
+                            <div class="progress-fill" style="width: 35%"></div>
+                        </div>
+                    </div>
+                    
+                    <p style="font-size: 15px; font-weight: 600; margin: 0 0 24px 0; line-height: 1.5;">
+                        You've reduced your total debt by $250 this month!
+                    </p>
+                    
+                    <hr style="border: none; border-top: 1px solid #E5E8EC; margin: 0 0 24px 0;">
+                    
+                    <p style="font-size: 15px; line-height: 1.6; margin-bottom: 0; flex: 1;">
+                        Your highest interest rate debt is Credit Card A with a balance of $2800. Paying an extra $50/month could save you $325 in interest every year.
+                    </p>
+                </div>
+                
+                <div style="text-align: center; margin-top: 32px;">
+                    <a href="debt-payoff-strategies.html" class="btn-secondary" style="text-decoration: none; display: inline-block;">Explore debt payoff strategies</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 3: Financial Forecast + Safety Net -->
+        <div class="two-column">
+            <!-- Your financial forecast -->
+            <div class="card">
+                <div style="flex: 1;">
+                    <div class="card-header" style="display: flex; justify-content: space-between; margin-bottom: 26px;">
+                        <h2 style="margin: 0;">Your financial forecast</h2>
+                        <div class="ai-dropdown">
+                            <button class="card-hover-icon-btn" onclick="toggleAIDropdown(event)" aria-label="AI insights menu" aria-haspopup="true" aria-expanded="false"><svg class="card-hover-icon" viewBox="0 0 21.9187 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <title>AI insights</title>
+                                <path d="M13.6533 7.76069C10.9505 6.17538 8.23434 5.32983 6.06121 5.2007C3.8124 5.06707 2.51883 5.69682 2.03522 6.54781C1.55162 7.39879 1.66157 8.85179 2.89988 10.7635C4.09653 12.6109 6.1754 14.5779 8.87818 16.1632C11.581 17.7485 14.2972 18.5941 16.4703 18.7232C18.7191 18.8568 20.0127 18.2271 20.4963 17.3761L21.4951 17.962C19.858 20.8427 13.951 20.4916 8.30152 17.1779C2.65202 13.8642 -0.600675 8.84268 1.03641 5.96196C2.67351 3.08124 8.58046 3.43226 14.23 6.74597C19.8795 10.0597 23.1322 15.0812 21.4951 17.962L20.4963 17.3761C20.9799 16.5251 20.8699 15.0721 19.6316 13.1604C18.435 11.313 16.3561 9.34601 13.6533 7.76069Z" fill="#295EFF"/>
+                                <path d="M13.0405 16.258C15.7433 14.6727 17.8221 12.7057 19.0188 10.8583C20.2571 8.94655 20.3671 7.49355 19.8834 6.64257C19.3998 5.7916 18.1062 5.16184 15.8575 5.29547C13.6843 5.4246 10.9681 6.27015 8.26536 7.85546C5.56258 9.44077 3.4837 11.4078 2.28705 13.2552C1.04875 15.1669 0.93879 16.6199 1.42239 17.4709L0.423582 18.0567C-1.2135 15.176 2.03919 10.1544 7.68869 6.84074C13.3382 3.52703 19.2451 3.17602 20.8823 6.05672C22.5194 8.93744 19.2667 13.959 13.6171 17.2727C7.96764 20.5864 2.06068 20.9374 0.423582 18.0567L1.42239 17.4709C1.906 18.3219 3.19958 18.9516 5.44838 18.818C7.62152 18.6888 10.3377 17.8433 13.0405 16.258Z" fill="#295EFF"/>
+                                <path d="M6.205 12C6.205 15.1706 6.84231 17.9832 7.8188 19.9597C8.82929 22.0051 10.0129 22.8283 10.9801 22.8283C11.9473 22.8283 13.131 22.005 14.1415 19.9597C15.1179 17.9832 15.7553 15.1706 15.7553 12C15.7553 8.82938 15.1179 6.01684 14.1415 4.0403C13.131 1.99495 11.9473 1.17171 10.9801 1.1717V0C14.2543 1.75919e-05 16.9086 5.37259 16.9086 12C16.9086 18.6274 14.2543 24 10.9801 24C7.70592 24 5.05167 18.6274 5.05168 12C5.05168 5.37258 7.70593 -4.25792e-07 10.9801 0V1.1717C10.0129 1.1717 8.82929 1.99494 7.8188 4.0403C6.84231 6.01684 6.205 8.82937 6.205 12Z" fill="#295EFF"/>
+                                <path d="M11.0815 9.1783L11.1986 10.1817C11.3033 11.0779 11.9988 11.7845 12.881 11.8908L13.8687 12.0099L12.881 12.129C11.9988 12.2353 11.3033 12.9419 11.1986 13.8381L11.0815 14.8415L10.9643 13.8381C10.8596 12.9419 10.1641 12.2353 9.28193 12.129L8.29425 12.0099L9.28193 11.8908C10.1641 11.7845 10.8596 11.0779 10.9643 10.1817L11.0815 9.1783Z" fill="#295EFF"/>
+                            </svg></button>
+                            <div class="ai-dropdown-menu" role="menu">
+                                <a href="#" role="menuitem" onclick="handleAIOption('deeper', event)">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M12 5v14m0 0l7-7m-7 7l-7-7"></path>
+                                    </svg>
+                                    Go deeper
+                                </a>
+                                <a href="#" role="menuitem" onclick="handleAIOption('report', event)">
+                                    <span style="font-size: 16px; font-weight: bold; color: #295EFF; width: 16px; text-align: center;">!</span>
+                                    Report error
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="height: 180px; position: relative; margin-bottom: 20px;">
+                        <svg viewBox="0 0 500 120" style="width: 100%; height: 100%;" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Financial forecast chart from January to June showing investment returns outpacing inflation. Investments trend upward from January to June, while inflation remains relatively flat.">
+                            <!-- Investments line with realistic market volatility - thicker -->
+                            <polyline points="10,85 88,65 170,78 255,50 345,62 465,25" 
+                                      fill="none" stroke="#295EFF" stroke-width="4" 
+                                      stroke-linecap="round" stroke-linejoin="round"/>
+                            
+                            <!-- Inflation line with realistic variation - dotted -->
+                            <polyline points="10,94 88,92 170,95 255,91 345,93 465,90" 
+                                      fill="none" stroke="#767676" stroke-width="2" 
+                                      stroke-dasharray="3,3" stroke-linecap="round" stroke-linejoin="round"/>
+                            
+                            <!-- X-axis labels -->
+                            <text x="10" y="115" font-size="11" fill="black" font-family="Libre Franklin, sans-serif">Jan</text>
+                            <text x="88" y="115" font-size="11" fill="black" font-family="Libre Franklin, sans-serif">Feb</text>
+                            <text x="170" y="115" font-size="11" fill="black" font-family="Libre Franklin, sans-serif">Mar</text>
+                            <text x="255" y="115" font-size="11" fill="black" font-family="Libre Franklin, sans-serif">Apr</text>
+                            <text x="345" y="115" font-size="11" fill="black" font-family="Libre Franklin, sans-serif">May</text>
+                            <text x="465" y="115" font-size="11" fill="black" font-family="Libre Franklin, sans-serif">Jun</text>
+                        </svg>
+                    </div>
+                    
+                    <!-- Legend -->
+                    <div style="display: flex; justify-content: center; gap: 48px; margin-bottom: 24px;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div style="width: 50px; height: 3px; background: #295EFF; border-radius: 2px;"></div>
+                            <span style="font-size: 12px; color: black;">Your investments</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div style="width: 50px; height: 2px; background: transparent; border-top: 2px dotted #767676;"></div>
+                            <span style="font-size: 12px; color: black;">Inflation</span>
+                        </div>
+                    </div>
+                    
+                    <p style="font-size: 11px; font-weight: 600; text-align: center; margin: 0 auto 0; max-width: 272px; line-height: 1.4;">
+                        While inflation has been on the rise, your investment returns are outpacing it. You're on a strong path.
+                    </p>
+                </div>
+                
+                <div class="button-group" style="margin-top: 24px;">
+                    <button class="btn-primary">Stress-test budget</button>
+                    <button class="btn-secondary">Learn more</button>
+                </div>
+            </div>
+
+            <!-- Building your safety net -->
+            <div class="card">
+                <div class="card-header" style="display: flex; justify-content: space-between; margin-bottom: 24px;">
+                    <h2 style="margin: 0;">Building your safety net</h2>
+                    <div class="ai-dropdown">
+                        <button class="card-hover-icon-btn" onclick="toggleAIDropdown(event)" aria-label="AI insights menu" aria-haspopup="true" aria-expanded="false"><svg class="card-hover-icon" viewBox="0 0 21.9187 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <title>AI insights</title>
+                            <path d="M13.6533 7.76069C10.9505 6.17538 8.23434 5.32983 6.06121 5.2007C3.8124 5.06707 2.51883 5.69682 2.03522 6.54781C1.55162 7.39879 1.66157 8.85179 2.89988 10.7635C4.09653 12.6109 6.1754 14.5779 8.87818 16.1632C11.581 17.7485 14.2972 18.5941 16.4703 18.7232C18.7191 18.8568 20.0127 18.2271 20.4963 17.3761L21.4951 17.962C19.858 20.8427 13.951 20.4916 8.30152 17.1779C2.65202 13.8642 -0.600675 8.84268 1.03641 5.96196C2.67351 3.08124 8.58046 3.43226 14.23 6.74597C19.8795 10.0597 23.1322 15.0812 21.4951 17.962L20.4963 17.3761C20.9799 16.5251 20.8699 15.0721 19.6316 13.1604C18.435 11.313 16.3561 9.34601 13.6533 7.76069Z" fill="#295EFF"/>
+                            <path d="M13.0405 16.258C15.7433 14.6727 17.8221 12.7057 19.0188 10.8583C20.2571 8.94655 20.3671 7.49355 19.8834 6.64257C19.3998 5.7916 18.1062 5.16184 15.8575 5.29547C13.6843 5.4246 10.9681 6.27015 8.26536 7.85546C5.56258 9.44077 3.4837 11.4078 2.28705 13.2552C1.04875 15.1669 0.93879 16.6199 1.42239 17.4709L0.423582 18.0567C-1.2135 15.176 2.03919 10.1544 7.68869 6.84074C13.3382 3.52703 19.2451 3.17602 20.8823 6.05672C22.5194 8.93744 19.2667 13.959 13.6171 17.2727C7.96764 20.5864 2.06068 20.9374 0.423582 18.0567L1.42239 17.4709C1.906 18.3219 3.19958 18.9516 5.44838 18.818C7.62152 18.6888 10.3377 17.8433 13.0405 16.258Z" fill="#295EFF"/>
+                            <path d="M6.205 12C6.205 15.1706 6.84231 17.9832 7.8188 19.9597C8.82929 22.0051 10.0129 22.8283 10.9801 22.8283C11.9473 22.8283 13.131 22.005 14.1415 19.9597C15.1179 17.9832 15.7553 15.1706 15.7553 12C15.7553 8.82938 15.1179 6.01684 14.1415 4.0403C13.131 1.99495 11.9473 1.17171 10.9801 1.1717V0C14.2543 1.75919e-05 16.9086 5.37259 16.9086 12C16.9086 18.6274 14.2543 24 10.9801 24C7.70592 24 5.05167 18.6274 5.05168 12C5.05168 5.37258 7.70593 -4.25792e-07 10.9801 0V1.1717C10.0129 1.1717 8.82929 1.99494 7.8188 4.0403C6.84231 6.01684 6.205 8.82937 6.205 12Z" fill="#295EFF"/>
+                            <path d="M11.0815 9.1783L11.1986 10.1817C11.3033 11.0779 11.9988 11.7845 12.881 11.8908L13.8687 12.0099L12.881 12.129C11.9988 12.2353 11.3033 12.9419 11.1986 13.8381L11.0815 14.8415L10.9643 13.8381C10.8596 12.9419 10.1641 12.2353 9.28193 12.129L8.29425 12.0099L9.28193 11.8908C10.1641 11.7845 10.8596 11.0779 10.9643 10.1817L11.0815 9.1783Z" fill="#295EFF"/>
+                        </svg></button>
+                        <div class="ai-dropdown-menu" role="menu">
+                            <a href="#" role="menuitem" onclick="handleAIOption('deeper', event)">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 5v14m0 0l7-7m-7 7l-7-7"></path>
+                                </svg>
+                                Go deeper
+                            </a>
+                            <a href="#" role="menuitem" onclick="handleAIOption('report', event)">
+                                <span style="font-size: 16px; font-weight: bold; color: #295EFF; width: 16px; text-align: center;">!</span>
+                                Report error
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="circular-progress">
+                    <div class="progress-circle" role="progressbar" aria-valuenow="650" aria-valuemin="0" aria-valuemax="1000" aria-label="Safety net savings: $650 of $1000 goal">
+                        <svg viewBox="0 0 200 200" aria-hidden="true">
+                            <!-- Background circle -->
+                            <circle cx="100" cy="100" r="80" fill="none" stroke="#E5E8EC" stroke-width="20"/>
+                            <!-- Progress circle -->
+                            <circle cx="100" cy="100" r="80" fill="none" stroke="#3A5AFE" stroke-width="20" 
+                                    stroke-dasharray="327 503" stroke-linecap="round" 
+                                    transform="rotate(-90 100 100)"/>
+                        </svg>
+                        <div class="progress-value">
+                            <div class="amount">$650</div>
+                            <div class="goal">of $1000</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <p style="font-size: 13px; text-align: center; line-height: 24px; margin-bottom: 32px;">
+                    Just $350 away from your first small savings goal!
+                </p>
+                
+                <div class="button-group">
+                    <button class="btn-primary">Turn on round-ups</button>
+                    <button class="btn-secondary">Set new goal</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Financial Tips Section -->
+        <div class="tips-section">
+            <h2 class="tips-title">More ways to boost your finances</h2>
+            
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <h3>Budgeting for a new car</h3>
+                    <p>You've been spending a lot of money on your car the last couple of months. Create a budget to save.</p>
+                    <a href="#">Try this tip</a>
+                </div>
+                
+                <div class="tip-card">
+                    <h3>Daily coffee spending</h3>
+                    <p>You often spend on coffee. Try bringing coffee from home 3 times a week to save.</p>
+                    <a href="#">Try this tip</a>
+                </div>
+                
+                <div class="tip-card">
+                    <h3>Budgeting for a new car</h3>
+                    <p>You've been spending a lot of money on your car the last couple of months. Create a budget to save.</p>
+                    <a href="#">Try this tip</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Report Error Modal -->
+    <div id="reportErrorModal" class="report-error-modal" role="dialog" aria-labelledby="modalTitle" aria-modal="true">
+        <div class="report-error-container">
+            <div class="report-error-header">
+                <h2 id="modalTitle">Report an error</h2>
+                <button class="close-modal-btn" onclick="closeReportErrorModal()" aria-label="Close modal">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="report-error-content">
+                <p class="report-error-description">Help us improve by reporting any incorrect information in this card.</p>
+                
+                <form id="reportErrorForm" onsubmit="submitErrorReport(event)">
+                    <div class="form-group">
+                        <label for="errorType">What's wrong?</label>
+                        <select id="errorType" class="form-input" required>
+                            <option value="">Select an issue</option>
+                            <option value="wrong-amount">Wrong amount shown</option>
+                            <option value="wrong-calculation">Calculation is incorrect</option>
+                            <option value="wrong-suggestion">Suggestion doesn't make sense</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="errorDetails">Details (optional)</label>
+                        <textarea 
+                            id="errorDetails" 
+                            class="form-input form-textarea" 
+                            rows="4" 
+                            placeholder="Please describe what you expected to see..."
+                        ></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" onclick="closeReportErrorModal()">Cancel</button>
+                        <button type="submit" class="btn-primary">Submit report</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle AI dropdown menu
+        function toggleAIDropdown(event) {
+            event.stopPropagation();
+            const dropdown = event.target.closest('.ai-dropdown');
+            const menu = dropdown.querySelector('.ai-dropdown-menu');
+            
+            // Close all other dropdowns
+            document.querySelectorAll('.ai-dropdown-menu').forEach(m => {
+                if (m !== menu) m.classList.remove('active');
+            });
+            
+            menu.classList.toggle('active');
+
+            // Update aria-expanded on the button
+            const btn = dropdown.querySelector('.card-hover-icon-btn');
+            if (btn) btn.setAttribute('aria-expanded', menu.classList.contains('active'));
+
+            // Set focus to first menu item when opened
+            if (menu.classList.contains('active')) {
+                const firstLink = menu.querySelector('a');
+                if (firstLink) firstLink.focus();
+            }
+        }
+        
+        // Add keyboard support for AI icon
+        document.addEventListener('keydown', (e) => {
+            // Open dropdown on Enter or Space
+            if (e.target.classList.contains('card-hover-icon-btn') && (e.key === 'Enter' || e.key === ' ')) {
+                e.preventDefault();
+                toggleAIDropdown(e);
+            }
+            
+            // Close modal on Escape
+            if (e.key === 'Escape') {
+                closeReportErrorModal();
+                // Close all dropdowns
+                document.querySelectorAll('.ai-dropdown-menu').forEach(menu => {
+                    menu.classList.remove('active');
+                });
+            }
+        });
+
+        // Handle AI dropdown options
+        function handleAIOption(option, event) {
+            event.preventDefault();
+
+            // Close all dropdowns
+            document.querySelectorAll('.ai-dropdown-menu').forEach(m => {
+                m.classList.remove('active');
+            });
+
+            switch(option) {
+                case 'deeper':
+                    // Find the parent card and screenshot it
+                    const card = event.target.closest('.card');
+                    if (card && typeof html2canvas !== 'undefined') {
+                        // Try with CORS first, fall back to hiding external images
+                        html2canvas(card, { backgroundColor: '#ffffff', scale: 2, useCORS: true }).then(canvas => {
+                            try {
+                                localStorage.setItem('aiChatCardImage', canvas.toDataURL('image/png'));
+                                const heading = card.querySelector('h2');
+                                if (heading) localStorage.setItem('aiChatCardTitle', heading.textContent.trim());
+                            } catch(e) {
+                                // Tainted canvas — retry without cross-origin images
+                                const externalImgs = card.querySelectorAll('img[src^="http"]');
+                                externalImgs.forEach(img => img.style.visibility = 'hidden');
+                                return html2canvas(card, { backgroundColor: '#ffffff', scale: 2 }).then(canvas2 => {
+                                    externalImgs.forEach(img => img.style.visibility = '');
+                                    try {
+                                        localStorage.setItem('aiChatCardImage', canvas2.toDataURL('image/png'));
+                                        const heading = card.querySelector('h2');
+                                        if (heading) localStorage.setItem('aiChatCardTitle', heading.textContent.trim());
+                                    } catch(e2) { /* give up on image */ }
+                                });
+                            }
+                        }).then(() => {
+                            window.location.href = 'ai-chat.html?from=card';
+                        }).catch(() => {
+                            window.location.href = 'ai-chat.html?from=card';
+                        });
+                    } else {
+                        window.location.href = 'ai-chat.html?from=card';
+                    }
+                    break;
+                case 'report':
+                    openReportErrorModal();
+                    break;
+            }
+        }
+
+        // Report Error Modal Functions
+        function openReportErrorModal() {
+            const modal = document.getElementById('reportErrorModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Set aria-hidden on main content
+            document.querySelector('main').setAttribute('aria-hidden', 'true');
+            document.querySelector('header').setAttribute('aria-hidden', 'true');
+            
+            // Focus first form element
+            setTimeout(() => {
+                const firstInput = modal.querySelector('select, input, textarea');
+                if (firstInput) firstInput.focus();
+            }, 100);
+        }
+
+        function closeReportErrorModal() {
+            const modal = document.getElementById('reportErrorModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            
+            // Remove aria-hidden from main content
+            document.querySelector('main').removeAttribute('aria-hidden');
+            document.querySelector('header').removeAttribute('aria-hidden');
+            
+            // Reset form
+            document.getElementById('reportErrorForm').reset();
+        }
+
+        function submitErrorReport(event) {
+            event.preventDefault();
+            
+            const errorType = document.getElementById('errorType').value;
+            const errorDetails = document.getElementById('errorDetails').value;
+            
+            // In a real app, you would send this to your backend
+            console.log('Error report submitted:', { errorType, errorDetails });
+            
+            // Show success message
+            alert('Thank you for your report! We\'ll review it and make improvements.');
+            
+            // Close modal
+            closeReportErrorModal();
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('reportErrorModal')?.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeReportErrorModal();
+            }
+        });
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function() {
+            document.querySelectorAll('.ai-dropdown-menu').forEach(menu => {
+                menu.classList.remove('active');
+            });
+            document.querySelectorAll('.card-hover-icon-btn').forEach(btn => {
+                btn.setAttribute('aria-expanded', 'false');
+            });
+        });
+
+        // Arrow key navigation within dropdown menus
+        document.addEventListener('keydown', function(e) {
+            const activeMenu = document.querySelector('.ai-dropdown-menu.active');
+            if (!activeMenu) return;
+
+            const items = Array.from(activeMenu.querySelectorAll('a'));
+            const currentIndex = items.indexOf(document.activeElement);
+
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                const next = currentIndex < items.length - 1 ? currentIndex + 1 : 0;
+                items[next].focus();
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                const prev = currentIndex > 0 ? currentIndex - 1 : items.length - 1;
+                items[prev].focus();
+            } else if (e.key === 'Tab') {
+                activeMenu.classList.remove('active');
+                const btn = activeMenu.closest('.ai-dropdown').querySelector('.card-hover-icon-btn');
+                if (btn) btn.setAttribute('aria-expanded', 'false');
+            }
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</body>
+</html>
