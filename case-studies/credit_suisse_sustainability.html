@@ -38,6 +38,17 @@
             background: rgba(34, 139, 34, 0.08);
             border-left: 4px solid #228B22;
         }
+        .sprint-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            margin-top: 24px;
+        }
+        @media (max-width: 768px) {
+            .sprint-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
@@ -181,7 +192,7 @@
                         <img src="../images/sustainability/design_sprint.png" alt="Design sprint Mural board" style="width: 100%; height: auto; display: block; border: 1px solid var(--border);">
                     </div>
 
-                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-top: 24px;">
+                    <div class="sprint-grid">
                         <div style="padding: 20px; background: var(--bg-cream); border-radius: var(--radius-lg);">
                             <h4 style="margin-bottom: 8px;">Sprint 1</h4>
                             <p style="font-size: 14px; margin: 0;">Framed the key questions, facilitated brainstorming, and defined the IA. Testing with six users revealed navigation label issues, but the overall direction held.</p>
@@ -237,7 +248,7 @@
                         More work
                     </a>
                     <a href="../" class="footer-link secondary">
-                        View all work
+                        View homepage
                     </a>
                 </div>
             </div>
