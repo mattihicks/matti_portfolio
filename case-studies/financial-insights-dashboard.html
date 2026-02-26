@@ -658,6 +658,102 @@
             height: 24px;
         }
 
+        /* "Why am I seeing this?" expandable section */
+        .why-seeing-this {
+            margin-top: 16px;
+        }
+        .why-seeing-toggle {
+            background: none;
+            border: none;
+            color: var(--color-secondary-text);
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 4px 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-family: var(--font-body);
+        }
+        .why-seeing-toggle:hover {
+            color: var(--color-brand);
+        }
+        .why-seeing-toggle svg {
+            transition: transform 0.2s;
+        }
+        .why-seeing-toggle.open svg {
+            transform: rotate(180deg);
+        }
+        .why-seeing-content {
+            display: none;
+            font-size: 12px;
+            color: var(--color-secondary-text);
+            line-height: 1.5;
+            padding: 8px 0 0 0;
+            max-width: 400px;
+        }
+        .why-seeing-content.open {
+            display: block;
+        }
+
+        /* Glossary tooltip */
+        .glossary-term {
+            border-bottom: 1px dotted var(--color-secondary-text);
+            cursor: help;
+            position: relative;
+            display: inline;
+        }
+        .glossary-term .glossary-def {
+            display: none;
+            position: absolute;
+            bottom: calc(100% + 8px);
+            left: 0;
+            background: #061223;
+            color: white;
+            font-size: 12px;
+            font-weight: 400;
+            padding: 10px 14px;
+            border-radius: 8px;
+            width: 260px;
+            line-height: 1.5;
+            z-index: 10;
+            pointer-events: none;
+            white-space: normal;
+        }
+        .glossary-def::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 20px;
+            border: 5px solid transparent;
+            border-top-color: #061223;
+        }
+        .glossary-term:hover .glossary-def,
+        .glossary-term:focus .glossary-def {
+            display: block;
+        }
+
+        /* Error report success state */
+        .report-success {
+            text-align: center;
+            padding: 32px 24px;
+        }
+        .report-success svg {
+            margin-bottom: 16px;
+        }
+        .report-success h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #061223;
+            margin-bottom: 8px;
+        }
+        .report-success p {
+            font-size: 14px;
+            color: #3A495D;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
         /* Responsive */
         @media (max-width: 1200px) {
             .header-content,
@@ -1015,7 +1111,10 @@
             <!-- What's available to spend? -->
             <div class="card available-spend" style="padding: 32px;">
                 <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
-                    <h2 style="margin: 0;">What's available to spend?</h2>
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <h2 style="margin: 0;">What's available to spend?</h2>
+                        <span style="display: inline-block; width: fit-content; background: #E5E8EC; color: #5A6A7F; font-size: 12px; font-weight: 500; padding: 2px 10px; border-radius: 100px; line-height: 1.5;">Estimate</span>
+                    </div>
                     <div class="ai-dropdown">
                         <button class="card-hover-icon-btn" onclick="toggleAIDropdown(event)" aria-label="AI insights menu" aria-haspopup="true" aria-expanded="false"><svg class="card-hover-icon" viewBox="0 0 21.9187 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <title>AI insights</title>
@@ -1035,13 +1134,21 @@
                                 <span style="font-size: 16px; font-weight: bold; color: #295EFF; width: 16px; text-align: center;">!</span>
                                 Report error
                             </a>
+                            <a href="#" role="menuitem" onclick="handleAIOption('whySeeing', event)">
+                                <span style="font-size: 16px; font-weight: bold; color: #295EFF; width: 16px; text-align: center;">?</span>
+                                Why am I seeing this?
+                            </a>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="amount-large" style="margin-bottom: 6px;">$237.85</div>
-                
-                <p class="text-center-small" style="margin-bottom: 12px;">You've got enough for essentials until May 31.</p>
+
+                <div class="why-seeing-content" style="font-size: 13px; color: var(--color-secondary-text); line-height: 1.5; text-align: center; max-width: 360px; margin: 0 auto 12px; padding: 0;" aria-live="polite">
+                    This estimate is based on your checking account balance, upcoming scheduled bills, and your spending patterns over the last 3 months. It does not account for pending deposits or unexpected expenses.
+                </div>
+
+                <div style="height: 33px;"></div>
                 
                 <div class="trend-indicator" style="margin-bottom: 16px;">
                     <span style="font-size: 13px; color: black;">6-month trend:</span>
@@ -1051,7 +1158,7 @@
                     </svg>
                 </div>
                 
-                <div class="progress-section">
+                <div class="progress-section" style="margin-top: 16px;">
                     <div class="progress-labels">
                         <span>Overall financial health</span>
                         <span>Building stability</span>
@@ -1090,6 +1197,10 @@
                             <a href="#" role="menuitem" onclick="handleAIOption('report', event)">
                                 <span style="font-size: 16px; font-weight: bold; color: #295EFF; width: 16px; text-align: center;">!</span>
                                 Report error
+                            </a>
+                            <a href="#" role="menuitem" onclick="handleAIOption('howDetermined', event)">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                                How we determined this
                             </a>
                         </div>
                     </div>
@@ -1158,6 +1269,18 @@
                     <button class="suggestion-btn">How can I save more?</button>
                 </div>
                 <p style="font-size: 12px; color: #8A94A6; text-align: center; margin-top: 12px; margin-bottom: 0;">AI-generated insights may be inaccurate. Please double-check responses.</p>
+                <div style="text-align: center; margin-top: 8px;">
+                    <button class="why-seeing-toggle" onclick="toggleWhySeeing(this)" aria-expanded="false" style="font-size: 12px;">
+                        Your data &amp; privacy
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                    <div class="why-seeing-content" aria-live="polite" style="margin: 8px auto 0; text-align: left;">
+                        <strong>What the AI can access:</strong> Your transaction history, account balances, and the financial goals you've set.<br><br>
+                        <strong>Data retention:</strong> Conversation history is kept for 30 days, then automatically deleted.<br><br>
+                        <strong>Your control:</strong> You can <a href="#" style="color: var(--color-brand);">delete your personalization data</a> at any time in Settings › Privacy.<br><br>
+                        <strong>Third parties:</strong> Your data is not shared with third parties for marketing purposes.
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -1227,7 +1350,7 @@
                     </p>
                     
                     <div class="tip-box" style="margin: 0 0 24px 0;">
-                        <p style="font-size: 15px;"><strong>Tip:</strong> Consider packing lunch to save $45 this week.</p>
+                        <p style="font-size: 15px;"><strong>Tip:</strong> Small changes to daily spending could save up to $45 this week. <a href="#" style="color: var(--color-brand); font-weight: 600; text-decoration: none;">See details</a></p>
                     </div>
                 </div>
                 
@@ -1339,6 +1462,10 @@
                                     <span style="font-size: 16px; font-weight: bold; color: #295EFF; width: 16px; text-align: center;">!</span>
                                     Report error
                                 </a>
+                                <a href="#" role="menuitem" onclick="handleAIOption('whySeeing', event)">
+                                    <span style="font-size: 16px; font-weight: bold; color: #295EFF; width: 16px; text-align: center;">?</span>
+                                    Why am I seeing this?
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -1360,7 +1487,7 @@
                     <hr style="border: none; border-top: 1px solid #E5E8EC; margin: 0 0 24px 0;">
                     
                     <p style="font-size: 15px; line-height: 1.6; margin-bottom: 0; flex: 1;">
-                        Your highest interest rate debt is Credit Card A with a balance of $2800. Paying an extra $50/month could save you $325 in interest every year.
+                        Your highest <span class="glossary-term" tabindex="0">interest rate<span class="glossary-def" role="tooltip">Annual Percentage Rate (APR) — the yearly cost of borrowing money, expressed as a percentage</span></span> debt is Credit Card A with a balance of $2800. Paying an extra $50/month could save you $325 in interest every year.
                     </p>
                 </div>
                 
@@ -1376,7 +1503,10 @@
             <div class="card">
                 <div style="flex: 1;">
                     <div class="card-header" style="display: flex; justify-content: space-between; margin-bottom: 26px;">
-                        <h2 style="margin: 0;">Your financial forecast</h2>
+                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                            <h2 style="margin: 0;">Your financial forecast</h2>
+                            <span style="display: inline-block; width: fit-content; background: #E5E8EC; color: #5A6A7F; font-size: 12px; font-weight: 500; padding: 2px 10px; border-radius: 100px; line-height: 1.5;">Estimate</span>
+                        </div>
                         <div class="ai-dropdown">
                             <button class="card-hover-icon-btn" onclick="toggleAIDropdown(event)" aria-label="AI insights menu" aria-haspopup="true" aria-expanded="false"><svg class="card-hover-icon" viewBox="0 0 21.9187 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <title>AI insights</title>
@@ -1434,7 +1564,7 @@
                         </div>
                     </div>
                     
-                    <p style="font-size: 11px; font-weight: 600; text-align: center; margin: 0 auto 0; max-width: 272px; line-height: 1.4;">
+                    <p style="font-size: 11px; font-weight: 400; text-align: center; margin: 0 auto 0; max-width: 272px; line-height: 1.4;">
                         While inflation has been on the rise, your investment returns are outpacing it. You're on a strong path.
                     </p>
                 </div>
@@ -1489,13 +1619,12 @@
                     </div>
                 </div>
                 
-                <p style="font-size: 13px; text-align: center; line-height: 24px; margin-bottom: 32px;">
-                    Just $350 away from your first small savings goal!
+                <p style="font-size: 13px; font-weight: 400; text-align: center; line-height: 24px; margin-bottom: 32px;">
+                    Just $350 away from your first small savings goal! <span class="glossary-term" tabindex="0">Round-ups<span class="glossary-def" role="tooltip">Automatically rounding up purchases to the nearest dollar and saving the difference</span></span> save spare change from every purchase automatically.
                 </p>
                 
-                <div class="button-group">
-                    <button class="btn-primary">Turn on round-ups</button>
-                    <button class="btn-secondary">Set new goal</button>
+                <div class="button-group" id="roundupsButtonGroup">
+                    <button class="btn-primary" id="roundupsBtn" onclick="openRoundupsConfirmModal()">Turn on round-ups</button>
                 </div>
             </div>
         </div>
@@ -1573,6 +1702,28 @@
         </div>
     </div>
 
+    <!-- Round-ups Confirmation Modal -->
+    <div id="roundupsConfirmModal" class="report-error-modal" role="dialog" aria-labelledby="roundupsModalTitle" aria-modal="true">
+        <div class="report-error-container" style="max-width: 420px;">
+            <div class="report-error-header">
+                <h2 id="roundupsModalTitle" style="font-size: 20px;">Turn on round-ups?</h2>
+                <button class="close-modal-btn" onclick="closeRoundupsConfirmModal()" aria-label="Close modal">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="report-error-content">
+                <p class="report-error-description">Every purchase will be rounded up to the nearest dollar, and the spare change will go straight into your safety-net savings.</p>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" onclick="closeRoundupsConfirmModal()">Cancel</button>
+                    <button type="button" class="btn-primary" onclick="confirmRoundups()">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Mobile hamburger menu toggle
         function toggleMobileMenu() {
@@ -1624,9 +1775,10 @@
                 toggleAIDropdown(e);
             }
             
-            // Close modal on Escape
+            // Close modals on Escape
             if (e.key === 'Escape') {
                 closeReportErrorModal();
+                closeRoundupsConfirmModal();
                 // Close all dropdowns
                 document.querySelectorAll('.ai-dropdown-menu').forEach(menu => {
                     menu.classList.remove('active');
@@ -1679,6 +1831,18 @@
                 case 'report':
                     openReportErrorModal();
                     break;
+                case 'whySeeing':
+                case 'howDetermined':
+                    // Find the parent card's expandable toggle and click it
+                    const parentCard = event.target.closest('.card');
+                    if (parentCard) {
+                        const toggle = parentCard.querySelector('.why-seeing-toggle');
+                        if (toggle) {
+                            toggle.click();
+                            toggle.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                    }
+                    break;
             }
         }
 
@@ -1703,29 +1867,48 @@
             const modal = document.getElementById('reportErrorModal');
             modal.classList.remove('active');
             document.body.style.overflow = 'auto';
-            
+
             // Remove aria-hidden from main content
             document.querySelector('main').removeAttribute('aria-hidden');
             document.querySelector('header').removeAttribute('aria-hidden');
-            
-            // Reset form
-            document.getElementById('reportErrorForm').reset();
+
+            // Restore form if it was replaced with success state
+            const container = modal.querySelector('.report-error-content');
+            if (!container.querySelector('form')) {
+                container.innerHTML = '<p class="report-error-description">Help us improve by reporting any incorrect information in this card.</p>' +
+                    '<form id="reportErrorForm" onsubmit="submitErrorReport(event)">' +
+                    '<div class="form-group"><label for="errorType">What\'s wrong?</label>' +
+                    '<select id="errorType" class="form-input" required><option value="">Select an issue</option>' +
+                    '<option value="wrong-amount">Wrong amount shown</option>' +
+                    '<option value="wrong-calculation">Calculation is incorrect</option>' +
+                    '<option value="wrong-suggestion">Suggestion doesn\'t make sense</option>' +
+                    '<option value="other">Other</option></select></div>' +
+                    '<div class="form-group"><label for="errorDetails">Details (optional)</label>' +
+                    '<textarea id="errorDetails" class="form-input form-textarea" rows="4" placeholder="Please describe what you expected to see..."></textarea></div>' +
+                    '<div class="form-actions"><button type="button" class="btn-secondary" onclick="closeReportErrorModal()">Cancel</button>' +
+                    '<button type="submit" class="btn-primary">Submit report</button></div></form>';
+            } else {
+                document.getElementById('reportErrorForm').reset();
+            }
         }
 
         function submitErrorReport(event) {
             event.preventDefault();
-            
+
             const errorType = document.getElementById('errorType').value;
             const errorDetails = document.getElementById('errorDetails').value;
-            
+
             // In a real app, you would send this to your backend
             console.log('Error report submitted:', { errorType, errorDetails });
-            
-            // Show success message
-            alert('Thank you for your report! We\'ll review it and make improvements.');
-            
-            // Close modal
-            closeReportErrorModal();
+
+            // Show in-modal success state
+            const container = document.querySelector('#reportErrorModal .report-error-content');
+            container.innerHTML = '<div class="report-success">' +
+                '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#E6F4EA"/><path d="M9 12l2 2 4-4" stroke="#1B7D3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+                '<h3>Thanks for your feedback</h3>' +
+                '<p>Our team reviews all reports within 48 hours. We\'ll use your input to improve the accuracy of your insights.</p>' +
+                '<button class="btn-primary" onclick="closeReportErrorModal()">Done</button>' +
+            '</div>';
         }
 
         // Close modal when clicking outside
@@ -1765,6 +1948,52 @@
                 activeMenu.classList.remove('active');
                 const btn = activeMenu.closest('.ai-dropdown').querySelector('.card-hover-icon-btn');
                 if (btn) btn.setAttribute('aria-expanded', 'false');
+            }
+        });
+        // Toggle "Why am I seeing this?" expandable sections
+        function toggleWhySeeing(btn) {
+            const content = btn.nextElementSibling;
+            const isOpen = content.classList.toggle('open');
+            btn.classList.toggle('open', isOpen);
+            btn.setAttribute('aria-expanded', isOpen);
+        }
+
+        // Round-ups confirmation modal
+        function openRoundupsConfirmModal() {
+            const modal = document.getElementById('roundupsConfirmModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            document.querySelector('main').setAttribute('aria-hidden', 'true');
+            document.querySelector('header').setAttribute('aria-hidden', 'true');
+            setTimeout(() => {
+                modal.querySelector('.btn-primary').focus();
+            }, 100);
+        }
+
+        function closeRoundupsConfirmModal() {
+            const modal = document.getElementById('roundupsConfirmModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            document.querySelector('main').removeAttribute('aria-hidden');
+            document.querySelector('header').removeAttribute('aria-hidden');
+        }
+
+        function confirmRoundups() {
+            closeRoundupsConfirmModal();
+            const group = document.getElementById('roundupsButtonGroup');
+            group.innerHTML = '<div style="display: flex; flex-direction: column; align-items: center; gap: 6px;">' +
+                '<span style="display: inline-flex; align-items: center; gap: 6px; background: #E6F4EA; color: #1B7D3A; font-size: 14px; font-weight: 600; padding: 6px 16px; border-radius: 100px;">' +
+                    '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1B7D3A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>' +
+                    'Round-ups enabled' +
+                '</span>' +
+                '<span style="font-size: 12px; color: #5A6A7F;">Turn off in Settings \u203A Automation</span>' +
+            '</div>';
+        }
+
+        // Close round-ups modal when clicking outside
+        document.getElementById('roundupsConfirmModal')?.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeRoundupsConfirmModal();
             }
         });
     </script>

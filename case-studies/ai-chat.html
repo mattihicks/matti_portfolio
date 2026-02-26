@@ -246,6 +246,121 @@
       background: #1E4ED8;
     }
 
+    /* Data & Privacy Modal */
+    .privacy-modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      animation: privacyFadeIn 0.2s ease;
+    }
+    .privacy-modal-overlay.active {
+      display: flex;
+    }
+    @keyframes privacyFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .privacy-modal {
+      background: white;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 480px;
+      max-height: 90vh;
+      overflow-y: auto;
+      animation: privacySlideUp 0.25s ease;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    }
+    @keyframes privacySlideUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .privacy-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 28px 28px 0;
+    }
+    .privacy-modal-header h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #1A1D1F;
+      margin: 0 0 4px;
+    }
+    .privacy-modal-header p {
+      font-size: 14px;
+      color: #5A6A7F;
+      margin: 0;
+    }
+    .privacy-close-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #6B7A8F;
+      padding: 4px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .privacy-close-btn:hover {
+      color: #1A1D1F;
+    }
+    .privacy-modal-body {
+      padding: 24px 28px 28px;
+    }
+    .privacy-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      margin-bottom: 24px;
+    }
+    .privacy-item:last-child {
+      margin-bottom: 0;
+    }
+    .privacy-item-icon {
+      font-size: 24px;
+      flex-shrink: 0;
+      width: 32px;
+      text-align: center;
+      line-height: 1;
+      padding-top: 2px;
+    }
+    .privacy-item h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1A1D1F;
+      margin: 0 0 4px;
+    }
+    .privacy-item p {
+      font-size: 14px;
+      color: #5A6A7F;
+      margin: 0;
+      line-height: 1.5;
+    }
+    .privacy-modal-footer {
+      padding: 0 28px 28px;
+    }
+    .privacy-got-it-btn {
+      width: 100%;
+      background: #295EFF;
+      color: white;
+      border: none;
+      padding: 14px 24px;
+      border-radius: 100px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .privacy-got-it-btn:hover {
+      background: #1E4ED8;
+    }
+
     @media (max-width: 768px) {
       .ai-chat-header {
         padding: 20px;
@@ -294,7 +409,18 @@
     </div>
     <p style="font-size: 12px; color: #8A94A6; text-align: center; margin-top: 8px;">AI-generated insights may be inaccurate. Please double-check responses.</p>
 
+    <div style="text-align: center; margin-top: 4px;">
+      <button onclick="openPrivacyModal()" style="background: none; border: none; color: #5A6A7F; font-size: 12px; cursor: pointer; padding: 4px 0; font-family: inherit;">
+        Data &amp; privacy
+      </button>
+    </div>
+
     <div id="chatMessages" class="chat-messages"></div>
+  </div>
+
+  <!-- Human escalation bar -->
+  <div style="text-align: center; padding: 12px 32px; background: #F5F7FA; border-top: 1px solid #E5E8EC;">
+    <a href="#" style="color: #295EFF; font-size: 13px; font-weight: 600; text-decoration: none;">Not finding what you need? Chat with a First Bank advisor</a>
   </div>
 
   <div class="ai-chat-input-container">
@@ -332,7 +458,84 @@
     </button>
   </div>
 
+  <!-- Data & Privacy Modal -->
+  <div id="privacyModal" class="privacy-modal-overlay" role="dialog" aria-labelledby="privacyModalTitle" aria-modal="true">
+    <div class="privacy-modal">
+      <div class="privacy-modal-header">
+        <div>
+          <h2 id="privacyModalTitle">Your data &amp; privacy</h2>
+          <p>How the AI uses and protects your information</p>
+        </div>
+        <button class="privacy-close-btn" onclick="closePrivacyModal()" aria-label="Close">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="privacy-modal-body">
+        <div class="privacy-item">
+          <div class="privacy-item-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5A6A7F" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/></svg>
+          </div>
+          <div>
+            <h3>What the AI can access</h3>
+            <p>Transaction history, account balances, scheduled bills, and savings goals within your First Bank account. It cannot access accounts at other institutions.</p>
+          </div>
+        </div>
+        <div class="privacy-item">
+          <div class="privacy-item-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5A6A7F" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <div>
+            <h3>How long data is retained</h3>
+            <p>AI conversation history is kept for 30 days to improve your experience. You can delete it at any time.</p>
+          </div>
+        </div>
+        <div class="privacy-item">
+          <div class="privacy-item-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5A6A7F" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <div>
+            <h3>Data sharing</h3>
+            <p>Your financial data is never sold or shared with third parties for marketing purposes. It is used solely to generate your personalized insights.</p>
+          </div>
+        </div>
+        <div class="privacy-item">
+          <div class="privacy-item-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5A6A7F" stroke-width="1.5"><polyline points="3 6 5 6 6 6"/><path d="M19 6h-7m2 0V4a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v2"/><path d="M5 6v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+          </div>
+          <div>
+            <h3>Delete your personalization data</h3>
+            <p>You can reset your profile and delete all personalization data at any time from Settings › Privacy › Clear AI data.</p>
+          </div>
+        </div>
+      </div>
+      <div class="privacy-modal-footer">
+        <button class="privacy-got-it-btn" onclick="closePrivacyModal()">Got it</button>
+      </div>
+    </div>
+  </div>
+
   <script>
+    function openPrivacyModal() {
+      const modal = document.getElementById('privacyModal');
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => modal.querySelector('.privacy-got-it-btn').focus(), 100);
+    }
+
+    function closePrivacyModal() {
+      const modal = document.getElementById('privacyModal');
+      modal.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+
+    document.getElementById('privacyModal')?.addEventListener('click', function(e) {
+      if (e.target === this) closePrivacyModal();
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closePrivacyModal();
+    });
+
     function sendMessage() {
       const input = document.getElementById('aiChatInput');
       const message = input.value.trim();
