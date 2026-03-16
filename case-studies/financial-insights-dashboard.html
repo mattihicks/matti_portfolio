@@ -460,7 +460,6 @@
 
         .ai-content h2 {
             font-size: 24px;
-            font-weight: 400;
             margin-bottom: 24px;
         }
 
@@ -1113,7 +1112,6 @@
                 <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
                     <div style="display: flex; flex-direction: column; gap: 8px;">
                         <h2 style="margin: 0;">What's available to spend?</h2>
-                        <span style="display: inline-block; width: fit-content; background: #E5E8EC; color: #5A6A7F; font-size: 12px; font-weight: 500; padding: 2px 10px; border-radius: 100px; line-height: 1.5;">Estimate</span>
                     </div>
                     <div class="ai-dropdown">
                         <button class="card-hover-icon-btn" onclick="toggleAIDropdown(event)" aria-label="AI insights menu" aria-haspopup="true" aria-expanded="false"><svg class="card-hover-icon" viewBox="0 0 21.9187 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -1142,7 +1140,15 @@
                     </div>
                 </div>
 
-                <div class="amount-large" style="margin-bottom: 6px;">$237.85</div>
+                <div id="amount-display" class="amount-large" style="margin-bottom: 6px;">$237.85</div>
+                <div id="amount-edit" style="display: none; margin-bottom: 6px; text-align: center;">
+                    <input id="amount-input" type="text" defaultValue="237.85" style="font-family: 'Libre Franklin', sans-serif; font-size: 40px; font-weight: 700; color: var(--color-foreground); border: 2px solid #295EFF; border-radius: 8px; padding: 4px 12px; width: 180px; text-align: center; outline: none;">
+                    <div style="display: flex; justify-content: center; gap: 8px; margin-top: 10px;">
+                        <button onclick="confirmAmount()" style="background: #295EFF; color: white; border: none; border-radius: 6px; padding: 6px 16px; font-size: 13px; font-weight: 600; cursor: pointer;">Confirm</button>
+                        <button onclick="cancelAmountEdit()" style="background: #E5E8EC; color: #5A6A7F; border: none; border-radius: 6px; padding: 6px 16px; font-size: 13px; font-weight: 600; cursor: pointer;">Cancel</button>
+                    </div>
+                </div>
+                <span style="font-size: 13px; font-weight: 400; color: #5A6A7F; line-height: 1.5; display: block; text-align: center;"><a href="#" onclick="editAmount(event)" style="color: #295EFF; text-decoration: none;">Estimated amount</a> calculated after bills and typical spending</span>
 
                 <div class="why-seeing-content" style="font-size: 13px; color: var(--color-secondary-text); line-height: 1.5; text-align: center; max-width: 360px; margin: 0 auto 12px; padding: 0;" aria-live="polite">
                     This estimate is based on your checking account balance, upcoming scheduled bills, and your spending patterns over the last 3 months. It does not account for pending deposits or unexpected expenses.
@@ -1228,15 +1234,15 @@
         <!-- AI Expertise Card -->
         <div class="card ai-card">
             <div class="ai-content">
-                <h2 style="display: flex; align-items: center; gap: 12px;">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 32px;">
                     <svg width="24" height="24" viewBox="0 0 21.9187 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M13.6533 7.76069C10.9505 6.17538 8.23434 5.32983 6.06121 5.2007C3.8124 5.06707 2.51883 5.69682 2.03522 6.54781C1.55162 7.39879 1.66157 8.85179 2.89988 10.7635C4.09653 12.6109 6.1754 14.5779 8.87818 16.1632C11.581 17.7485 14.2972 18.5941 16.4703 18.7232C18.7191 18.8568 20.0127 18.2271 20.4963 17.3761L21.4951 17.962C19.858 20.8427 13.951 20.4916 8.30152 17.1779C2.65202 13.8642 -0.600675 8.84268 1.03641 5.96196C2.67351 3.08124 8.58046 3.43226 14.23 6.74597C19.8795 10.0597 23.1322 15.0812 21.4951 17.962L20.4963 17.3761C20.9799 16.5251 20.8699 15.0721 19.6316 13.1604C18.435 11.313 16.3561 9.34601 13.6533 7.76069Z" fill="#295EFF"/>
                         <path d="M13.0405 16.258C15.7433 14.6727 17.8221 12.7057 19.0188 10.8583C20.2571 8.94655 20.3671 7.49355 19.8834 6.64257C19.3998 5.7916 18.1062 5.16184 15.8575 5.29547C13.6843 5.4246 10.9681 6.27015 8.26536 7.85546C5.56258 9.44077 3.4837 11.4078 2.28705 13.2552C1.04875 15.1669 0.93879 16.6199 1.42239 17.4709L0.423582 18.0567C-1.2135 15.176 2.03919 10.1544 7.68869 6.84074C13.3382 3.52703 19.2451 3.17602 20.8823 6.05672C22.5194 8.93744 19.2667 13.959 13.6171 17.2727C7.96764 20.5864 2.06068 20.9374 0.423582 18.0567L1.42239 17.4709C1.906 18.3219 3.19958 18.9516 5.44838 18.818C7.62152 18.6888 10.3377 17.8433 13.0405 16.258Z" fill="#295EFF"/>
                         <path d="M6.205 12C6.205 15.1706 6.84231 17.9832 7.8188 19.9597C8.82929 22.0051 10.0129 22.8283 10.9801 22.8283C11.9473 22.8283 13.131 22.005 14.1415 19.9597C15.1179 17.9832 15.7553 15.1706 15.7553 12C15.7553 8.82938 15.1179 6.01684 14.1415 4.0403C13.131 1.99495 11.9473 1.17171 10.9801 1.1717V0C14.2543 1.75919e-05 16.9086 5.37259 16.9086 12C16.9086 18.6274 14.2543 24 10.9801 24C7.70592 24 5.05167 18.6274 5.05168 12C5.05168 5.37258 7.70593 -4.25792e-07 10.9801 0V1.1717C10.0129 1.1717 8.82929 1.99494 7.8188 4.0403C6.84231 6.01684 6.205 8.82937 6.205 12Z" fill="#295EFF"/>
                         <path d="M11.0815 9.1783L11.1986 10.1817C11.3033 11.0779 11.9988 11.7845 12.881 11.8908L13.8687 12.0099L12.881 12.129C11.9988 12.2353 11.3033 12.9419 11.1986 13.8381L11.0815 14.8415L10.9643 13.8381C10.8596 12.9419 10.1641 12.2353 9.28193 12.129L8.29425 12.0099L9.28193 11.8908C10.1641 11.7845 10.8596 11.0779 10.9643 10.1817L11.0815 9.1783Z" fill="#295EFF"/>
                     </svg>
-                    AI expertise on your finances
-                </h2>
+                    <h2 style="margin: 0;">AI expertise on your finances</h2>
+                </div>
                 
                 <div class="ai-input-container">
                     <div class="ai-input">
@@ -1506,7 +1512,6 @@
                     <div class="card-header" style="display: flex; justify-content: space-between; margin-bottom: 26px;">
                         <div style="display: flex; flex-direction: column; gap: 8px;">
                             <h2 style="margin: 0;">Your financial forecast</h2>
-                            <span style="display: inline-block; width: fit-content; background: #E5E8EC; color: #5A6A7F; font-size: 12px; font-weight: 500; padding: 2px 10px; border-radius: 100px; line-height: 1.5;">Estimate</span>
                         </div>
                         <div class="ai-dropdown">
                             <button class="card-hover-icon-btn" onclick="toggleAIDropdown(event)" aria-label="AI insights menu" aria-haspopup="true" aria-expanded="false"><svg class="card-hover-icon" viewBox="0 0 21.9187 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -1565,7 +1570,7 @@
                         </div>
                     </div>
                     
-                    <p style="font-size: 11px; font-weight: 400; text-align: center; margin: 0 auto 0; max-width: 272px; line-height: 1.4;">
+                    <p style="font-size: 13px; font-weight: 400; text-align: center; margin: 0 auto 0; max-width: 272px; line-height: 1.4;">
                         While inflation has been on the rise, your investment returns are outpacing it. You're on a strong path.
                     </p>
                 </div>
@@ -1743,6 +1748,52 @@
                 btn.setAttribute('aria-expanded', 'false');
             }
         });
+
+        // Amount editing
+        function editAmount(event) {
+            event.preventDefault();
+            const display = document.getElementById('amount-display');
+            const edit = document.getElementById('amount-edit');
+            const input = document.getElementById('amount-input');
+            const current = display.textContent.replace('$', '');
+            input.value = current;
+            display.style.display = 'none';
+            edit.style.display = 'block';
+            input.focus();
+            input.select();
+        }
+
+        function confirmAmount() {
+            const display = document.getElementById('amount-display');
+            const edit = document.getElementById('amount-edit');
+            const input = document.getElementById('amount-input');
+            const val = parseFloat(input.value.replace(/[^0-9.]/g, ''));
+            if (!isNaN(val)) {
+                display.textContent = '$' + val.toFixed(2);
+            }
+            edit.style.display = 'none';
+            display.style.display = 'block';
+            showAmountToast();
+        }
+
+        function cancelAmountEdit() {
+            document.getElementById('amount-edit').style.display = 'none';
+            document.getElementById('amount-display').style.display = 'block';
+        }
+
+        function showAmountToast() {
+            let toast = document.getElementById('amount-toast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'amount-toast';
+                toast.style.cssText = 'position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%); background: #1a1a1a; color: white; font-size: 13px; padding: 12px 20px; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.18); z-index: 9999; opacity: 0; transition: opacity 0.25s ease; white-space: nowrap;';
+                toast.textContent = 'Thank you for updating, this helps us learn about your spending';
+                document.body.appendChild(toast);
+            }
+            toast.style.opacity = '1';
+            clearTimeout(toast._hideTimer);
+            toast._hideTimer = setTimeout(() => { toast.style.opacity = '0'; }, 3000);
+        }
 
         // Toggle AI dropdown menu
         function toggleAIDropdown(event) {
