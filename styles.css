@@ -835,7 +835,10 @@ footer {
 /* Responsive Design
    ========================================================================== */
 
+br.mobile-only { display: none; }
+
 @media (max-width: 768px) {
+    br.mobile-only { display: block; }
     .scroll-indicator {
         display: flex;
         justify-content: center;
