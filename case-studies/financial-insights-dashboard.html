@@ -1140,7 +1140,7 @@
                     </div>
                 </div>
 
-                <div id="amount-display" class="amount-large" style="margin-bottom: 6px;">$237.85</div>
+                <div id="amount-display" class="amount-large" style="margin-bottom: 6px; display: flex; align-items: center; justify-content: center; gap: 16px;">$237.85<a href="#" onclick="editAmount(event)" aria-label="Edit amount" style="display: inline-flex; align-items: center; color: #5A6A7F; text-decoration: none; opacity: 0.6; transition: opacity 0.15s;" onmouseenter="this.style.opacity='1'" onmouseleave="this.style.opacity='0.6'"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></a></div>
                 <div id="amount-edit" style="display: none; margin-bottom: 6px; text-align: center;">
                     <input id="amount-input" type="text" defaultValue="237.85" style="font-family: 'Libre Franklin', sans-serif; font-size: 40px; font-weight: 700; color: var(--color-foreground); border: 2px solid #295EFF; border-radius: 8px; padding: 4px 12px; width: 180px; text-align: center; outline: none;">
                     <div style="display: flex; justify-content: center; gap: 8px; margin-top: 10px;">
@@ -1148,7 +1148,7 @@
                         <button onclick="cancelAmountEdit()" style="background: #E5E8EC; color: #5A6A7F; border: none; border-radius: 6px; padding: 6px 16px; font-size: 13px; font-weight: 600; cursor: pointer;">Cancel</button>
                     </div>
                 </div>
-                <span style="font-size: 13px; font-weight: 400; color: #5A6A7F; line-height: 1.5; display: block; text-align: center;"><a href="#" onclick="editAmount(event)" style="color: #295EFF; text-decoration: none;">Estimated amount</a> calculated after bills and typical spending</span>
+                <span style="font-size: 13px; font-weight: 400; color: #5A6A7F; line-height: 1.5; display: block; text-align: center;">Estimated amount calculated after bills and typical spending.</span>
 
                 <div class="why-seeing-content" style="font-size: 13px; color: var(--color-secondary-text); line-height: 1.5; text-align: center; max-width: 360px; margin: 0 auto 12px; padding: 0;" aria-live="polite">
                     This estimate is based on your checking account balance, upcoming scheduled bills, and your spending patterns over the last 3 months. It does not account for pending deposits or unexpected expenses.
@@ -1213,7 +1213,7 @@
                 </div>
                 
                 <p style="font-size: 15px; line-height: 26px; margin-bottom: 6px;">
-                    Heads up! Based on your upcoming bills ($395 due on May 25) and your typical spending, your balance might be low.
+                    Heads up! Based on your upcoming bills ($212.15 due on May 25) and your typical spending, your balance might be low.
                 </p>
                 
                 <p style="font-size: 15px; line-height: 26px; margin-bottom: 32px;">
@@ -1755,7 +1755,7 @@
             const display = document.getElementById('amount-display');
             const edit = document.getElementById('amount-edit');
             const input = document.getElementById('amount-input');
-            const current = display.textContent.replace('$', '');
+            const current = display.childNodes[0].textContent.replace('$', '');
             input.value = current;
             display.style.display = 'none';
             edit.style.display = 'block';
@@ -1769,7 +1769,7 @@
             const input = document.getElementById('amount-input');
             const val = parseFloat(input.value.replace(/[^0-9.]/g, ''));
             if (!isNaN(val)) {
-                display.textContent = '$' + val.toFixed(2);
+                display.childNodes[0].textContent = '$' + val.toFixed(2);
             }
             edit.style.display = 'none';
             display.style.display = 'block';
