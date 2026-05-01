@@ -124,7 +124,7 @@
                 <div class="content-card" style="margin-bottom: 24px;">
                     <p style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-gray); margin-bottom: 12px;">01</p>
                     <h3 style="margin-bottom: 12px;">Users needed to see what they could spend after bills, not after past spending</h3>
-                    <p style="color: var(--text-gray); margin-bottom: 16px;">Existing dashboards calculated "available to spend" by subtracting historical spending from income. This consistently underestimated committed costs and left users anxious about discretionary decisions. In testing, nearly every participant was confused by the number.</p>
+                    <p style="color: var(--text-gray); margin-bottom: 16px;">Variable spending made "available to spend" unreliable. Users couldn't trust it. Dashboards subtracted historical spending from income, ignoring committed costs. In testing, nearly every participant made the same mistake: treating the number as safe to spend.</p>
                     <p style="margin-bottom: 0;"><strong>Design decision:</strong> The Left to Spend panel shows a transparent, editable calculation: Balance − Upcoming Bills = Available to Spend, that users can adjust when their situation changes. Making the logic visible, not just the output, was the differentiator.</p>
                 </div>
 
@@ -159,6 +159,7 @@
                         <li style="margin-bottom: 8px;">Comparing a simpler Control against a richer Variant, 60% preferred the Variant but 40% disengaged: "it looks like I'm now a data analyst." Users asked for the best of both.</li>
                         <li>The Hybrid resolved this through progressive disclosure, and 90% chose it in the final round.</li>
                     </ol>
+                    <p style="margin: 16px 0 0 0; color: var(--text-gray);">This directly shaped the final hierarchy: 'Left to Spend' became the primary card, secondary metrics were simplified, and the calculation logic was made visible by default.</p>
                 </div>
 
                 <!-- Iteration images: grouped by round -->
@@ -221,6 +222,7 @@
                 <h2 class="section-title">Impact</h2>
                 <div class="impact-list">
                     <ul>
+                        <li>Users consistently used 'Left to Spend' as their primary decision metric across all three testing rounds, replacing the fragmented balance-checking behaviour they'd described at the start of the study.</li>
                         <li>90% of users chose Hybrid over Control. Users consistently prioritised Left to Spend as the first number they checked, before balance or spending history</li>
 <li>Users described it as their "personal financial planner", a shift from passive ledger to active guide, unprompted across all testing rounds</li>
                         <li>The concept is now shaping the company's broader Financial Wellness product strategy (details under NDA)</li>
