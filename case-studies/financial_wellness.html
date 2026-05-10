@@ -126,9 +126,15 @@
                     <h3 style="margin-bottom: 12px;">Users needed to see what they could spend after bills, not after past spending</h3>
                     <p style="color: var(--text-gray); margin-bottom: 16px;">Variable spending made "available to spend" unreliable. Users couldn't trust it. Dashboards subtracted historical spending from income, ignoring committed costs. In testing, nearly every participant made the same mistake: treating the number as safe to spend.</p>
                     <p style="margin-bottom: 16px;"><strong>Design decision:</strong> The Left to Spend panel shows a transparent, editable calculation: Balance − Upcoming Bills = Available to Spend, that users can adjust when their situation changes. Making the logic visible, not just the output, was the differentiator.</p>
-                    <div style="text-align: center;">
-                        <img src="../images/FID_edit_amount.png" alt="Editing the Left to Spend amount" class="zoomable" style="max-width: 360px; width: 100%; height: auto; display: inline-block; border-radius: var(--radius-lg); cursor: pointer; box-shadow: var(--shadow-soft);">
-                        <span style="font-size: 12px; color: var(--text-gray); margin-top: 6px; display: block;">Editing the Left to Spend amount</span>
+                    <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+                        <div style="text-align: center; flex: 1; min-width: 140px; max-width: 240px;">
+                            <img src="../images/FID_edit_amount.png" alt="Editing the Left to Spend amount" class="zoomable" style="width: 100%; height: auto; display: block; border-radius: var(--radius-lg); cursor: pointer; box-shadow: var(--shadow-soft);">
+                            <span style="font-size: 12px; color: var(--text-gray); margin-top: 6px; display: block;">Editing the amount</span>
+                        </div>
+                        <div style="text-align: center; flex: 1; min-width: 140px; max-width: 240px;">
+                            <img src="../images/FID_edit_amount_confirmation.png" alt="Edit amount confirmation" class="zoomable" style="width: 100%; height: auto; display: block; border-radius: var(--radius-lg); cursor: pointer; box-shadow: var(--shadow-soft);">
+                            <span style="font-size: 12px; color: var(--text-gray); margin-top: 6px; display: block;">Confirmation state</span>
+                        </div>
                     </div>
                 </div>
 
