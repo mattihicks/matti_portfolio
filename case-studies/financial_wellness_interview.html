@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI-Powered Financial Wellness | Matti Hicks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    img { max-width: 100%; height: auto; display: block; }
+
+    :root {
+      --bg:       #FAF7F4;
+      --card:     #FFFFFF;
+      --subtle:   #F2EFE9;
+      --canvas:   #E8E4DC;
+      --dark:     #2A2825;
+      --accent:   #E86C3A;
+      --blue:     #4A6FA5;
+      --green:    #3A8A5A;
+      --amber:    #C08B30;
+      --ink:      #1A1A1A;
+      --muted:    #6B6B6B;
+      --faint:    #9B9B9B;
+      --border:   #E2DDD8;
+      --r:        10px;
+      --shadow:   0 2px 16px rgba(0,0,0,0.08);
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.65;
+      font-size: 16px;
+    }
+
+    /* ── Top nav ── */
+    .topnav {
+      position: sticky; top: 0;
+      height: 52px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px;
+      z-index: 100;
+    }
+    .topnav-brand { font-size: 14px; font-weight: 600; color: var(--ink); text-decoration: none; }
+    .topnav-link  { font-size: 13px; color: var(--muted); text-decoration: none; display: flex; align-items: center; gap: 6px; }
+    .topnav-link:hover { color: var(--ink); }
+
+    /* ── Layout ── */
+    .container       { max-width: 960px;  margin: 0 auto; padding: 0 48px; }
+    .container-wide  { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+
+    /* ── Sections ── */
+    .section { padding: 72px 0; border-top: 1px solid var(--border); }
+    .section-label {
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--faint); margin-bottom: 14px;
+    }
+    h2 { font-size: 26px; font-weight: 600; line-height: 1.25; margin-bottom: 20px; letter-spacing: -0.01em; }
+    h3 { font-size: 17px; font-weight: 600; line-height: 1.4; margin-bottom: 8px; }
+    h4 { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+
+    p { font-size: 15px; color: var(--muted); line-height: 1.75; margin-bottom: 14px; }
+    p:last-child { margin-bottom: 0; }
+    p strong { color: var(--ink); font-weight: 500; }
+
+    /* ── Hero ── */
+    .hero { padding: 64px 0 56px; }
+    .hero h1 { font-size: 38px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 8px; }
+    .hero-location { font-size: 15px; color: var(--faint); margin-bottom: 44px; }
+    .hero-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; }
+    .hero-col { padding: 20px 24px; background: var(--card); }
+    .hero-col + .hero-col { border-left: 1px solid var(--border); }
+    .hero-col-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); margin-bottom: 8px; }
+    .hero-col p { font-size: 15px; color: var(--muted); line-height: 1.65; margin: 0; }
+
+    /* ── Before & after ── */
+    .ba-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; }
+    .ba-pill {
+      display: inline-block;
+      font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em;
+      padding: 4px 10px; border-radius: 100px; margin-bottom: 12px;
+    }
+    .ba-pill.before { background: var(--subtle); color: var(--faint); }
+    .ba-pill.after  { background: rgba(58,138,90,0.12); color: var(--green); }
+    .ba-img { border-radius: 10px; box-shadow: var(--shadow); }
+
+    /* ── Two column ── */
+    .two-col       { display: grid; grid-template-columns: 3fr 2fr; gap: 48px; align-items: start; }
+    .two-col-even  { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
+
+    /* ── Bullet lists ── */
+    ul.list { list-style: disc; padding-left: 20px; display: flex; flex-direction: column; gap: 10px; }
+    ul.list li { font-size: 15px; color: var(--muted); line-height: 1.65; padding-left: 4px; }
+
+    ul.check { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    ul.check li { font-size: 15px; color: var(--muted); line-height: 1.65; padding-left: 24px; position: relative; }
+    ul.check li::before { content: '✓'; position: absolute; left: 0; color: var(--green); font-weight: 600; }
+
+    /* ── Discovery phases ── */
+    .phase-block { padding: 28px 0; border-bottom: 1px solid var(--border); }
+    .phase-label {
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--accent);
+      margin-bottom: 14px;
+    }
+    .phase-block p { max-width: 620px; margin-bottom: 16px; }
+    .phase-concepts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 16px; }
+    .phase-concept { background: var(--subtle); border-radius: var(--r); padding: 16px 18px; }
+    .pc-name { font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+    .phase-concept p { font-size: 13px; line-height: 1.55; margin: 0; }
+
+    /* ── Discovery cards ── */
+    .disc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .disc-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--r); padding: 18px 20px; }
+    .disc-tag { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--accent); margin-bottom: 7px; }
+    .disc-card h4 { font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 5px; }
+    .disc-card p  { font-size: 13px; line-height: 1.55; margin: 0; }
+
+    /* ── Concept wireframe cards ── */
+    .concepts-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .concept-card { background: var(--dark); border-radius: var(--r); padding: 20px; }
+    .concept-num  { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.35); margin-bottom: 10px; }
+    .concept-name { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.9); margin-bottom: 18px; }
+    .wire { display: flex; flex-direction: column; gap: 5px; }
+    .wr   { height: 22px; border-radius: 4px; background: rgba(255,255,255,0.10); display: flex; align-items: center; padding: 0 8px; }
+    .wr.hi { background: rgba(232,108,58,0.40); height: 30px; }
+    .wr.md { background: rgba(255,255,255,0.16); }
+    .wr-row { display: grid; gap: 5px; }
+    .wr-row.cols2 { grid-template-columns: 1fr 1fr; }
+    .wr-row.cols3 { grid-template-columns: 1fr 1fr 1fr; }
+    .wr-label { font-size: 9px; color: rgba(255,255,255,0.4); }
+
+    /* ── Testing rounds ── */
+    .rounds-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .round-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--r); padding: 20px; }
+    .round-num { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--faint); margin-bottom: 10px; }
+    .round-card h4 { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+    .round-card p { font-size: 13px; line-height: 1.55; }
+    .round-result { font-size: 12px; font-weight: 500; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); }
+    .round-result.orange { color: var(--accent); }
+    .round-result.blue   { color: var(--blue); }
+    .round-result.green  { color: var(--green); }
+
+    /* ── Screens ── */
+    .screens-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+    .screen-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: var(--faint); margin-bottom: 8px; }
+    .screen-img { border-radius: var(--r); box-shadow: var(--shadow); width: 100%; }
+    .annotation {
+      background: var(--ink); color: #fff;
+      font-size: 13px; font-weight: 500; line-height: 1.45;
+      padding: 10px 14px; border-radius: 8px; margin-top: 12px;
+    }
+
+    /* ── Tension ── */
+    .tension-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 32px;
+    }
+    .tension-q { font-size: 19px; font-weight: 600; line-height: 1.35; color: var(--ink); margin-bottom: 20px; }
+    .voices { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+    .voice { background: var(--subtle); border-radius: var(--r); padding: 14px 16px; }
+    .vtag {
+      display: inline-block; font-size: 10px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.07em;
+      padding: 2px 8px; border-radius: 100px; margin-bottom: 7px;
+    }
+    .vtag.eng { background: rgba(74,111,165,0.15); color: var(--blue); }
+    .vtag.des { background: rgba(232,108,58,0.12); color: var(--accent); }
+    .vtag.prd { background: rgba(192,139,48,0.15); color: var(--amber); }
+    .vquote { font-size: 13px; color: var(--ink); line-height: 1.6; font-style: italic; margin: 0; }
+    .tension-outcome { border-top: 1px solid var(--border); padding-top: 20px; }
+    .outcome-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--accent); margin-bottom: 8px; }
+    .tension-outcome p { font-size: 14px; color: var(--muted); line-height: 1.7; margin: 0; }
+
+    /* ── Callout ── */
+    .callout { border-radius: 8px; padding: 14px 18px; font-size: 14px; line-height: 1.6; }
+    .callout.orange { background: rgba(232,108,58,0.08); border-left: 3px solid var(--accent); }
+    .callout.blue   { background: rgba(74,111,165,0.08);  border-left: 3px solid var(--blue); }
+    .callout.green  { background: rgba(58,138,90,0.08);   border-left: 3px solid var(--green); }
+    .callout p { font-size: 14px; color: var(--ink); margin: 0; }
+
+    /* ── Reflection ── */
+    .reflection { background: var(--dark); border-radius: 14px; padding: 48px; }
+    .reflection p { font-size: 18px; color: rgba(255,255,255,0.85); line-height: 1.75; font-style: italic; margin: 0; }
+
+    /* ── Prototype link ── */
+    .proto-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--accent); color: #fff;
+      font-size: 14px; font-weight: 500; padding: 11px 20px;
+      border-radius: 8px; text-decoration: none; margin-top: 24px;
+    }
+    .proto-link:hover { opacity: 0.9; }
+
+    /* ── Workflow comparison ── */
+    .wf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 32px 0 28px; }
+    .wf-col { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 28px 28px 24px; }
+    .wf-col-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); margin-bottom: 18px; }
+    .wf-steps { display: flex; flex-direction: column; gap: 0; }
+    .wf-step { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+    .wf-step:last-child { border-bottom: none; padding-bottom: 0; }
+    .wf-step-num { flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; color: var(--muted); background: var(--subtle); margin-top: 1px; }
+    .wf-step-text { font-size: 13px; color: var(--ink); line-height: 1.5; }
+    .wf-col.highlight .wf-step-num { background: rgba(232,108,58,0.12); color: var(--accent); }
+    .wf-col.highlight { border-color: rgba(232,108,58,0.25); }
+    @media (max-width: 640px) { .wf-grid { grid-template-columns: 1fr; } }
+
+    /* ── Image captions ── */
+    .caption { font-size: 12px; color: var(--faint); text-align: center; margin-top: 8px; }
+
+    /* ── Footer ── */
+    .footer { padding: 32px 0; border-top: 1px solid var(--border); }
+
+    /* ── Image zoom ── */
+    .zoomable { cursor: zoom-in; }
+    #zoom-modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.88); z-index:999; align-items:center; justify-content:center; }
+    #zoom-modal.open { display:flex; }
+    #zoom-modal img { max-width:92vw; max-height:92vh; border-radius:8px; object-fit:contain; }
+    #zoom-close { position:fixed; top:18px; right:22px; background:none; border:none; color:#fff; font-size:30px; cursor:pointer; line-height:1; opacity:0.7; }
+    #zoom-close:hover { opacity:1; }
+
+    /* ── Utility ── */
+    .gap-sm { height: 16px; }
+    .gap    { height: 28px; }
+    .gap-lg { height: 44px; }
+    .tag {
+      display: inline-block; font-size: 10px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.06em;
+      padding: 3px 9px; border-radius: 100px;
+    }
+    .tag.gone  { background: rgba(192,71,58,0.1);  color: #B83A30; }
+    .tag.kept  { background: rgba(58,138,90,0.12); color: var(--green); }
+    .tag.later { background: rgba(74,111,165,0.12); color: var(--blue); }
+
+    /* ── Responsive ── */
+    @media (max-width: 800px) {
+      .topnav { padding: 0 24px; }
+      .container { padding: 0 24px; }
+      .hero h1 { font-size: 28px; }
+      .hero-cols, .ba-grid, .two-col, .two-col-even,
+      .concepts-grid, .rounds-grid, .disc-grid, .screens-pair { grid-template-columns: 1fr; }
+      .hero-col + .hero-col { border-left: none; border-top: 1px solid var(--border); }
+      .section { padding: 48px 0; }
+      .reflection { padding: 32px 24px; }
+      .reflection p { font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Top nav ── -->
+<nav class="topnav">
+  <a href="https://mattihicks.com" class="topnav-brand">Matti Hicks</a>
+  <a href="https://mattihicks.com" class="topnav-link">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Home
+  </a>
+</nav>
+
+<!-- ── Hero ── -->
+<section class="hero">
+  <div class="container">
+    <h1>Financial Insights Dashboard</h1>
+    <p class="hero-location">Backbase · Amsterdam</p>
+    <div class="hero-cols">
+      <div class="hero-col">
+        <div class="hero-col-label">Goal</div>
+        <p>Design an AI-powered Financial Wellness experience that increases engagement and supports smarter financial decisions, helping users understand not just where their money went, but what to do next.</p>
+      </div>
+      <div class="hero-col">
+        <div class="hero-col-label">My Role</div>
+        <p>Sole designer. Led research, product framing, concept design, prototyping, and 3 rounds of usability testing. Collaborated closely with Product and Engineering throughout.</p>
+      </div>
+      <div class="hero-col">
+        <div class="hero-col-label">Impact and status</div>
+        <p>90% preference for the Hybrid design across 3 testing rounds with 26 participants. Now shaping internal conversations around the Financial Wellness roadmap.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── Before and after ── -->
+<section class="section" id="before-after">
+  <div class="container-wide">
+    <div class="ba-grid">
+      <div>
+        <div class="ba-pill before">Before</div>
+        <img src="../images/Financial%20Insights%20Dashboard_original.png"
+             alt="Original Financial Insights dashboard"
+             class="ba-img zoomable">
+        <p class="caption">Passive reporting: balance, spending history, no guidance</p>
+      </div>
+      <div>
+        <div class="ba-pill after">Current direction</div>
+        <img src="../images/hybrid_collapsed.png"
+             alt="Hybrid dashboard, final design"
+             class="ba-img zoomable">
+        <p class="caption">Actionable: Left to Spend, AI guidance, expandable depth</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── Our first steps ── -->
+<section class="section" id="first-steps">
+  <div class="container">
+    <div class="two-col">
+      <div>
+        <h2>First steps</h2>
+        <p>My first step was understanding what insight already existed internally.</p>
+        <p>We had <strong>previously run a financial wellness survey</strong> with nearly 300 participants across the US, UK, and Canada, which highlighted:</p>
+        <ul class="list" style="margin-bottom: 16px;">
+          <li>financial anxiety</li>
+          <li>decision-making behavior</li>
+          <li>moments users actively seek guidance</li>
+          <li>frustrations with existing banking tools</li>
+        </ul>
+        <p>I also <strong>revisited analytics</strong> from the existing Insights experience and prior research from the broader retail banking redesign. Overall, I discovered that engagement was low. Users briefly checked spending categories or budgets, but there was very little deeper interaction.</p>
+      </div>
+      <div>
+        <img src="../images/report_financial_wellness.png"
+             alt="Financial insights research report"
+             class="zoomable" style="border-radius: var(--r); box-shadow: var(--shadow); width:100%;">
+        <p class="caption">Financial insights research report</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── Layout exploration ── -->
+<section class="section" id="layout-exploration">
+  <div class="container">
+    <div class="section-label">Layout exploration</div>
+    <h2>Exploring new hierarchy models</h2>
+    <p style="max-width:700px; margin-bottom: 10px;">The real challenge wasn't fitting more onto the screen. It was deciding what a financial wellness experience should actually prioritize.</p>
+    <p style="max-width:700px; margin-bottom: 28px; color: var(--muted);">Different clients and stakeholders implicitly wanted different features. Some focused on budgeting, others on debt management, spending breakdowns, forecasting, or financial safety. Each implied a different information hierarchy. These three concepts explored those competing models directly.</p>
+
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 32px;">
+      <div style="background: var(--subtle); border-radius: var(--r); padding: 16px 18px;">
+        <p style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 6px;">Concept 1: Priority-first</p>
+        <p style="font-size: 13px; color: var(--ink); line-height: 1.6; margin: 0;">Immediate clarity and action. "Available to Spend" as the dominant anchor. One number, one focus.</p>
+      </div>
+      <div style="background: var(--subtle); border-radius: var(--r); padding: 16px 18px;">
+        <p style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--blue); margin-bottom: 6px;">Concept 2: Topic-first</p>
+        <p style="font-size: 13px; color: var(--ink); line-height: 1.6; margin: 0;">A balanced guidance model organized around financial topics: forecasting, debt, earnings, wellness. Multiple entry points.</p>
+      </div>
+      <div style="background: var(--subtle); border-radius: var(--r); padding: 16px 18px;">
+        <p style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 6px;">Concept 3: Category-based</p>
+        <p style="font-size: 13px; color: var(--ink); line-height: 1.6; margin: 0;">Closer to traditional banking taxonomy. Organized by category, familiar structure, broader financial overview upfront.</p>
+      </div>
+    </div>
+
+  </div>
+  <div style="padding: 0 0 28px;">
+    <img src="../images/wellness_concept_layouts.png"
+         alt="Three competing hierarchy models"
+         style="width:100%; display:block;">
+  </div>
+  <div class="container">
+    <p style="max-width:680px; margin-top: 4px; color: var(--muted);">Testing and internal review showed users responded better when there was one clear primary focus, less competing visual weight, and a calmer default hierarchy. That insight eventually led to <strong>Left to Spend</strong> becoming the primary anchor of the experience.</p>
+  </div>
+</section>
+
+
+<!-- ── Data constraints ── -->
+<section class="section" id="data-constraints">
+  <div class="container">
+    <h2>Designing around imperfect financial data</h2>
+    <p style="max-width:640px; margin-bottom: 36px; color: var(--muted);">A major challenge was that the system should understand different parts of a user's financial life with very different levels of reliability. The interface couldn't assume perfect financial understanding, which is shaping product and interaction decisions.</p>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+
+      <div style="background: var(--card); border: 1px solid var(--border); border-top: 3px solid var(--green); border-radius: 12px; padding: 28px 28px 24px;">
+        <p style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--green); margin-bottom: 6px;">Reliable</p>
+        <p style="font-size: 16px; font-weight: 600; color: var(--ink); margin-bottom: 12px;">Account balance</p>
+        <p style="font-size: 14px; color: var(--muted); line-height: 1.7; margin: 0;">Real-time and stable, but not meaningful on its own without context around upcoming obligations.</p>
+      </div>
+
+      <div style="background: var(--card); border: 1px solid var(--border); border-top: 3px solid var(--amber); border-radius: 12px; padding: 28px 28px 24px;">
+        <p style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--amber); margin-bottom: 6px;">Noisy</p>
+        <p style="font-size: 16px; font-weight: 600; color: var(--ink); margin-bottom: 12px;">Transaction categories</p>
+        <p style="font-size: 14px; color: var(--muted); line-height: 1.7; margin: 0;">Usually accurate for common spending patterns, but inconsistent with ambiguous merchant names and edge cases.</p>
+      </div>
+
+      <div style="background: var(--card); border: 1px solid var(--border); border-top: 3px solid var(--accent); border-radius: 12px; padding: 28px 28px 24px;">
+        <p style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 6px;">Uncertain</p>
+        <p style="font-size: 16px; font-weight: 600; color: var(--ink); margin-bottom: 12px;">Forecasting</p>
+        <p style="font-size: 14px; color: var(--muted); line-height: 1.7; margin: 0;">Works best with recurring patterns and established history. Reliability drops significantly with variable income. Still on roadmap.</p>
+      </div>
+
+      <div style="background: var(--card); border: 1px solid var(--border); border-top: 3px solid var(--border); border-radius: 12px; padding: 28px 28px 24px;">
+        <p style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); margin-bottom: 6px;">Missing</p>
+        <p style="font-size: 16px; font-weight: 600; color: var(--ink); margin-bottom: 12px;">New users</p>
+        <p style="font-size: 14px; color: var(--muted); line-height: 1.7; margin: 0;">Some users had little or no historical financial data, making onboarding and progressive personalization critical.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ── Research & iteration ── -->
+<section class="section" id="concept-exploration">
+  <div class="container">
+    <div class="section-label">Research &amp; iteration</div>
+    <h2>Research &amp; iteration</h2>
+
+    <p style="margin-bottom: 24px;">Three rounds of testing with 26 UK-based users shaped the final design.</p>
+
+    <div style="display: flex; flex-direction: column; gap: 32px;">
+
+      <!-- Round 1 -->
+      <div>
+        <p style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); margin-bottom: 8px;">Round 1</p>
+        <p style="margin-bottom: 16px;">Round 1 surfaced that the "available to spend" calculation was opaque and the editable field needed more affordance, and both were fixed before Round 2.</p>
+        <div style="max-width: 280px;">
+          <img src="../images/initial_prototype.png" alt="Round 1: Initial prototype" class="zoomable" style="width:100%; border-radius: var(--r); box-shadow: var(--shadow);">
+          <a href="https://sunset-donkey-14427650.figma.site/" target="_blank" style="font-size: 12px; color: var(--accent); margin-top: 8px; display: inline-flex; align-items: center; gap: 4px; text-decoration: none;">
+            View prototype
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Round 2 -->
+      <div>
+        <p style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); margin-bottom: 8px;">Round 2</p>
+        <p style="margin-bottom: 16px;">Comparing a simpler Control against a richer Variant, 60% preferred the Variant but 40% disengaged: "it looks like I'm now a data analyst." Users asked for the best of both.</p>
+        <div style="display: flex; gap: 12px; max-width: 560px;">
+          <div style="flex: 1;">
+            <img src="../images/control_prototype.png" alt="Round 2: Control" class="zoomable" style="width:100%; border-radius: var(--r); box-shadow: var(--shadow);">
+            <a href="https://taffy-judge-98528828.figma.site/" target="_blank" style="font-size: 12px; color: var(--accent); margin-top: 8px; display: inline-flex; align-items: center; gap: 4px; text-decoration: none;">
+              Control
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+            </a>
+          </div>
+          <div style="flex: 1;">
+            <img src="../images/variant_prototype.png" alt="Round 2: Variant" class="zoomable" style="width:100%; border-radius: var(--r); box-shadow: var(--shadow);">
+            <a href="https://box-rouge-83601612.figma.site/" target="_blank" style="font-size: 12px; color: var(--accent); margin-top: 8px; display: inline-flex; align-items: center; gap: 4px; text-decoration: none;">
+              Variant
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Round 3 -->
+      <div>
+        <p style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); margin-bottom: 8px;">Round 3</p>
+        <p style="margin-bottom: 16px;">The Hybrid resolved this through progressive disclosure, and 90% chose it in the final round.</p>
+        <div style="display: flex; gap: 12px; max-width: 560px;">
+          <div style="flex: 1;">
+            <img src="../images/hybrid_collapsed.png" alt="Round 3: Hybrid" class="zoomable" style="width:100%; border-radius: var(--r); box-shadow: var(--shadow);">
+            <a href="https://affix-wild-87484619.figma.site/" target="_blank" style="font-size: 12px; color: var(--accent); margin-top: 8px; display: inline-flex; align-items: center; gap: 4px; text-decoration: none;">
+              Hybrid prototype
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+            </a>
+          </div>
+          <div style="flex: 1;">
+            <img src="../images/hybrid_show_more.png" alt="Round 3: Hybrid expanded" class="zoomable" style="width:100%; border-radius: var(--r); box-shadow: var(--shadow);">
+            <span style="font-size: 12px; color: var(--faint); margin-top: 6px; display: block;">Show more</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <p style="margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border);">This directly shaped the final hierarchy: 'Left to Spend' became the primary card, secondary metrics were simplified, and the calculation logic was made visible by default.</p>
+  </div>
+</section>
+
+
+<!-- ── Decisions ── -->
+<section class="section" id="decisions">
+  <div class="container">
+    <h2>Key product decisions</h2>
+
+    <!-- Decision 01 -->
+    <div style="background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--blue); border-radius: 12px; padding: 28px 32px; margin-bottom: 20px;">
+      <p style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--blue); margin-bottom: 10px;">Decision 01</p>
+      <h3 style="margin-bottom: 12px;">Show the calculation, not just the output</h3>
+      <p>The original "available to spend" was a single derived number that ignored upcoming bills.</p>
+      <p><strong>What changed:</strong> A transparent formula with Balance − Upcoming Bills = Left to Spend that users could edit. The differentiator wasn't the prediction itself, but making the logic visible.</p>
+      <div style="text-align:center; margin: 20px 0;">
+        <img src="../images/FID_edit_amount.png" alt="Editing Left to Spend" class="zoomable" style="max-width:300px; width:100%; border-radius: var(--r); box-shadow: var(--shadow);">
+        <p class="caption">Editable Left to Spend, transparency as a trust mechanism</p>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px;">
+        <div style="background: rgba(58,138,90,0.07); border-radius: var(--r); padding: 14px 16px;">
+          <p style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--green); margin-bottom: 6px;">Kept</p>
+          <p style="font-size: 13px; margin: 0;">Trust, accuracy, user agency. The number reflects reality, not an approximation.</p>
+        </div>
+        <div style="background: rgba(192,71,58,0.07); border-radius: var(--r); padding: 14px 16px;">
+          <p style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: #B83A30; margin-bottom: 6px;">Gave up</p>
+          <p style="font-size: 13px; margin: 0;">Simplicity. Showing a formula adds upfront cognitive load.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Decision 02 -->
+    <div style="background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--green); border-radius: 12px; padding: 28px 32px; margin-bottom: 20px;">
+      <p style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--green); margin-bottom: 10px;">Decision 02</p>
+      <h3 style="margin-bottom: 12px;">Progressive disclosure</h3>
+      <p>Round 2 compared a minimal Control against a richer Variant. 60% preferred the richer direction, but 40% disengaged: "It looks like I'm now a data analyst."</p>
+      <p><strong>What changed:</strong> A calmer default focused on the information users checked most often. Deeper insights appeared progressively through exploration and expansion.</p>
+      <div style="margin: 20px 0;">
+        <img src="../images/FID_progressive.png" alt="Progressive disclosure" class="zoomable" style="width:100%; border-radius: var(--r); box-shadow: var(--shadow);">
+        <p class="caption">Calm by default, detailed on request</p>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px;">
+        <div style="background: rgba(58,138,90,0.07); border-radius: var(--r); padding: 14px 16px;">
+          <p style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--green); margin-bottom: 6px;">Kept</p>
+          <p style="font-size: 13px; margin: 0;">Daily usability for users who want quick, clear answers.</p>
+        </div>
+        <div style="background: rgba(192,71,58,0.07); border-radius: var(--r); padding: 14px 16px;">
+          <p style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: #B83A30; margin-bottom: 6px;">Gave up</p>
+          <p style="font-size: 13px; margin: 0;">Discoverability. Some users didn't notice the deeper functionality unless they actively explored.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Decision 03 -->
+    <div style="background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--amber); border-radius: 12px; padding: 28px 32px;">
+      <p style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--amber); margin-bottom: 10px;">Decision 03</p>
+      <h3 style="margin-bottom: 12px;">Designing AI interactions users could verify</h3>
+      <p>Users were hesitant to trust AI-generated financial guidance when the calculations felt opaque.</p>
+      <p><strong>What changed:</strong> AI-generated values became visible and editable. The AI acted more like a conversational guide than an authoritative system output.</p>
+      <div style="text-align:center; margin: 20px 0;">
+        <img src="../images/FID_helpter_tips.png" alt="AI helper tips" class="zoomable" style="max-width:300px; width:100%; border-radius: var(--r); box-shadow: var(--shadow);">
+        <p class="caption">AI in context with visible, editable logic</p>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px;">
+        <div style="background: rgba(58,138,90,0.07); border-radius: var(--r); padding: 14px 16px;">
+          <p style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--green); margin-bottom: 6px;">Kept</p>
+          <p style="font-size: 13px; margin: 0;">Trust and engagement. Users interacted more confidently when they understood how recommendations were generated.</p>
+        </div>
+        <div style="background: rgba(192,71,58,0.07); border-radius: var(--r); padding: 14px 16px;">
+          <p style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: #B83A30; margin-bottom: 6px;">Gave up</p>
+          <p style="font-size: 13px; margin: 0;">Automation. Editable values meant prioritizing user control over fully automated guidance.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ── Concept design ── -->
+<section class="section" id="concept-design">
+  <div class="container">
+    <div class="section-label">Concept design</div>
+    <h2>The Hybrid: calm by default, but more useful on exploration</h2>
+    <p style="max-width:600px; margin-bottom:32px;">The final design brings Left to Spend to the front: a single, trustworthy number. AI guidance is a layer below, present when needed, invisible when not.</p>
+
+    <div class="screens-pair">
+      <div>
+        <div class="screen-label">Default view</div>
+        <img src="../images/hybrid_collapsed.png"
+             alt="Hybrid dashboard default" class="screen-img zoomable">
+        <div class="annotation">Users are directed to what they should do first. One clear, actionable number.</div>
+      </div>
+      <div>
+        <div class="screen-label">Expanded view</div>
+        <img src="../images/hybrid_show_more.png"
+             alt="Hybrid dashboard expanded" class="screen-img zoomable">
+        <div class="annotation">AI insights surface on demand. Guidance framed as suggestions, not instructions.</div>
+      </div>
+    </div>
+
+    <div class="gap-lg"></div>
+
+    <div class="two-col-even">
+      <div>
+        <div class="screen-label">Editable Left to Spend</div>
+        <img src="../images/FID_edit_amount.png"
+             alt="Editing Left to Spend"
+             style="max-width:280px; border-radius:var(--r); box-shadow:var(--shadow); width:100%;" class="zoomable">
+        <p class="caption" style="text-align:left; margin-top:10px;">Balance − Upcoming Bills = Left to Spend. Users can adjust the formula, making imperfect data more useful, not less.</p>
+      </div>
+      <div>
+        <div class="screen-label">AI guidance in context</div>
+        <img src="../images/FID_helpter_tips.png"
+             alt="AI helper tips"
+             style="max-width:280px; border-radius:var(--r); box-shadow:var(--shadow); width:100%;" class="zoomable">
+        <p class="caption" style="text-align:left; margin-top:10px;">"Pay £55 extra/month to save £325 in interest". Specific, actionable, verifiable. Users who understood the AI used it significantly more.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ── Design tension ── -->
+<section class="section" id="design-tension">
+  <div class="container">
+    <h2>Design tensions</h2>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+
+      <!-- Tension 01 -->
+      <div class="tension-card">
+        <div class="tension-q" style="font-size: 16px;">Should "Left to Spend" exist if the data is imperfect?</div>
+        <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 16px;">
+          <div>
+            <div class="outcome-label">Concern</div>
+            <p style="font-size: 13px; color: var(--muted); margin: 0; line-height: 1.6;">Variable income and incomplete history could produce unreliable forecasts.</p>
+          </div>
+          <div>
+            <div class="outcome-label">Direction</div>
+            <p style="font-size: 13px; color: var(--muted); margin: 0; line-height: 1.6;">Design for estimates, not certainty.</p>
+          </div>
+          <div>
+            <div class="outcome-label">Resolution</div>
+            <p style="font-size: 13px; color: var(--muted); margin: 0; line-height: 1.6;">Predictions became editable, conservative, and progressively more useful over time.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tension 02 -->
+      <div class="tension-card">
+        <div class="tension-q" style="font-size: 16px;">How visible should AI be?</div>
+        <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 16px;">
+          <div>
+            <div class="outcome-label">Concern</div>
+            <p style="font-size: 13px; color: var(--muted); margin: 0; line-height: 1.6;">Too much AI labeling made the interface feel noisy and self-conscious.</p>
+          </div>
+          <div>
+            <div class="outcome-label">Direction</div>
+            <p style="font-size: 13px; color: var(--muted); margin: 0; line-height: 1.6;">Use AI where it improves guidance, not where it advertises itself.</p>
+          </div>
+          <div>
+            <div class="outcome-label">Resolution</div>
+            <p style="font-size: 13px; color: var(--muted); margin: 0; line-height: 1.6;">AI indicators appeared selectively where transparency mattered most.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ── How the workflow evolved ── -->
+<section class="section" id="how-workflow-evolved">
+  <div class="container">
+    <h2>How my workflow evolved</h2>
+
+    <div class="wf-grid">
+      <div class="wf-col">
+        <div class="wf-col-label">Typical product design flow</div>
+        <div class="wf-steps">
+          <div class="wf-step"><div class="wf-step-num">1</div><div class="wf-step-text">Benchmarking &amp; exploratory research</div></div>
+          <div class="wf-step"><div class="wf-step-num">2</div><div class="wf-step-text">Sketching</div></div>
+          <div class="wf-step"><div class="wf-step-num">3</div><div class="wf-step-text">Wireframing</div></div>
+          <div class="wf-step"><div class="wf-step-num">4</div><div class="wf-step-text">High-fidelity mockups</div></div>
+          <div class="wf-step"><div class="wf-step-num">5</div><div class="wf-step-text">Prototyping</div></div>
+          <div class="wf-step"><div class="wf-step-num">6</div><div class="wf-step-text">Usability testing</div></div>
+          <div class="wf-step"><div class="wf-step-num">7</div><div class="wf-step-text">Developer handoff</div></div>
+        </div>
+      </div>
+      <div class="wf-col highlight">
+        <div class="wf-col-label">On this project</div>
+        <div class="wf-steps">
+          <div class="wf-step"><div class="wf-step-num">1</div><div class="wf-step-text">Benchmarking, research synthesis &amp; exploratory interviews</div></div>
+          <div class="wf-step"><div class="wf-step-num">2</div><div class="wf-step-text">AI-assisted concept exploration &amp; browser prototyping</div></div>
+          <div class="wf-step"><div class="wf-step-num">3</div><div class="wf-step-text">Early usability testing &amp; iteration</div></div>
+          <div class="wf-step"><div class="wf-step-num">4</div><div class="wf-step-text">Collaborative refinement across product &amp; engineering</div></div>
+          <div class="wf-step"><div class="wf-step-num">5</div><div class="wf-step-text">Developer handoff</div></div>
+        </div>
+      </div>
+    </div>
+
+    <p style="max-width:640px; margin-bottom: 14px; color: var(--muted);">What changed wasn't that research or testing disappeared. Concept generation, prototyping, and validation moved much closer together. Interactive browser prototypes became more effective for discussing behavior and hierarchy directly with product and engineering than static flows ever were.</p>
+    <p style="max-width:640px; margin-bottom: 0; color: var(--muted);">Human judgment still drove every decision. AI accelerated exploration and synthesis. The difference was speed of feedback, and how early real interactions could enter the conversation.</p>
+
+  </div>
+</section>
+
+
+<!-- ── Workflow ── -->
+<section class="section" id="workflow">
+  <div class="container">
+    <h2>Where we're at now</h2>
+    <p style="max-width:640px; margin-bottom: 28px; color: var(--muted);">A recurring question throughout the project was how far the design should go, and how quickly. The AI pipeline isn't production-ready across all markets, and a full rollout isn't realistic in one step. So I designed two tracks in parallel: the long-term vision, and a deliberate first step that banks could ship incrementally.</p>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 40px; align-items: start;">
+      <div>
+        <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+          <p style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); margin: 0;">The first step</p>
+          <a href="https://financial-insights-prototype.vercel.app/financial-insights-dashboard-web.html" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--accent); text-decoration: none; font-weight: 500;">View live <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></a>
+        </div>
+        <img src="../images/FID_first_step.png" alt="Incremental first step design" class="zoomable" style="width:100%; border-radius: var(--r); box-shadow: var(--shadow); cursor: zoom-in;">
+        <p class="caption">An evolved version of today's dashboard, shippable now</p>
+      </div>
+      <div style="padding-top: 28px;">
+        <p style="font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 14px;">The first step wasn't a compromise. It was a proof point: the direction was achievable, and the product could move incrementally without losing sight of the north star.</p>
+        <p style="font-size: 14px; color: var(--muted); line-height: 1.7; margin: 0;">The broader vision continues to evolve. The project is currently shaping internal conversations about the Financial Wellness roadmap and how AI guidance can be introduced progressively across markets.</p>
+      </div>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 12px;">
+      <p style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); margin: 0;">Collaboration workspace</p>
+      <a href="https://financial-insights-prototype.vercel.app" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--accent); text-decoration: none; font-weight: 500;">View live <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></a>
+    </div>
+    <img src="../images/FID_discussions.png" alt="Project discussions and organization" style="width:100%; border-radius: var(--r); box-shadow: var(--shadow);">
+    <p class="caption">Organizing research, prototypes, and testing directions across product and engineering conversations</p>
+  </div>
+</section>
+
+
+
+
+<!-- ── Footer ── -->
+<footer class="footer">
+  <div class="container">
+    <p style="font-size: 13px; color: var(--faint); margin: 0;">&copy; Matti Hicks</p>
+  </div>
+</footer>
+
+
+<!-- ── Image zoom modal ── -->
+<div id="zoom-modal">
+  <button id="zoom-close">&times;</button>
+  <img id="zoom-img" src="" alt="">
+</div>
+
+<script>
+  const modal    = document.getElementById('zoom-modal');
+  const zoomImg  = document.getElementById('zoom-img');
+  const closeBtn = document.getElementById('zoom-close');
+  const imgs     = document.querySelectorAll('.zoomable');
+  let idx = 0;
+
+  imgs.forEach((img, i) => {
+    img.addEventListener('click', () => {
+      idx = i; zoomImg.src = img.src; zoomImg.alt = img.alt;
+      modal.classList.add('open');
+    });
+  });
+  closeBtn.addEventListener('click', () => modal.classList.remove('open'));
+  modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('open'); });
+  document.addEventListener('keydown', e => {
+    if (!modal.classList.contains('open')) return;
+    if (e.key === 'Escape') modal.classList.remove('open');
+    if (e.key === 'ArrowRight' && idx < imgs.length - 1) { idx++; zoomImg.src = imgs[idx].src; }
+    if (e.key === 'ArrowLeft'  && idx > 0)               { idx--; zoomImg.src = imgs[idx].src; }
+  });
+</script>
+</body>
+</html>
