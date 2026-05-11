@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Financial Insights Dashboard — Slides | Matti Hicks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    img { max-width: 100%; height: auto; display: block; }
+
+    :root {
+      --bg:     #FAF7F4;
+      --card:   #FFFFFF;
+      --subtle: #F2EFE9;
+      --canvas: #E8E4DC;
+      --dark:   #2A2825;
+      --accent: #E86C3A;
+      --blue:   #4A6FA5;
+      --green:  #3A8A5A;
+      --amber:  #C08B30;
+      --ink:    #1A1A1A;
+      --muted:  #6B6B6B;
+      --faint:  #9B9B9B;
+      --border: #E2DDD8;
+      --r:      10px;
+      --shadow: 0 2px 16px rgba(0,0,0,0.08);
+    }
+
+    html, body {
+      width: 100%; height: 100%;
+      overflow: hidden;
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+    }
+
+    /* ── Deck ── */
+    .deck {
+      position: fixed;
+      inset: 0;
+    }
+
+    /* ── Slides ── */
+    .slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 56px 88px 72px;
+      overflow: hidden;
+    }
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .slide-inner {
+      width: 100%;
+      max-width: 920px;
+    }
+
+    /* ── Navigation zones ── */
+    .zone {
+      position: fixed;
+      top: 0; bottom: 0;
+      width: 20%;
+      cursor: pointer;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+    }
+    .zone-prev { left: 0; justify-content: flex-start; padding-left: 22px; }
+    .zone-next { right: 0; justify-content: flex-end;  padding-right: 22px; }
+    .zone-arrow {
+      opacity: 0;
+      transition: opacity 0.2s;
+      color: var(--faint);
+      font-size: 32px;
+      line-height: 1;
+      user-select: none;
+      font-weight: 300;
+    }
+    .zone:hover .zone-arrow { opacity: 0.45; }
+
+    /* ── Counter ── */
+    .counter {
+      position: fixed;
+      bottom: 22px;
+      right: 28px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--faint);
+      z-index: 60;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── Home button ── */
+    .home-btn {
+      position: fixed;
+      top: 18px;
+      right: 22px;
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 5px 12px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--muted);
+      cursor: pointer;
+      z-index: 60;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .home-btn:hover { color: var(--ink); border-color: var(--ink); }
+
+    /* ── Progress bar ── */
+    .progress-bar {
+      position: fixed;
+      bottom: 0; left: 0;
+      height: 2px;
+      background: var(--accent);
+      z-index: 60;
+      transition: width 0.3s ease;
+      opacity: 0.5;
+    }
+
+    /* ── Typography ── */
+    .label {
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--faint); margin-bottom: 12px;
+    }
+    .label.accent { color: var(--accent); }
+    .label.blue   { color: var(--blue); }
+
+    h1.slide-title {
+      font-size: 42px; font-weight: 700; letter-spacing: -0.025em;
+      line-height: 1.08; color: var(--ink); margin-bottom: 8px;
+    }
+    h2.slide-h {
+      font-size: 28px; font-weight: 600; letter-spacing: -0.015em;
+      line-height: 1.2; color: var(--ink); margin-bottom: 16px;
+    }
+    .body     { font-size: 15px; color: var(--muted); line-height: 1.7; }
+    .body strong { color: var(--ink); font-weight: 500; }
+    .body + .body { margin-top: 10px; }
+    .body-sm  { font-size: 13px; color: var(--muted); line-height: 1.65; }
+    .body-sm strong { color: var(--ink); font-weight: 500; }
+
+    /* ── Hero metadata cards ── */
+    .hero-cards {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--border); border-radius: var(--r); overflow: hidden;
+      margin-top: 36px;
+    }
+    .hero-card { padding: 20px 24px; background: var(--card); }
+    .hero-card + .hero-card { border-left: 1px solid var(--border); }
+    .hero-card-label {
+      font-size: 10px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--faint); margin-bottom: 8px;
+    }
+    .hero-card p { font-size: 14px; color: var(--muted); line-height: 1.6; margin: 0; }
+
+    /* ── Grid layouts ── */
+    .cols-3-2   { display: grid; grid-template-columns: 3fr 2fr;       gap: 48px; align-items: start; }
+    .cols-1-1   { display: grid; grid-template-columns: 1fr 1fr;       gap: 28px; align-items: start; }
+    .cols-1-1-1 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+
+    /* ── Pill ── */
+    .pill {
+      display: inline-block; font-size: 10px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.07em;
+      padding: 4px 10px; border-radius: 100px; margin-bottom: 10px;
+    }
+    .pill.before { background: var(--subtle); color: var(--faint); }
+    .pill.after  { background: rgba(58,138,90,0.12); color: var(--green); }
+
+    /* ── Annotation ── */
+    .annotation {
+      background: var(--ink); color: #fff;
+      font-size: 13px; font-weight: 500; line-height: 1.45;
+      padding: 9px 13px; border-radius: 8px; margin-top: 10px;
+    }
+
+    /* ── Caption ── */
+    .caption { font-size: 11px; color: var(--faint); margin-top: 7px; text-align: center; }
+
+    /* ── Concept cards (layout exploration) ── */
+    .concept-card { background: var(--subtle); border-radius: var(--r); padding: 14px 16px; }
+    .concept-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 5px; }
+    .concept-label.orange { color: var(--accent); }
+    .concept-label.blue   { color: var(--blue); }
+    .concept-label.gray   { color: var(--muted); }
+
+    /* ── Data constraint cards ── */
+    .constraint-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .constraint-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 22px 24px;
+    }
+    .constraint-card.c-green  { border-top: 3px solid var(--green); }
+    .constraint-card.c-amber  { border-top: 3px solid var(--amber); }
+    .constraint-card.c-orange { border-top: 3px solid var(--accent); }
+    .constraint-card.c-gray   { border-top: 3px solid var(--border); }
+    .constraint-rel {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; margin-bottom: 5px;
+    }
+    .constraint-rel.green  { color: var(--green); }
+    .constraint-rel.amber  { color: var(--amber); }
+    .constraint-rel.orange { color: var(--accent); }
+    .constraint-rel.gray   { color: var(--faint); }
+    .constraint-name { font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+    .constraint-desc { font-size: 13px; color: var(--muted); line-height: 1.6; margin: 0; }
+
+    /* ── Tool chips ── */
+    .tool-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+    .tool-chip {
+      display: inline-block; font-size: 13px; color: var(--ink);
+      background: var(--subtle); border-radius: 6px; padding: 4px 12px;
+    }
+
+    /* ── Round label ── */
+    .round-label {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--faint); margin-bottom: 7px;
+    }
+
+    /* ── Proto link ── */
+    .proto-link {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 12px; color: var(--accent); text-decoration: none;
+      font-weight: 500; margin-top: 7px;
+    }
+    .proto-link:hover { opacity: 0.75; }
+
+    /* ── Live link ── */
+    .live-link {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 12px; color: var(--accent); text-decoration: none; font-weight: 500;
+    }
+    .live-link:hover { opacity: 0.75; }
+
+    /* ── Decision badge ── */
+    .decision-badge {
+      display: inline-block; font-size: 11px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.07em;
+      margin-bottom: 10px; padding-bottom: 2px;
+    }
+    .decision-badge.blue   { color: var(--blue);   border-bottom: 2px solid var(--blue); }
+    .decision-badge.green  { color: var(--green);  border-bottom: 2px solid var(--green); }
+    .decision-badge.amber  { color: var(--amber);  border-bottom: 2px solid var(--amber); }
+
+    /* ── Tradeoff grid ── */
+    .tradeoff-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
+    .tradeoff-card { border-radius: var(--r); padding: 12px 14px; }
+    .tradeoff-card.kept { background: rgba(58,138,90,0.07); }
+    .tradeoff-card.gave { background: rgba(192,71,58,0.07); }
+    .tradeoff-label {
+      font-size: 10px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.07em; margin-bottom: 5px;
+    }
+    .tradeoff-label.kept { color: var(--green); }
+    .tradeoff-label.gave { color: #B83A30; }
+    .tradeoff-card p { font-size: 13px; color: var(--ink); margin: 0; line-height: 1.5; }
+
+    /* ── Screen label ── */
+    .screen-label {
+      font-size: 11px; font-weight: 500; text-transform: uppercase;
+      letter-spacing: 0.05em; color: var(--faint); margin-bottom: 8px;
+    }
+
+    /* ── Tension card ── */
+    .tension-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 26px 28px;
+    }
+    .tension-q {
+      font-size: 16px; font-weight: 600; color: var(--ink);
+      margin-bottom: 18px; line-height: 1.4;
+    }
+    .tension-section { margin-bottom: 12px; }
+    .tension-section:last-child { margin-bottom: 0; }
+    .tension-section-label {
+      font-size: 10px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.07em; color: var(--accent); margin-bottom: 4px;
+    }
+    .tension-section p { font-size: 13px; color: var(--muted); line-height: 1.6; margin: 0; }
+
+    /* ── Workflow comparison ── */
+    .wf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .wf-col {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 18px 20px;
+    }
+    .wf-col.highlight { border-color: rgba(232,108,58,0.25); }
+    .wf-col-label {
+      font-size: 10px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--faint); margin-bottom: 12px;
+    }
+    .wf-steps { display: flex; flex-direction: column; }
+    .wf-step {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 7px 0; border-bottom: 1px solid var(--border);
+    }
+    .wf-step:last-child { border-bottom: none; padding-bottom: 0; }
+    .wf-step-num {
+      flex-shrink: 0; width: 18px; height: 18px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: 600; color: var(--muted);
+      background: var(--subtle); margin-top: 1px;
+    }
+    .wf-col.highlight .wf-step-num { background: rgba(232,108,58,0.12); color: var(--accent); }
+    .wf-step-text { font-size: 13px; color: var(--ink); line-height: 1.45; }
+
+    /* ── Callout ── */
+    .callout { border-radius: 8px; padding: 12px 16px; margin-top: 16px; }
+    .callout.orange { background: rgba(232,108,58,0.08); border-left: 3px solid var(--accent); }
+    .callout p { font-size: 14px; color: var(--ink); margin: 0; line-height: 1.6; }
+
+    /* ── Bullet list ── */
+    ul.bullet {
+      list-style: disc; padding-left: 18px;
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    ul.bullet li { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+    /* ── Spacers ── */
+    .gap-sm { height: 10px; }
+    .gap    { height: 18px; }
+    .gap-lg { height: 28px; }
+
+    /* ── Image zoom ── */
+    .slide img {
+      cursor: zoom-in;
+      position: relative;
+      z-index: 55; /* sit above nav zones so clicks register on the image */
+      box-shadow: none !important;
+      border-radius: 0 !important;
+    }
+    #zoom-modal {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.88); z-index: 1000;
+      align-items: center; justify-content: center;
+    }
+    #zoom-modal.open { display: flex; }
+    #zoom-modal img {
+      max-width: 92vw; max-height: 92vh;
+      border-radius: 0; object-fit: contain;
+      cursor: default; position: static;
+    }
+    #zoom-close {
+      position: fixed; top: 18px; right: 22px;
+      background: none; border: none; color: #fff;
+      font-size: 30px; cursor: pointer; line-height: 1;
+      opacity: 0.7; z-index: 1001;
+    }
+    #zoom-close:hover { opacity: 1; }
+  </style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 1 — Title / Hero
+  ═══════════════════════════════════════════════════ -->
+  <div class="slide" id="s1">
+    <div class="slide-inner">
+      <div class="label">Case Study · Backbase · Amsterdam</div>
+      <h1 class="slide-title">Financial Insights<br>Dashboard</h1>
+      <p class="body" style="margin-top: 12px; max-width: 560px;">An AI-powered Financial Wellness experience designed to help users understand not just where their money went, but what to do next.</p>
+      <div class="hero-cards">
+        <div class="hero-card">
+          <div class="hero-card-label">Goal</div>
+          <p>Design an AI-powered Financial Wellness experience that increases engagement and supports smarter financial decisions.</p>
+        </div>
+        <div class="hero-card">
+          <div class="hero-card-label">My Role</div>
+          <p>Sole designer. Led research, concept design, prototyping, and 3 rounds of usability testing. Collaborated closely with Product and Engineering.</p>
+        </div>
+        <div class="hero-card">
+          <div class="hero-card-label">Impact &amp; Status</div>
+          <p>90% preference for the Hybrid design across 3 testing rounds with 26 participants. Now shaping the Financial Wellness roadmap.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 2 — Before & After
+  ═══════════════════════════════════════════════════ -->
+  <div class="slide" id="s2">
+    <div class="slide-inner">
+      <div class="label">Before &amp; After</div>
+      <h2 class="slide-h">From passive reporting to actionable guidance</h2>
+      <div class="cols-1-1">
+        <div>
+          <div class="pill before">Before</div>
+          <img src="../images/Financial%20Insights%20Dashboard_original.png"
+               alt="Original Financial Insights dashboard"
+               style="border-radius: 10px; box-shadow: var(--shadow); width: 100%; max-height: 340px; object-fit: contain; object-position: top;">
+          <p class="caption">Passive reporting: balance, spending history, no guidance</p>
+        </div>
+        <div>
+          <div class="pill after">Current direction</div>
+          <img src="../images/hybrid_collapsed.png"
+               alt="Hybrid dashboard, final design"
+               style="border-radius: 10px; box-shadow: var(--shadow); width: 100%; max-height: 340px; object-fit: contain; object-position: top;">
+          <p class="caption">Actionable: Left to Spend, AI guidance, expandable depth</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 3 — First Steps
+  ═══════════════════════════════════════════════════ -->
+  <div class="slide" id="s3">
+    <div class="slide-inner">
+      <div class="cols-3-2">
+        <div>
+          <h2 class="slide-h">First steps</h2>
+          <p class="body">My first step was understanding what insight already existed internally.</p>
+          <p class="body">We had <strong>previously run a financial wellness survey</strong> with nearly 300 participants across the US, UK, and Canada, which highlighted:</p>
+          <div class="gap-sm"></div>
+          <ul class="bullet">
+            <li>Financial anxiety patterns</li>
+            <li>Decision-making behavior</li>
+            <li>Moments users actively seek guidance</li>
+            <li>Frustrations with existing banking tools</li>
+          </ul>
+          <div class="gap-sm"></div>
+          <p class="body">I also <strong>revisited analytics</strong> from the existing Insights experience and prior research from the broader retail banking redesign. Engagement was low — users briefly checked spending categories or budgets, but deeper interaction was rare.</p>
+        </div>
+        <div>
+          <img src="../images/report_financial_wellness.png"
+               alt="Financial insights research report"
+               style="border-radius: var(--r); box-shadow: var(--shadow); width: 100%;">
+          <p class="caption">Financial insights research report</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 4 — Layout Exploration
+  ═══════════════════════════════════════════════════ -->
+  <div class="slide" id="s4">
+    <div class="slide-inner">
+      <div class="label accent">Layout exploration</div>
+      <h2 class="slide-h">Exploring new hierarchy models</h2>
+      <div class="cols-1-1-1" style="margin-bottom: 16px;">
+        <div class="concept-card">
+          <div class="concept-label orange">Concept 1: Priority-first</div>
+          <p class="body-sm" style="color: var(--ink);">Immediate clarity and action. "Available to Spend" as the dominant anchor. One number, one focus.</p>
+        </div>
+        <div class="concept-card">
+          <div class="concept-label blue">Concept 2: Topic-first</div>
+          <p class="body-sm" style="color: var(--ink);">A balanced guidance model: 'What's my situation right now?' → 'How did I get here?' → 'Where am I headed?' → 'What can I do about it?'</p>
+        </div>
+        <div class="concept-card">
+          <div class="concept-label gray">Concept 3: Category-based</div>
+          <p class="body-sm" style="color: var(--ink);">Closer to traditional banking taxonomy. Familiar structure, broader financial overview upfront.</p>
+        </div>
+      </div>
+      <img src="../images/wellness_concept_layouts.png"
+           alt="Three competing hierarchy models"
+           style="width: 100%; display: block; border-radius: var(--r);">
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 5 — Data Constraints
+  ═══════════════════════════════════════════════════ -->
+  <div class="slide" id="s5">
+    <div class="slide-inner">
+      <h2 class="slide-h">Designing around imperfect financial data</h2>
+      <p class="body" style="max-width: 660px; margin-bottom: 24px;">A major challenge: the system understood different parts of a user's financial life with very different levels of reliability. The interface couldn't assume perfect financial understanding.</p>
+      <div class="constraint-grid">
+        <div class="constraint-card c-green">
+          <div class="constraint-rel green">Reliable</div>
+          <div class="constraint-name">Account balance</div>
+          <p class="constraint-desc">Real-time and stable, but not meaningful on its own without context around upcoming obligations.</p>
+        </div>
+        <div class="constraint-card c-amber">
+          <div class="constraint-rel amber">Noisy</div>
+          <div class="constraint-name">Transaction categories</div>
+          <p class="constraint-desc">Usually accurate for common spending patterns, but inconsistent with ambiguous merchant names and edge cases.</p>
+        </div>
+        <div class="constraint-card c-orange">
+          <div class="constraint-rel orange">Uncertain</div>
+          <div class="constraint-name">Forecasting</div>
+          <p class="constraint-desc">Works best with recurring patterns and established history. Reliability drops significantly with variable income. Still on roadmap.</p>
+        </div>
+        <div class="constraint-card c-gray">
+          <div class="constraint-rel gray">Missing</div>
+          <div class="constraint-name">New users</div>
+          <p class="constraint-desc">Some users had little or no historical financial data, making onboarding and progressive personalization critical.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 6 — AI-Assisted Browser Prototyping
+  ═══════════════════════════════════════════════════ -->
+  <div class="slide" id="s6">
+    <div class="slide-inner">
+      <div style="display: grid; grid-template-columns: 1fr auto; gap: 52px; align-items: center;">
+        <div>
+          <h2 class="slide-h">AI-assisted browser prototyping</h2>
+          <p class="body" style="margin-bottom: 12px;">Once the hierarchy direction became clearer, I moved quickly into AI-assisted browser prototyping.</p>
+          <p class="body" style="margin-bottom: 20px;">This enabled earlier discussions around feasibility and design-system alignment, making collaboration with product and engineering more concrete from the start. Interactive browser prototypes proved more effective for discussing behavior and hierarchy than static flows ever were.</p>
+          <div class="label" style="margin-bottom: 6px;">Tools</div>
+          <div class="tool-chips">
+            <span class="tool-chip">Cursor / Claude</span>
+            <span class="tool-chip">Lovable</span>
+            <span class="tool-chip">Figma Make</span>
+          </div>
+        </div>
+        <div>
+          <img src="../images/FID_prompting.jpg"
+               alt="AI-assisted browser prototyping exploration"
+               style="width: 265px; border-radius: var(--r); box-shadow: var(--shadow); display: block;">
+          <p class="caption" style="text-align: left; margin-top: 8px;">Implementation-aware browser prototyping workflow</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 7 — Research & Iteration: Round 1
+  ═══════════════════════════════════════════════════ -->
+  <div class="slide" id="s7">
+    <div class="slide-inner">
+      <div class="label accent">Research &amp; Iteration</div>
+      <h2 class="slide-h">Three rounds of testing with 26 UK-based users</h2>
+      <div style="display: grid; grid-template-columns: 3fr 2fr; gap: 44px; align-items: start;">
+        <div>
+          <div class="round-label">Round 1</div>
+          <p class="body" style="margin-bottom: 14px;">Round 1 surfaced that the "available to spend" calculation was opaque and the editable field needed more affordance. Both were fixed before Round 2.</p>
+        </div>
+        <div>
+          <img src="../images/initial_prototype.png"
+               alt="Round 1: Initial prototype"
+               style="width: 100%; border-radius: var(--r); box-shadow: var(--shadow);">
+          <a href="https://sunset-donkey-14427650.figma.site/" target="_blank" class="proto-link">
+            View prototype
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 8 — Research & Iteration: Rounds 2 & 3
+  ═══════════════════════════════════════════════════ -->
+  <div class="slide" id="s8">
+    <div class="slide-inner">
+      <div class="label accent">Research &amp; Iteration</div>
+      <div class="cols-1-1">
+        <div>
+          <div class="round-label">Round 2</div>
+          <p class="body-sm" style="margin-bottom: 14px;">Comparing a simpler Control against a richer Variant — 60% preferred the Variant but 40% disengaged: <em>"It looks like I'm now a data analyst."</em> Users asked for the best of both.</p>
+          <div style="display: flex; gap: 10px;">
+            <div style="flex: 1;">
+              <img src="../images/control_prototype.png"
+                   alt="Round 2: Control"
+                   style="width: 100%; border-radius: var(--r); box-shadow: var(--shadow);">
+              <a href="https://taffy-judge-98528828.figma.site/" target="_blank" class="proto-link">
+                Control
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+              </a>
+            </div>
+            <div style="flex: 1;">
+              <img src="../images/variant_prototype.png"
+                   alt="Round 2: Variant"
+                   style="width: 100%; border-radius: var(--r); box-shadow: var(--shadow);">
+              <a href="https://box-rouge-83601612.figma.site/" target="_blank" class="proto-link">
+                Variant
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="round-label">Round 3</div>
+          <p class="body-sm" style="margin-bottom: 14px;">The Hybrid resolved this through progressive disclosure — <strong style="color: var(--ink);">90% chose it</strong> in the final round. Calm by default, revealing depth on demand.</p>
+          <div style="display: flex; gap: 10px;">
+            <div style="flex: 1;">
+              <img src="../images/hybrid_collapsed.png"
+                   alt="Round 3: Hybrid"
+                   style="width: 100%; border-radius: var(--r); box-shadow: var(--shadow);">
+              <a href="https://affix-wild-87484619.figma.site/" target="_blank" class="proto-link">
+                Hybrid prototype
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+              </a>
+            </div>
+            <div style="flex: 1;">
+              <img src="../images/hybrid_show_more.png"
+                   alt="Round 3: Hybrid expanded"
+                   style="width: 100%; border-radius: var(--r); box-shadow: var(--shadow);">
+              <p class="caption" style="text-align: left;">Show more</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 9 — Decision 01: Show the Calculation
+  ═══════════════════════════════════════════════════ -->
+  <div class="slide" id="s9">
+    <div class="slide-inner">
+      <div class="decision-badge blue">Decision 01</div>
+      <h2 class="slide-h">Show the calculation, not just the output</h2>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: start;">
+        <div>
+          <p class="body" style="margin-bottom: 12px;">The original "available to spend" was a single derived number that ignored upcoming bills.</p>
+          <p class="body"><strong>What changed:</strong> A transparent formula — Balance − Upcoming Bills = Left to Spend — that users could edit. The differentiator wasn't the prediction itself, but making the logic visible.</p>
+          <div class="tradeoff-grid">
+            <div class="tradeoff-card kept">
+              <div class="tradeoff-label kept">Kept</div>
+              <p>Trust, accuracy, user agency. The number reflects reality, not an approximation.</p>
+            </div>
+            <div class="tradeoff-card gave">
+              <div class="tradeoff-label gave">Gave up</div>
+              <p>Simplicity. Showing a formula adds upfront cognitive load.</p>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; gap: 14px; align-items: start;">
+          <div style="flex: 1;">
+            <img src="../images/FID_edit_amount.png"
+                 alt="Editing Left to Spend"
+                 style="width: 100%; border-radius: var(--r); box-shadow: var(--shadow);">
+            <p class="caption">Editing the amount</p>
+          </div>
+          <div style="flex: 1;">
+            <img src="../images/FID_edit_amount_confirmation.png"
+                 alt="Edit amount confirmation"
+                 style="width: 100%; border-radius: var(--r); box-shadow: var(--shadow);">
+            <p class="caption">Confirmation state</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 10 — Decision 02: Progressive Disclosure
+  ═══════════════════════════════════════════════════ -->
+  <div class="slide" id="s10">
+    <div class="slide-inner">
+      <div class="decision-badge green">Decision 02</div>
+      <h2 class="slide-h">Progressive disclosure</h2>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: start;">
+        <div>
+          <p class="body" style="margin-bottom: 12px;">Round 2 compared a minimal Control against a richer Variant. 60% preferred the richer direction, but 40% disengaged: <em>"It looks like I'm now a data analyst."</em></p>
+          <p class="body"><strong>What changed:</strong> A calmer default focused on what users checked most often. Deeper insights appeared progressively through exploration and expansion.</p>
+          <div class="tradeoff-grid">
+            <div class="tradeoff-card kept">
+              <div class="tradeoff-label kept">Kept</div>
+              <p>Daily usability for users who want quick, clear answers.</p>
+            </div>
+            <div class="tradeoff-card gave">
+              <div class="tradeoff-label gave">Gave up</div>
+              <p>Discoverability. Some users didn't notice deeper functionality unless they actively explored.</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <img src="../images/FID_progressive.png"
+               alt="Progressive disclosure"
+               style="width: 100%; border-radius: var(--r); box-shadow: var(--shadow);">
+          <p class="caption">Calm by default, detailed on request</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 11 — Decision 03: Verifiable AI
+  ═══════════════════════════════════════════════════ -->
+  <div class="slide" id="s11">
+    <div class="slide-inner">
+      <div class="decision-badge amber">Decision 03</div>
+      <h2 class="slide-h">Designing AI interactions thoughtfully</h2>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: start;">
+        <div>
+          <p class="body" style="margin-bottom: 12px;">Users were generally comfortable with AI-driven financial guidance, but excessive AI labeling made the interface feel noisy and self-conscious.</p>
+          <p class="body"><strong>What changed:</strong> We shifted from highly visible AI interactions toward calmer, contextual guidance. AI became supportive infrastructure rather than the centerpiece of the experience.</p>
+          <div class="tradeoff-grid">
+            <div class="tradeoff-card kept">
+              <div class="tradeoff-label kept">Kept</div>
+              <p>Trust and engagement, transparency where it mattered, and contextual guidance tied to real user goals.</p>
+            </div>
+            <div class="tradeoff-card gave">
+              <div class="tradeoff-label gave">Gave up</div>
+              <p>Highly visible AI branding, "black box" behavior, AI as the primary interaction model.</p>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; justify-content: center;">
+          <div>
+            <img src="../images/FID_helpter_tips.png"
+                 alt="AI helper tips"
+                 style="max-width: 240px; width: 100%; border-radius: var(--r); box-shadow: var(--shadow);">
+            <p class="caption">AI in context with visible, editable logic</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 12 — The Hybrid Design
+  ═══════════════════════════════════════════════════ -->
+  <div class="slide" id="s12">
+    <div class="slide-inner">
+      <div class="label accent">Concept design</div>
+      <h2 class="slide-h">The Hybrid: calm by default, more useful on exploration</h2>
+      <p class="body" style="max-width: 600px; margin-bottom: 22px;">The final design brings Left to Spend to the front: a single, trustworthy number. AI guidance is a layer below — present when needed, invisible when not.</p>
+      <div class="cols-1-1">
+        <div>
+          <div class="screen-label">Default view</div>
+          <img src="../images/hybrid_collapsed.png"
+               alt="Hybrid dashboard default"
+               style="width: 100%; border-radius: var(--r); box-shadow: var(--shadow); max-height: 280px; object-fit: contain; object-position: top;">
+          <div class="annotation">Users are directed to what they should do first. One clear, actionable number.</div>
+        </div>
+        <div>
+          <div class="screen-label">Expanded view</div>
+          <img src="../images/hybrid_show_more.png"
+               alt="Hybrid dashboard expanded"
+               style="width: 100%; border-radius: var(--r); box-shadow: var(--shadow); max-height: 280px; object-fit: contain; object-position: top;">
+          <div class="annotation">AI insights surface on demand. Guidance framed as suggestions, not instructions.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 13 — Design Tensions
+  ═══════════════════════════════════════════════════ -->
+  <div class="slide" id="s14">
+    <div class="slide-inner">
+      <h2 class="slide-h">Design tensions</h2>
+      <div class="cols-1-1">
+        <div class="tension-card">
+          <div class="tension-q">Should users need to edit "Left to Spend"?</div>
+          <div class="tension-section">
+            <div class="tension-section-label">Concern</div>
+            <p>Frequent overrides could signal weak forecasting, low confidence, or gaps in the underlying financial data.</p>
+          </div>
+          <div class="tension-section">
+            <div class="tension-section-label">Resolution</div>
+            <p>Users can inspect or occasionally override system assumptions when financial context is uncertain, while the default experience remains calm and mostly automated.</p>
+          </div>
+        </div>
+        <div class="tension-card">
+          <div class="tension-q">How visible should AI be?</div>
+          <div class="tension-section">
+            <div class="tension-section-label">Concern</div>
+            <p>Too much AI labeling made the interface feel noisy and self-conscious.</p>
+          </div>
+          <div class="tension-section">
+            <div class="tension-section-label">Resolution</div>
+            <p>Use AI where it improves guidance, not where it advertises itself. AI indicators should appear selectively where transparency matters most.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 15 — How My Workflow Evolved
+  ═══════════════════════════════════════════════════ -->
+  <div class="slide" id="s15">
+    <div class="slide-inner">
+      <h2 class="slide-h">How my workflow evolved</h2>
+      <div class="wf-grid" style="margin-bottom: 22px;">
+        <div class="wf-col">
+          <div class="wf-col-label">Typical product design flow</div>
+          <div class="wf-steps">
+            <div class="wf-step"><div class="wf-step-num">1</div><div class="wf-step-text">Benchmarking &amp; exploratory research</div></div>
+            <div class="wf-step"><div class="wf-step-num">2</div><div class="wf-step-text">Sketching</div></div>
+            <div class="wf-step"><div class="wf-step-num">3</div><div class="wf-step-text">Wireframing</div></div>
+            <div class="wf-step"><div class="wf-step-num">4</div><div class="wf-step-text">High-fidelity mockups</div></div>
+            <div class="wf-step"><div class="wf-step-num">5</div><div class="wf-step-text">Prototyping</div></div>
+            <div class="wf-step"><div class="wf-step-num">6</div><div class="wf-step-text">Usability testing</div></div>
+            <div class="wf-step"><div class="wf-step-num">7</div><div class="wf-step-text">Developer handoff</div></div>
+          </div>
+        </div>
+        <div class="wf-col highlight">
+          <div class="wf-col-label">On this project</div>
+          <div class="wf-steps">
+            <div class="wf-step"><div class="wf-step-num">1</div><div class="wf-step-text">Benchmarking, research synthesis &amp; exploratory interviews</div></div>
+            <div class="wf-step"><div class="wf-step-num">2</div><div class="wf-step-text">AI-assisted concept exploration &amp; browser prototyping</div></div>
+            <div class="wf-step"><div class="wf-step-num">3</div><div class="wf-step-text">Early usability testing &amp; iteration</div></div>
+            <div class="wf-step"><div class="wf-step-num">4</div><div class="wf-step-text">Collaborative refinement across product &amp; engineering</div></div>
+            <div class="wf-step"><div class="wf-step-num">5</div><div class="wf-step-text">Developer handoff</div></div>
+          </div>
+        </div>
+      </div>
+      <p class="body" style="max-width: 640px; margin-bottom: 10px;">What changed wasn't that research or testing disappeared. Concept generation, prototyping, and validation moved much closer together. Interactive browser prototypes became more effective for discussing behavior and hierarchy directly with product and engineering than static flows ever were.</p>
+      <p class="body" style="max-width: 640px;">Human judgment still drove every decision. AI accelerated exploration and synthesis.</p>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 16 — Where We're At Now
+  ═══════════════════════════════════════════════════ -->
+  <div class="slide" id="s16">
+    <div class="slide-inner">
+      <h2 class="slide-h">Where we're at now</h2>
+      <p class="body" style="max-width: 640px; margin-bottom: 8px;">A recurring question throughout the project was how far the design should go, and how quickly. A full rollout isn't realistic in one step. So I designed two tracks in parallel: the long-term vision, and a deliberate first step that banks could ship incrementally.</p>
+      <p class="body" style="max-width: 640px; margin-bottom: 28px;">The hybrid design continues to evolve, shaping internal conversations about the Financial Wellness roadmap and how AI guidance can be introduced progressively across markets.</p>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start;">
+        <div>
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+            <span class="label" style="margin: 0;">The first step</span>
+            <a href="https://financial-insights-prototype.vercel.app/financial-insights-dashboard-web.html" target="_blank" class="live-link">
+              View live
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+            </a>
+          </div>
+          <img src="../images/FID_first_step.png"
+               alt="Incremental first step design"
+               style="width: 100%; border-radius: var(--r); box-shadow: var(--shadow); max-height: 260px; object-fit: cover; object-position: top;">
+        </div>
+        <div>
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+            <span class="label" style="margin: 0;">Collaboration workspace</span>
+            <a href="https://financial-insights-prototype.vercel.app" target="_blank" class="live-link">
+              View live
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+            </a>
+          </div>
+          <img src="../images/FID_discussions.png"
+               alt="Project discussions and organization"
+               style="width: 100%; border-radius: var(--r); box-shadow: var(--shadow); max-height: 260px; object-fit: cover; object-position: top;">
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /deck -->
+
+
+<!-- ── Navigation zones ── -->
+<div class="zone zone-prev" id="zone-prev" role="button" aria-label="Previous slide">
+  <span class="zone-arrow">‹</span>
+</div>
+<div class="zone zone-next" id="zone-next" role="button" aria-label="Next slide">
+  <span class="zone-arrow">›</span>
+</div>
+
+<!-- ── UI chrome ── -->
+<div class="counter" id="counter">1 / 15</div>
+
+<button class="home-btn" id="home-btn" title="Return to first slide">
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+    <polyline points="9 22 9 12 15 12 15 22"/>
+  </svg>
+  Home
+</button>
+
+<div class="progress-bar" id="progress-bar"></div>
+
+<!-- ── Image zoom modal ── -->
+<div id="zoom-modal">
+  <button id="zoom-close">&times;</button>
+  <img id="zoom-img" src="" alt="">
+</div>
+
+
+<script>
+  const TOTAL  = 15;
+  let current  = 0;
+
+  const slides  = document.querySelectorAll('.slide');
+  const counter = document.getElementById('counter');
+  const bar     = document.getElementById('progress-bar');
+
+  function updateUI() {
+    counter.textContent = `${current + 1} / ${TOTAL}`;
+    bar.style.width = `${((current + 1) / TOTAL) * 100}%`;
+  }
+
+  function goTo(n) {
+    if (n < 0 || n >= TOTAL) return;
+    slides[current].classList.remove('active');
+    current = n;
+    slides[current].classList.add('active');
+    updateUI();
+  }
+
+  // Initialise first slide
+  slides[0].classList.add('active');
+  updateUI();
+
+  // Click zones
+  document.getElementById('zone-prev').addEventListener('click', () => goTo(current - 1));
+  document.getElementById('zone-next').addEventListener('click', () => goTo(current + 1));
+
+  // Home button
+  document.getElementById('home-btn').addEventListener('click', () => goTo(0));
+
+  // ── Image zoom ──
+  const zoomModal = document.getElementById('zoom-modal');
+  const zoomImg   = document.getElementById('zoom-img');
+  const zoomClose = document.getElementById('zoom-close');
+  const allImgs   = Array.from(document.querySelectorAll('.slide img'));
+  let zoomIdx = 0;
+
+  function openZoom(i) {
+    zoomIdx = i;
+    zoomImg.src = allImgs[i].src;
+    zoomImg.alt = allImgs[i].alt;
+    zoomModal.classList.add('open');
+  }
+  function closeZoom() {
+    zoomModal.classList.remove('open');
+  }
+
+  allImgs.forEach((img, i) => {
+    img.addEventListener('click', e => {
+      e.stopPropagation();
+      openZoom(i);
+    });
+  });
+
+  zoomClose.addEventListener('click', closeZoom);
+  zoomModal.addEventListener('click', e => {
+    if (e.target === zoomModal) closeZoom();
+  });
+
+  // Keyboard navigation — zoom takes priority when open
+  document.addEventListener('keydown', e => {
+    if (zoomModal.classList.contains('open')) {
+      if (e.key === 'Escape') { e.preventDefault(); closeZoom(); }
+      if (e.key === 'ArrowRight' && zoomIdx < allImgs.length - 1) {
+        zoomIdx++; zoomImg.src = allImgs[zoomIdx].src; zoomImg.alt = allImgs[zoomIdx].alt;
+      }
+      if (e.key === 'ArrowLeft' && zoomIdx > 0) {
+        zoomIdx--; zoomImg.src = allImgs[zoomIdx].src; zoomImg.alt = allImgs[zoomIdx].alt;
+      }
+      return; // don't let slide navigation fire while zoom is open
+    }
+
+    switch (e.key) {
+      case 'ArrowRight':
+      case 'ArrowDown':
+      case ' ':
+        e.preventDefault();
+        goTo(current + 1);
+        break;
+      case 'ArrowLeft':
+      case 'ArrowUp':
+        e.preventDefault();
+        goTo(current - 1);
+        break;
+      case 'Escape':
+      case 'Home':
+        e.preventDefault();
+        goTo(0);
+        break;
+      case 'End':
+        e.preventDefault();
+        goTo(TOTAL - 1);
+        break;
+    }
+  });
+
+  // Touch / swipe support
+  let touchStartX = 0;
+  document.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].clientX;
+  }, { passive: true });
+  document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 50) {
+      dx < 0 ? goTo(current + 1) : goTo(current - 1);
+    }
+  }, { passive: true });
+</script>
+
+</body>
+</html>
