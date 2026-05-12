@@ -250,9 +250,66 @@
       .reflection { padding: 32px 24px; }
       .reflection p { font-size: 16px; }
     }
+
+    /* ── Password gate ── */
+    #password-gate {
+      position: fixed; inset: 0;
+      background: var(--bg);
+      z-index: 2000;
+      display: flex; align-items: center; justify-content: center;
+      transition: opacity 0.4s ease;
+    }
+    #password-gate.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .gate-card {
+      width: 100%; max-width: 360px;
+      padding: 40px;
+    }
+    .gate-card h2 {
+      font-size: 20px; font-weight: 600; color: var(--ink);
+      margin-bottom: 6px; letter-spacing: -0.01em;
+    }
+    .gate-card p {
+      font-size: 14px; color: var(--muted); margin-bottom: 24px; line-height: 1.6;
+    }
+    .gate-input {
+      width: 100%; padding: 10px 14px;
+      font-size: 15px; font-family: inherit;
+      border: 1px solid var(--border); border-radius: var(--r);
+      background: var(--card); color: var(--ink);
+      outline: none; margin-bottom: 12px;
+      transition: border-color 0.15s;
+    }
+    .gate-input:focus { border-color: var(--accent); }
+    .gate-input.error { border-color: #B83A30; }
+    .gate-btn {
+      width: 100%; padding: 10px;
+      background: var(--accent); color: #fff;
+      font-size: 14px; font-weight: 500; font-family: inherit;
+      border: none; border-radius: var(--r);
+      cursor: pointer; transition: opacity 0.15s;
+    }
+    .gate-btn:hover { opacity: 0.9; }
+    .gate-error {
+      font-size: 13px; color: #B83A30;
+      margin-top: 10px; display: none;
+    }
   </style>
 </head>
 <body>
+
+<!-- ── Password gate ── -->
+<div id="password-gate">
+  <div class="gate-card">
+    <h2>Financial Insights Dashboard</h2>
+    <p>Matti Hicks · Case Study</p>
+    <input type="password" id="gate-input" class="gate-input" placeholder="Password" autofocus>
+    <button class="gate-btn" id="gate-btn">Enter</button>
+    <div class="gate-error" id="gate-error">Incorrect password. Please try again.</div>
+  </div>
+</div>
 
 <!-- ── Top nav ── -->
 <nav class="topnav">
@@ -759,6 +816,36 @@
 </div>
 
 <script>
+  // ── Password gate ──
+  const gate      = document.getElementById('password-gate');
+  const gateInput = document.getElementById('gate-input');
+  const gateBtn   = document.getElementById('gate-btn');
+  const gateError = document.getElementById('gate-error');
+
+  function tryPassword() {
+    if (gateInput.value === 'tester') {
+      sessionStorage.setItem('unlocked', '1');
+      gate.classList.add('hidden');
+      setTimeout(() => gate.remove(), 400);
+    } else {
+      gateInput.classList.add('error');
+      gateError.style.display = 'block';
+      gateInput.value = '';
+      gateInput.focus();
+    }
+  }
+
+  if (sessionStorage.getItem('unlocked') === '1') {
+    gate.remove();
+  }
+
+  gateBtn.addEventListener('click', tryPassword);
+  gateInput.addEventListener('keydown', e => { if (e.key === 'Enter') tryPassword(); });
+  gateInput.addEventListener('input', () => {
+    gateInput.classList.remove('error');
+    gateError.style.display = 'none';
+  });
+
   const modal    = document.getElementById('zoom-modal');
   const zoomImg  = document.getElementById('zoom-img');
   const closeBtn = document.getElementById('zoom-close');

@@ -338,6 +338,52 @@
     .gap    { height: 18px; }
     .gap-lg { height: 28px; }
 
+    /* ── Password gate ── */
+    #password-gate {
+      position: fixed; inset: 0;
+      background: var(--bg);
+      z-index: 2000;
+      display: flex; align-items: center; justify-content: center;
+      transition: opacity 0.4s ease;
+    }
+    #password-gate.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .gate-card {
+      width: 100%; max-width: 360px;
+      padding: 40px;
+    }
+    .gate-card h2 {
+      font-size: 20px; font-weight: 600; color: var(--ink);
+      margin-bottom: 6px; letter-spacing: -0.01em;
+    }
+    .gate-card p {
+      font-size: 14px; color: var(--muted); margin-bottom: 24px; line-height: 1.6;
+    }
+    .gate-input {
+      width: 100%; padding: 10px 14px;
+      font-size: 15px; font-family: inherit;
+      border: 1px solid var(--border); border-radius: var(--r);
+      background: var(--card); color: var(--ink);
+      outline: none; margin-bottom: 12px;
+      transition: border-color 0.15s;
+    }
+    .gate-input:focus { border-color: var(--accent); }
+    .gate-input.error { border-color: #B83A30; }
+    .gate-btn {
+      width: 100%; padding: 10px;
+      background: var(--accent); color: #fff;
+      font-size: 14px; font-weight: 500; font-family: inherit;
+      border: none; border-radius: var(--r);
+      cursor: pointer; transition: opacity 0.15s;
+    }
+    .gate-btn:hover { opacity: 0.9; }
+    .gate-error {
+      font-size: 13px; color: #B83A30;
+      margin-top: 10px; display: none;
+    }
+
     /* ── Image zoom ── */
     .slide img {
       cursor: zoom-in;
@@ -368,6 +414,17 @@
 </head>
 <body>
 
+<!-- ── Password gate ── -->
+<div id="password-gate">
+  <div class="gate-card">
+    <h2>Financial Insights Dashboard</h2>
+    <p>Matti Hicks · Case Study</p>
+    <input type="password" id="gate-input" class="gate-input" placeholder="Password" autofocus>
+    <button class="gate-btn" id="gate-btn">Enter</button>
+    <div class="gate-error" id="gate-error">Incorrect password. Please try again.</div>
+  </div>
+</div>
+
 <div class="deck" id="deck">
 
   <!-- ═══════════════════════════════════════════════════
@@ -377,7 +434,7 @@
     <div class="slide-inner">
       <div class="label">Case Study · Backbase · Amsterdam</div>
       <h1 class="slide-title">Financial Insights<br>Dashboard</h1>
-      <p class="body" style="margin-top: 12px; max-width: 560px;">An AI-powered Financial Wellness experience designed to help users understand not just where their money went, but what to do next.</p>
+      <p class="body" style="margin-top: 12px; max-width: 560px;">A Financial Wellness experience designed to help users understand not just where their money went, but what to do next.</p>
       <div class="hero-cards">
         <div class="hero-card">
           <div class="hero-card-label">Goal</div>
@@ -401,7 +458,6 @@
   ═══════════════════════════════════════════════════ -->
   <div class="slide" id="s2">
     <div class="slide-inner">
-      <div class="label">Before &amp; After</div>
       <h2 class="slide-h">From passive reporting to actionable guidance</h2>
       <div class="cols-1-1">
         <div>
@@ -488,12 +544,12 @@
   <div class="slide" id="s5">
     <div class="slide-inner">
       <h2 class="slide-h">Designing around imperfect financial data</h2>
-      <p class="body" style="max-width: 660px; margin-bottom: 24px;">A major challenge: the system understood different parts of a user's financial life with very different levels of reliability. The interface couldn't assume perfect financial understanding.</p>
+      <p class="body" style="max-width: 660px; margin-bottom: 24px;">A major challenge: the system understands different parts of a user's financial life with very different levels of reliability. The interface can't assume perfect financial understanding.</p>
       <div class="constraint-grid">
         <div class="constraint-card c-green">
           <div class="constraint-rel green">Reliable</div>
           <div class="constraint-name">Account balance</div>
-          <p class="constraint-desc">Real-time and stable, but not meaningful on its own without context around upcoming obligations.</p>
+          <p class="constraint-desc">Real-time and stable, but can be less meaningful on its own without context around upcoming obligations.</p>
         </div>
         <div class="constraint-card c-amber">
           <div class="constraint-rel amber">Noisy</div>
@@ -827,8 +883,8 @@
           </div>
         </div>
       </div>
-      <p class="body" style="max-width: 640px; margin-bottom: 10px;">What changed wasn't that research or testing disappeared. Concept generation, prototyping, and validation moved much closer together. Interactive browser prototypes became more effective for discussing behavior and hierarchy directly with product and engineering than static flows ever were.</p>
-      <p class="body" style="max-width: 640px;">Human judgment still drove every decision. AI accelerated exploration and synthesis.</p>
+      <p class="body" style="max-width: 640px; margin-bottom: 10px;">Concept generation, prototyping, and validation have moved much closer together. Interactive browser prototypes have become more effective for discussing behavior and hierarchy directly with product and engineering than static flows ever were.</p>
+      <p class="body" style="max-width: 640px;">Human judgment still drives every decision. AI accelerates exploration and synthesis.</p>
     </div>
   </div>
 
@@ -839,8 +895,8 @@
   <div class="slide" id="s16">
     <div class="slide-inner">
       <h2 class="slide-h">Where we're at now</h2>
-      <p class="body" style="max-width: 640px; margin-bottom: 8px;">A recurring question throughout the project was how far the design should go, and how quickly. A full rollout isn't realistic in one step. So I designed two tracks in parallel: the long-term vision, and a deliberate first step that banks could ship incrementally.</p>
-      <p class="body" style="max-width: 640px; margin-bottom: 28px;">The hybrid design continues to evolve, shaping internal conversations about the Financial Wellness roadmap and how AI guidance can be introduced progressively across markets.</p>
+      <p class="body" style="max-width: 640px; margin-bottom: 8px;">A recurring question throughout the project was how far the design should go, and how quickly. A full rollout isn't realistic in one step. So I designed two tracks in parallel: the long-term vision, and a deliberate first step MVP.</p>
+      <p class="body" style="max-width: 640px; margin-bottom: 28px;">The MVP and hybrid designs continue to evolve, shaping internal conversations about the Financial Wellness roadmap and how AI guidance can be introduced progressively across markets.</p>
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start;">
         <div>
           <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
@@ -902,6 +958,36 @@
 
 
 <script>
+  // ── Password gate ──
+  const gate      = document.getElementById('password-gate');
+  const gateInput = document.getElementById('gate-input');
+  const gateBtn   = document.getElementById('gate-btn');
+  const gateError = document.getElementById('gate-error');
+
+  function tryPassword() {
+    if (gateInput.value === 'tester') {
+      sessionStorage.setItem('unlocked', '1');
+      gate.classList.add('hidden');
+      setTimeout(() => gate.remove(), 400);
+    } else {
+      gateInput.classList.add('error');
+      gateError.style.display = 'block';
+      gateInput.value = '';
+      gateInput.focus();
+    }
+  }
+
+  if (sessionStorage.getItem('unlocked') === '1') {
+    gate.remove();
+  }
+
+  gateBtn.addEventListener('click', tryPassword);
+  gateInput.addEventListener('keydown', e => { if (e.key === 'Enter') tryPassword(); });
+  gateInput.addEventListener('input', () => {
+    gateInput.classList.remove('error');
+    gateError.style.display = 'none';
+  });
+
   const TOTAL  = 15;
   let current  = 0;
 
