@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Revamping Retail Banking — Slides | Matti Hicks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    img { max-width: 100%; height: auto; display: block; }
+
+    :root {
+      --bg:     #FAF7F4;
+      --card:   #FFFFFF;
+      --subtle: #F2EFE9;
+      --canvas: #E8E4DC;
+      --dark:   #2A2825;
+      --accent: #E86C3A;
+      --blue:   #4A6FA5;
+      --green:  #3A8A5A;
+      --amber:  #C08B30;
+      --ink:    #1A1A1A;
+      --muted:  #6B6B6B;
+      --faint:  #9B9B9B;
+      --border: #E2DDD8;
+      --r:      10px;
+      --shadow: 0 2px 16px rgba(0,0,0,0.08);
+    }
+
+    html, body {
+      width: 100%; height: 100%;
+      overflow: hidden;
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+    }
+
+    /* ── Deck ── */
+    .deck { position: fixed; inset: 0; }
+
+    /* ── Slides ── */
+    .slide {
+      position: absolute; inset: 0;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease;
+      display: flex; align-items: center; justify-content: center;
+      padding: 56px 88px 72px;
+      overflow: hidden;
+    }
+    .slide.active { opacity: 1; pointer-events: auto; }
+    .slide-inner { width: 100%; max-width: 920px; }
+
+    /* ── Navigation zones ── */
+    .zone {
+      position: fixed; top: 0; bottom: 0; width: 20%;
+      cursor: pointer; z-index: 50;
+      display: flex; align-items: center;
+    }
+    .zone-prev { left: 0;  justify-content: flex-start; padding-left: 22px; }
+    .zone-next { right: 0; justify-content: flex-end;   padding-right: 22px; }
+    .zone-arrow {
+      opacity: 0; transition: opacity 0.2s;
+      color: var(--faint); font-size: 32px;
+      line-height: 1; user-select: none; font-weight: 300;
+    }
+    .zone:hover .zone-arrow { opacity: 0.45; }
+
+    /* ── Counter ── */
+    .counter {
+      position: fixed; bottom: 22px; right: 28px;
+      font-size: 12px; font-weight: 500; color: var(--faint);
+      z-index: 60; letter-spacing: 0.04em;
+    }
+
+    /* ── Home button ── */
+    .home-btn {
+      position: fixed; top: 18px; right: 22px;
+      background: none; border: 1px solid var(--border);
+      border-radius: 8px; padding: 5px 12px;
+      font-size: 12px; font-weight: 500; color: var(--muted);
+      cursor: pointer; z-index: 60; font-family: inherit;
+      display: flex; align-items: center; gap: 5px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .home-btn:hover { color: var(--ink); border-color: var(--ink); }
+
+    /* ── Progress bar ── */
+    .progress-bar {
+      position: fixed; bottom: 0; left: 0;
+      height: 2px; background: var(--accent);
+      z-index: 60; transition: width 0.3s ease; opacity: 0.5;
+    }
+
+    /* ── Typography ── */
+    .label {
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--faint); margin-bottom: 12px;
+    }
+    .label.accent { color: var(--accent); }
+    .label.blue   { color: var(--blue); }
+
+    h1.slide-title {
+      font-size: 42px; font-weight: 700; letter-spacing: -0.025em;
+      line-height: 1.08; color: var(--ink); margin-bottom: 8px;
+    }
+    h2.slide-h {
+      font-size: 28px; font-weight: 600; letter-spacing: -0.015em;
+      line-height: 1.2; color: var(--ink); margin-bottom: 16px;
+    }
+    .body     { font-size: 15px; color: var(--muted); line-height: 1.7; }
+    .body strong { color: var(--ink); font-weight: 500; }
+    .body + .body { margin-top: 10px; }
+    .body-sm  { font-size: 13px; color: var(--muted); line-height: 1.65; }
+    .body-sm strong { color: var(--ink); font-weight: 500; }
+
+    /* ── Hero metadata cards ── */
+    .hero-cards {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--border); border-radius: var(--r);
+      overflow: hidden; margin-top: 36px;
+    }
+    .hero-card { padding: 20px 24px; background: var(--card); }
+    .hero-card + .hero-card { border-left: 1px solid var(--border); }
+    .hero-card-label {
+      font-size: 10px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--faint); margin-bottom: 8px;
+    }
+    .hero-card p { font-size: 14px; color: var(--muted); line-height: 1.6; margin: 0; }
+
+    /* ── Grid layouts ── */
+    .cols-3-2   { display: grid; grid-template-columns: 3fr 2fr;        gap: 48px; align-items: start; }
+    .cols-1-1   { display: grid; grid-template-columns: 1fr 1fr;        gap: 28px; align-items: start; }
+    .cols-1-1-1 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .cols-2-2   { display: grid; grid-template-columns: 1fr 1fr;        gap: 14px; }
+
+    /* ── Pill ── */
+    .pill {
+      display: inline-block; font-size: 10px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.07em;
+      padding: 4px 10px; border-radius: 100px; margin-bottom: 10px;
+    }
+    .pill.before { background: var(--subtle); color: var(--faint); }
+    .pill.after  { background: rgba(58,138,90,0.12); color: var(--green); }
+
+    /* ── Problem list ── */
+    .problem-list { display: flex; flex-direction: column; gap: 16px; }
+    .problem-item { display: flex; gap: 14px; align-items: flex-start; }
+    .problem-num {
+      flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%;
+      background: rgba(184,58,48,0.1);
+      display: flex; align-items: center; justify-content: center; margin-top: 2px;
+    }
+    .problem-num span { font-size: 11px; font-weight: 700; color: #B83A30; }
+    .problem-item p { font-size: 14px; color: var(--muted); line-height: 1.75; margin: 0; }
+
+    /* ── Stat cards ── */
+    .stat-item { padding-top: 16px; border-top: 2px solid var(--border); }
+    .stat-item.primary { border-top-color: var(--green); }
+    .stat-label {
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--faint); margin-bottom: 6px;
+    }
+    .stat-label.green { color: var(--green); }
+    .stat-num { font-size: 22px; font-weight: 700; color: var(--ink); letter-spacing: -0.02em; margin-bottom: 4px; }
+    .stat-desc { font-size: 13px; color: var(--muted); line-height: 1.6; margin: 0; }
+
+    /* ── Disc cards (discovery methods) ── */
+    .disc-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--r); padding: 16px 18px; }
+    .disc-tag { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--accent); margin-bottom: 5px; }
+    .disc-card h4 { font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+    .disc-card p  { font-size: 12px; color: var(--muted); line-height: 1.55; margin: 0; }
+
+    /* ── Caption ── */
+    .caption { font-size: 11px; color: var(--faint); margin-top: 7px; text-align: center; }
+
+    /* ── Check list ── */
+    ul.check { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    ul.check li { font-size: 14px; color: var(--muted); line-height: 1.6; padding-left: 20px; position: relative; }
+    ul.check li::before { content: '✓'; position: absolute; left: 0; color: var(--green); font-weight: 600; }
+
+    /* ── Bullet list ── */
+    ul.bullet { list-style: disc; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; }
+    ul.bullet li { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+    /* ── Verdict callout ── */
+    .callout { border-radius: 8px; padding: 14px 16px; }
+    .callout.green { background: rgba(58,138,90,0.08); border-left: 3px solid var(--green); }
+    .callout p { font-size: 14px; color: var(--ink); margin: 0; line-height: 1.65; }
+
+    /* ── Decision badge ── */
+    .decision-badge {
+      display: inline-block; font-size: 11px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.07em;
+      margin-bottom: 10px; padding-bottom: 2px;
+    }
+    .decision-badge.amber { color: var(--amber); border-bottom: 2px solid var(--amber); }
+
+    /* ── Tradeoff grid ── */
+    .tradeoff-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
+    .tradeoff-card { border-radius: var(--r); padding: 12px 14px; }
+    .tradeoff-card.kept { background: rgba(58,138,90,0.07); }
+    .tradeoff-card.gave { background: rgba(192,71,58,0.07); }
+    .tradeoff-label {
+      font-size: 10px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.07em; margin-bottom: 5px;
+    }
+    .tradeoff-label.kept { color: var(--green); }
+    .tradeoff-label.gave { color: #B83A30; }
+    .tradeoff-card p { font-size: 13px; color: var(--ink); margin: 0; line-height: 1.5; }
+
+    /* ── Screen label ── */
+    .screen-label {
+      font-size: 11px; font-weight: 500; text-transform: uppercase;
+      letter-spacing: 0.05em; color: var(--faint); margin-bottom: 8px;
+    }
+
+    /* ── Video container ── */
+    .video-wrap { position: relative; width: 100%; padding-bottom: 56.25%; border-radius: var(--r); overflow: hidden; box-shadow: var(--shadow); }
+    .video-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
+    /* ── Impact stats row ── */
+    .impact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 28px; }
+    .impact-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 22px 22px 18px;
+    }
+    .impact-card.primary { border-top: 3px solid var(--green); }
+    .impact-card .num { font-size: 26px; font-weight: 700; color: var(--ink); letter-spacing: -0.02em; margin-bottom: 6px; }
+    .impact-card .title { font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+    .impact-card .desc { font-size: 13px; color: var(--muted); line-height: 1.6; margin: 0; }
+
+    /* ── Spacers ── */
+    .gap-sm { height: 10px; }
+    .gap    { height: 18px; }
+    .gap-lg { height: 28px; }
+
+    /* ── Password gate ── */
+    #password-gate {
+      position: fixed; inset: 0; background: var(--bg);
+      z-index: 2000; display: flex; align-items: center; justify-content: center;
+      transition: opacity 0.4s ease;
+    }
+    #password-gate.hidden { opacity: 0; pointer-events: none; }
+    .gate-card { width: 100%; max-width: 360px; padding: 40px; }
+    .gate-card h2 { font-size: 20px; font-weight: 600; color: var(--ink); margin-bottom: 6px; letter-spacing: -0.01em; }
+    .gate-card p  { font-size: 14px; color: var(--muted); margin-bottom: 24px; line-height: 1.6; }
+    .gate-input {
+      width: 100%; padding: 10px 14px; font-size: 15px; font-family: inherit;
+      border: 1px solid var(--border); border-radius: var(--r);
+      background: var(--card); color: var(--ink);
+      outline: none; margin-bottom: 12px; transition: border-color 0.15s;
+    }
+    .gate-input:focus { border-color: var(--accent); }
+    .gate-input.error { border-color: #B83A30; }
+    .gate-btn {
+      width: 100%; padding: 10px; background: var(--accent); color: #fff;
+      font-size: 14px; font-weight: 500; font-family: inherit;
+      border: none; border-radius: var(--r); cursor: pointer; transition: opacity 0.15s;
+    }
+    .gate-btn:hover { opacity: 0.9; }
+    .gate-error { font-size: 13px; color: #B83A30; margin-top: 10px; display: none; }
+
+    /* ── Image zoom ── */
+    .slide img { cursor: zoom-in; position: relative; z-index: 55; }
+    #zoom-modal {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.88); z-index: 1000;
+      align-items: center; justify-content: center;
+    }
+    #zoom-modal.open { display: flex; }
+    #zoom-modal img {
+      max-width: 92vw; max-height: 92vh;
+      border-radius: 0; object-fit: contain;
+      cursor: default; position: static;
+    }
+    #zoom-close {
+      position: fixed; top: 18px; right: 22px;
+      background: none; border: none; color: #fff;
+      font-size: 30px; cursor: pointer; line-height: 1;
+      opacity: 0.7; z-index: 1001;
+    }
+    #zoom-close:hover { opacity: 1; }
+  </style>
+</head>
+<body>
+
+<!-- ── Password gate ── -->
+<div id="password-gate">
+  <div class="gate-card">
+    <h2>Revamping Retail Banking</h2>
+    <p>Matti Hicks · Case Study</p>
+    <input type="password" id="gate-input" class="gate-input" placeholder="Password" autofocus>
+    <button class="gate-btn" id="gate-btn">Enter</button>
+    <div class="gate-error" id="gate-error">Incorrect password. Please try again.</div>
+  </div>
+</div>
+
+<div class="deck" id="deck">
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 1 — Title / Hero
+  ═══════════════════════════════════════════════════ -->
+  <div class="slide" id="s1">
+    <div class="slide-inner">
+      <div class="label">Case Study · Backbase · Amsterdam</div>
+      <h1 class="slide-title">Revamping Retail<br>Banking</h1>
+      <p class="body" style="margin-top: 12px; max-width: 560px;">A complete redesign of the retail banking app's dashboard and information architecture to drive customer satisfaction and sales growth.</p>
+      <div class="hero-cards">
+        <div class="hero-card">
+          <div class="hero-card-label">Goal</div>
+          <p>Redesign the retail banking app's dashboard and IA to support an expanding feature set and drive customer satisfaction and sales growth.</p>
+        </div>
+        <div class="hero-card">
+          <div class="hero-card-label">My Role</div>
+          <p>Led UX design and research with a product designer. Collaborated with engineers, product managers, and leadership.</p>
+        </div>
+        <div class="hero-card">
+          <div class="hero-card-label">Impact &amp; Status</div>
+          <p>76% of clients preferred the revamped experience. Established cross-functional practices and a research repository now used as standard.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 2 — Before: problems
+  ═══════════════════════════════════════════════════ -->
+  <div class="slide" id="s2">
+    <div class="slide-inner">
+      <div style="display: grid; grid-template-columns: 3fr 2fr; gap: 44px; align-items: center;">
+        <div>
+          <div class="pill before">Before</div>
+          <img src="../images/where-we-started-revamp.png"
+               alt="Before: the existing retail banking app"
+               style="width: 100%;">
+        </div>
+        <div>
+          <div class="label" style="margin-bottom: 16px;">Overall</div>
+          <div class="problem-list">
+            <div class="problem-item">
+              <div class="problem-num"><span>1</span></div>
+              <p>Standalone features resulted in a fragmented user experience that failed to support strategic business goals such as cross-selling and upselling opportunities.</p>
+            </div>
+            <div class="problem-item">
+              <div class="problem-num"><span>2</span></div>
+              <p>Clients expressed growing frustration with the app's usability, frequently raising concerns with the Customer Success team and questioning the company's ability to meet their needs effectively.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 3 — After: results
+  ═══════════════════════════════════════════════════ -->
+  <div class="slide" id="s3">
+    <div class="slide-inner">
+      <div style="display: grid; grid-template-columns: 3fr 2fr; gap: 44px; align-items: center;">
+        <div>
+          <div class="pill after">After</div>
+          <img src="../images/retail_after.png"
+               alt="After: revamped retail banking app"
+               style="width: 100%;">
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+          <div class="stat-item primary">
+            <div class="stat-label green">Client satisfaction</div>
+            <div class="stat-num">76%</div>
+            <p class="stat-desc">of clients preferred the new app experience</p>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">Inconsistencies</div>
+            <div class="stat-num">40% less</div>
+            <p class="stat-desc">UX MAINTs</p>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">Client requests</div>
+            <div class="stat-num">24% less</div>
+            <p class="stat-desc">UX RFFs</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 4 — First Steps
+  ═══════════════════════════════════════════════════ -->
+  <div class="slide" id="s4">
+    <div class="slide-inner">
+      <div class="cols-3-2">
+        <div>
+          <h2 class="slide-h">First steps</h2>
+          <p class="body" style="margin-bottom: 12px;">We started by aligning across product and engineering on what the redesign needed to solve, not just aesthetically, but structurally. The app had grown organically, and the "More" tab had become a symptom of that drift.</p>
+          <ul class="bullet">
+            <li>Analyzed sales data with product to set clear goals and identify key markets</li>
+            <li>Attended quarterly business reviews to understand priorities and get buy-in</li>
+            <li>Conducted interviews with clients and their customers</li>
+            <li>Expert review: 61 expert review findings, including untappable buttons and small text</li>
+          </ul>
+        </div>
+        <div>
+          <img src="../images/banking_revamp_expert_review.png"
+               alt="Expert review findings"
+               style="width: 100%; border-radius: var(--r); box-shadow: var(--shadow);">
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 5 — Redefining the IA
+  ═══════════════════════════════════════════════════ -->
+  <div class="slide" id="s5">
+    <div class="slide-inner">
+      <div class="label accent">Information architecture</div>
+      <h2 class="slide-h">Redefining the IA</h2>
+      <div class="cols-2-2" style="margin-bottom: 16px;">
+        <div class="disc-card">
+          <div class="disc-tag">Card sorting</div>
+          <h4>Understanding mental models</h4>
+          <p>Asked customers and stakeholders to group banking features into categories that made sense to them.</p>
+        </div>
+        <div class="disc-card">
+          <div class="disc-tag">Tree testing</div>
+          <h4>Validating the structure</h4>
+          <p>Tested proposed navigation structures to confirm users could find key features without visual cues.</p>
+        </div>
+        <div class="disc-card">
+          <div class="disc-tag">Content audit</div>
+          <h4>Cataloguing every screen</h4>
+          <p>Mapped every screen and feature to identify gaps and structural problems.</p>
+        </div>
+        <div class="disc-card">
+          <div class="disc-tag">User journey mapping</div>
+          <h4>Tracing common tasks</h4>
+          <p>Identified friction points and dead ends across balance checks, transfers, and bill payments.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 6 — Dashboard Research
+  ═══════════════════════════════════════════════════ -->
+  <div class="slide" id="s6b">
+    <div class="slide-inner">
+      <div class="label accent">Dashboard</div>
+      <h2 class="slide-h">Exploratory research</h2>
+      <div class="cols-3-2" style="align-items: start;">
+        <div>
+          <p class="body" style="margin-bottom: 12px;">We began by asking two foundational questions:</p>
+          <ul class="bullet" style="margin-bottom: 16px;">
+            <li>What do consumers expect to see when they first open the app?</li>
+            <li>How do users organize and prioritize their interactions with retail banking features?</li>
+          </ul>
+          <p class="body">Deep-dive interviews helped us understand how people actually used their mobile banking day-to-day. From there, we shared concepts with PM and engineering, then ran two rounds of concept testing with real bank customers.</p>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <div class="disc-card">
+            <div class="disc-tag">Deep-dive interviews</div>
+            <h4>How people use banking day-to-day</h4>
+          </div>
+          <div class="disc-card">
+            <div class="disc-tag">Competitive benchmarking</div>
+            <h4>Best-in-class benchmarks</h4>
+          </div>
+          <img src="../images/Competitive_review_image.jpeg"
+               alt="Competitive review: dashboard layouts"
+               style="width: 100%; border-radius: var(--r); object-fit: cover; object-position: top; max-height: 180px;">
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 8 — Key Design Decision: Concepts 1 & 2
+  ═══════════════════════════════════════════════════ -->
+  <div class="slide" id="s8">
+    <div class="slide-inner">
+      <div class="label accent">Concept testing</div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: start;">
+        <div>
+          <p style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); margin-bottom: 8px;">Concept 1</p>
+          <p class="body-sm" style="margin-bottom: 12px;"><strong>Category-based</strong> — organizes around what things are. Mental model: "I want to check my account balance."</p>
+          <img src="../images/Category-based-concept.png"
+               alt="Concept 1: Category-based"
+               style="width: 100%; object-fit: contain; object-position: top left; max-height: 380px;">
+        </div>
+        <div>
+          <p style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); margin-bottom: 8px;">Concept 2</p>
+          <p class="body-sm" style="margin-bottom: 12px;"><strong>Task-based</strong> — organizes around what the user wants to do or know. Mental model: "How much can I spend this month?"</p>
+          <img src="../images/Task-based-concept.png"
+               alt="Concept 2: Task-based"
+               style="width: 100%; object-fit: contain; object-position: top left; max-height: 380px;">
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 10 — Plot Twist: The More Button
+  ═══════════════════════════════════════════════════ -->
+  <div class="slide" id="s10">
+    <div class="slide-inner">
+      <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 44px; align-items: center;">
+        <div>
+          <h2 class="slide-h">Plot twist: Where's the "More" button?</h2>
+          <p class="body-sm" style="margin-bottom: 12px;">Our goal was to eliminate the "More" tab — an easy-to-implement catch-all dumping ground. But several clients still insisted on keeping it, fearing users wouldn't find settings and logout without it.</p>
+          <p class="body-sm">We developed a hybrid: keep "More" scoped deliberately, with a roadmap to phase it out over time.</p>
+        </div>
+        <div>
+          <div style="display: flex; justify-content: space-around; margin-bottom: 8px;">
+            <p style="text-align: center; font-size: 11px; color: var(--faint); flex: 1;">More as a features catch-all</p>
+            <p style="text-align: center; font-size: 11px; color: var(--faint); flex: 1;">More in tab bar</p>
+            <p style="text-align: center; font-size: 11px; color: var(--faint); flex: 1;">More in Profile section</p>
+          </div>
+          <img src="../images/More_button_evolution.png"
+               alt="Evolution of the More section"
+               style="width: 100%; max-height: 420px; object-fit: contain; object-position: top;">
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 11 — Key Product Decision: Business Buy-in
+  ═══════════════════════════════════════════════════ -->
+  <div class="slide" id="s11">
+    <div class="slide-inner">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 44px; align-items: center;">
+        <div>
+          <div class="decision-badge amber" style="margin-bottom: 10px;">Key product decision</div>
+          <h2 class="slide-h">Designing with business buy-in built in</h2>
+          <p class="body" style="margin-bottom: 12px;">Design decisions that lack cross-functional alignment often get reversed. Attending QBRs and working from sales data meant the design direction was grounded in business reality from the start.</p>
+          <p class="body" style="margin-bottom: 16px;"><strong>What changed:</strong> Engineering directors and product stakeholders were engaged early and shown research findings directly. Design wasn't a handoff, it was a shared journey throughout the process.</p>
+          <div class="tradeoff-grid">
+            <div class="tradeoff-card kept">
+              <div class="tradeoff-label kept">Kept</div>
+              <p>Durability. Decisions made with cross-functional input were more likely to survive engineering and client review.</p>
+            </div>
+            <div class="tradeoff-card gave">
+              <div class="tradeoff-label gave">Gave up</div>
+              <p>Speed. Early alignment took time and iteration that a faster, designer-led process would have avoided.</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <img src="../images/Matti-developers-revamp.jpg"
+               alt="Presenting findings to engineering directors"
+               style="width: 100%; border-radius: var(--r); box-shadow: var(--shadow);">
+          <p class="caption">Research findings presented directly to engineering directors</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 12 — Final Screens: Dashboard
+  ═══════════════════════════════════════════════════ -->
+  <div class="slide" id="s12">
+    <div class="slide-inner">
+      <div class="label accent">Final design</div>
+      <h2 class="slide-h" style="margin-bottom: 12px;">Dashboard</h2>
+      <div style="display: flex; justify-content: space-around; margin-bottom: 8px;">
+        <p style="text-align: center; font-size: 12px; color: var(--faint); flex: 1;">Home</p>
+        <p style="text-align: center; font-size: 12px; color: var(--faint); flex: 1;">Insights</p>
+        <p style="text-align: center; font-size: 12px; color: var(--faint); flex: 1;">Cards</p>
+        <p style="text-align: center; font-size: 12px; color: var(--faint); flex: 1;">Help</p>
+      </div>
+      <img src="../images/final-design-revamp.png"
+           alt="Dashboard: Home, Insights, Cards, Help"
+           style="width: 100%; display: block;">
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 13 — Final Screens: Move Money
+  ═══════════════════════════════════════════════════ -->
+  <div class="slide" id="s13">
+    <div class="slide-inner">
+      <div class="label accent">Final design</div>
+      <h2 class="slide-h" style="margin-bottom: 12px;">Move Money</h2>
+      <div style="display: flex; justify-content: space-around; margin-bottom: 8px;">
+        <p style="text-align: center; font-size: 12px; color: var(--faint); flex: 1;">Transfer</p>
+        <p style="text-align: center; font-size: 12px; color: var(--faint); flex: 1;">Scheduled</p>
+        <p style="text-align: center; font-size: 12px; color: var(--faint); flex: 1;">History</p>
+        <p style="text-align: center; font-size: 12px; color: var(--faint); flex: 1;">Contacts</p>
+      </div>
+      <img src="../images/move_money_revamp.png"
+           alt="Move Money screens"
+           style="width: 100%; display: block;">
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 14 — Final Screens: Accounts
+  ═══════════════════════════════════════════════════ -->
+  <div class="slide" id="s14">
+    <div class="slide-inner">
+      <div class="label accent">Final design</div>
+      <h2 class="slide-h" style="margin-bottom: 12px;">Accounts</h2>
+      <img src="../images/accounts_revamp.png"
+           alt="Accounts screens"
+           style="width: 75%; display: block; max-height: 480px; object-fit: contain; object-position: top left;">
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 14 — Video
+  ═══════════════════════════════════════════════════ -->
+  <div class="slide" id="s14">
+    <div class="slide-inner">
+      <h2 class="slide-h" style="margin-bottom: 20px;">The redesigned retail banking experience</h2>
+      <div class="video-wrap">
+        <iframe title="vimeo-player" src="https://player.vimeo.com/video/1156194840?h=881449472d" width="640" height="360" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 15 — Impact
+  ═══════════════════════════════════════════════════ -->
+  <div class="slide" id="s15">
+    <div class="slide-inner">
+      <h2 class="slide-h">Impact</h2>
+      <div class="impact-grid">
+        <div class="impact-card primary">
+          <div class="num">76%</div>
+          <p class="desc">of clients preferred the revamped experience over the previous version</p>
+        </div>
+        <div class="impact-card">
+          <div class="title">Cross-functional collaboration</div>
+          <p class="desc">Established ongoing collaboration between Retail and Business departments, leading to faster decision-making</p>
+        </div>
+        <div class="impact-card">
+          <div class="title">Research repository</div>
+          <p class="desc">Initiated a centralized research repository across teams, now used as standard practice at Backbase</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /deck -->
+
+
+<!-- ── Navigation zones ── -->
+<div class="zone zone-prev" id="zone-prev" role="button" aria-label="Previous slide">
+  <span class="zone-arrow">‹</span>
+</div>
+<div class="zone zone-next" id="zone-next" role="button" aria-label="Next slide">
+  <span class="zone-arrow">›</span>
+</div>
+
+<!-- ── UI chrome ── -->
+<div class="counter" id="counter">1 / 14</div>
+
+<button class="home-btn" id="home-btn" title="Return to first slide">
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+    <polyline points="9 22 9 12 15 12 15 22"/>
+  </svg>
+  Home
+</button>
+
+<div class="progress-bar" id="progress-bar"></div>
+
+<!-- ── Image zoom modal ── -->
+<div id="zoom-modal">
+  <button id="zoom-close">&times;</button>
+  <img id="zoom-img" src="" alt="">
+</div>
+
+
+<script>
+  // ── Password gate ──
+  const gate      = document.getElementById('password-gate');
+  const gateInput = document.getElementById('gate-input');
+  const gateBtn   = document.getElementById('gate-btn');
+  const gateError = document.getElementById('gate-error');
+
+  function tryPassword() {
+    if (gateInput.value === 'tester') {
+      sessionStorage.setItem('unlocked', '1');
+      gate.classList.add('hidden');
+      setTimeout(() => gate.remove(), 400);
+    } else {
+      gateInput.classList.add('error');
+      gateError.style.display = 'block';
+      gateInput.value = '';
+      gateInput.focus();
+    }
+  }
+
+  if (sessionStorage.getItem('unlocked') === '1') {
+    gate.remove();
+  }
+
+  gateBtn.addEventListener('click', tryPassword);
+  gateInput.addEventListener('keydown', e => { if (e.key === 'Enter') tryPassword(); });
+  gateInput.addEventListener('input', () => {
+    gateInput.classList.remove('error');
+    gateError.style.display = 'none';
+  });
+
+  // ── Slide deck ──
+  const TOTAL  = 14;
+  let current  = 0;
+
+  const slides  = document.querySelectorAll('.slide');
+  const counter = document.getElementById('counter');
+  const bar     = document.getElementById('progress-bar');
+
+  function updateUI() {
+    counter.textContent = `${current + 1} / ${TOTAL}`;
+    bar.style.width = `${((current + 1) / TOTAL) * 100}%`;
+  }
+
+  function goTo(n) {
+    if (n < 0 || n >= TOTAL) return;
+    slides[current].classList.remove('active');
+    current = n;
+    slides[current].classList.add('active');
+    updateUI();
+  }
+
+  slides[0].classList.add('active');
+  updateUI();
+
+  document.getElementById('zone-prev').addEventListener('click', () => goTo(current - 1));
+  document.getElementById('zone-next').addEventListener('click', () => goTo(current + 1));
+  document.getElementById('home-btn').addEventListener('click', () => goTo(0));
+
+  // ── Image zoom ──
+  const zoomModal = document.getElementById('zoom-modal');
+  const zoomImg   = document.getElementById('zoom-img');
+  const zoomClose = document.getElementById('zoom-close');
+  const allImgs   = Array.from(document.querySelectorAll('.slide img'));
+  let zoomIdx = 0;
+
+  function openZoom(i) {
+    zoomIdx = i;
+    zoomImg.src = allImgs[i].src;
+    zoomImg.alt = allImgs[i].alt;
+    zoomModal.classList.add('open');
+  }
+  function closeZoom() { zoomModal.classList.remove('open'); }
+
+  allImgs.forEach((img, i) => {
+    img.addEventListener('click', e => { e.stopPropagation(); openZoom(i); });
+  });
+
+  zoomClose.addEventListener('click', closeZoom);
+  zoomModal.addEventListener('click', e => { if (e.target === zoomModal) closeZoom(); });
+
+  // ── Keyboard navigation ──
+  document.addEventListener('keydown', e => {
+    if (zoomModal.classList.contains('open')) {
+      if (e.key === 'Escape') { e.preventDefault(); closeZoom(); }
+      if (e.key === 'ArrowRight' && zoomIdx < allImgs.length - 1) {
+        zoomIdx++; zoomImg.src = allImgs[zoomIdx].src; zoomImg.alt = allImgs[zoomIdx].alt;
+      }
+      if (e.key === 'ArrowLeft' && zoomIdx > 0) {
+        zoomIdx--; zoomImg.src = allImgs[zoomIdx].src; zoomImg.alt = allImgs[zoomIdx].alt;
+      }
+      return;
+    }
+    switch (e.key) {
+      case 'ArrowRight': case 'ArrowDown': case ' ':
+        e.preventDefault(); goTo(current + 1); break;
+      case 'ArrowLeft': case 'ArrowUp':
+        e.preventDefault(); goTo(current - 1); break;
+      case 'Escape': case 'Home':
+        e.preventDefault(); goTo(0); break;
+      case 'End':
+        e.preventDefault(); goTo(TOTAL - 1); break;
+    }
+  });
+
+  // ── Touch / swipe ──
+  let touchStartX = 0;
+  document.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].clientX;
+  }, { passive: true });
+  document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 50) { dx < 0 ? goTo(current + 1) : goTo(current - 1); }
+  }, { passive: true });
+</script>
+
+</body>
+</html>

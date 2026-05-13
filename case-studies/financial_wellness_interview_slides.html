@@ -239,6 +239,7 @@
       display: inline-flex; align-items: center; gap: 4px;
       font-size: 12px; color: var(--accent); text-decoration: none;
       font-weight: 500; margin-top: 7px;
+      position: relative; z-index: 55;
     }
     .proto-link:hover { opacity: 0.75; }
 
@@ -246,6 +247,7 @@
     .live-link {
       display: inline-flex; align-items: center; gap: 5px;
       font-size: 12px; color: var(--accent); text-decoration: none; font-weight: 500;
+      position: relative; z-index: 55;
     }
     .live-link:hover { opacity: 0.75; }
 
@@ -637,9 +639,11 @@
           <p class="body-sm" style="margin-bottom: 14px;">Comparing a simpler Control against a richer Variant — 60% preferred the Variant but 40% disengaged: <em>"It looks like I'm now a data analyst."</em> Users asked for the best of both.</p>
           <div style="display: flex; gap: 10px;">
             <div style="flex: 1;">
-              <img src="../images/control_prototype.png"
-                   alt="Round 2: Control"
-                   style="width: 100%; border-radius: var(--r); box-shadow: var(--shadow);">
+              <a href="https://taffy-judge-98528828.figma.site/" target="_blank" style="display: block; position: relative; z-index: 55;">
+                <img src="../images/control_prototype.png"
+                     alt="Round 2: Control"
+                     style="width: 100%; border-radius: var(--r); box-shadow: var(--shadow); cursor: pointer;">
+              </a>
               <a href="https://taffy-judge-98528828.figma.site/" target="_blank" class="proto-link">
                 Control
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
@@ -792,35 +796,7 @@
 
 
   <!-- ═══════════════════════════════════════════════════
-       SLIDE 12 — The Hybrid Design
-  ═══════════════════════════════════════════════════ -->
-  <div class="slide" id="s12">
-    <div class="slide-inner">
-      <div class="label accent">Concept design</div>
-      <h2 class="slide-h">The Hybrid: calm by default, more useful on exploration</h2>
-      <p class="body" style="max-width: 600px; margin-bottom: 22px;">The final design brings Left to Spend to the front: a single, trustworthy number. AI guidance is a layer below — present when needed, invisible when not.</p>
-      <div class="cols-1-1">
-        <div>
-          <div class="screen-label">Default view</div>
-          <img src="../images/hybrid_collapsed.png"
-               alt="Hybrid dashboard default"
-               style="width: 100%; border-radius: var(--r); box-shadow: var(--shadow); max-height: 280px; object-fit: contain; object-position: top;">
-          <div class="annotation">Users are directed to what they should do first. One clear, actionable number.</div>
-        </div>
-        <div>
-          <div class="screen-label">Expanded view</div>
-          <img src="../images/hybrid_show_more.png"
-               alt="Hybrid dashboard expanded"
-               style="width: 100%; border-radius: var(--r); box-shadow: var(--shadow); max-height: 280px; object-fit: contain; object-position: top;">
-          <div class="annotation">AI insights surface on demand. Guidance framed as suggestions, not instructions.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- ═══════════════════════════════════════════════════
-       SLIDE 13 — Design Tensions
+       SLIDE 12 — Design Tensions
   ═══════════════════════════════════════════════════ -->
   <div class="slide" id="s14">
     <div class="slide-inner">
@@ -988,7 +964,7 @@
     gateError.style.display = 'none';
   });
 
-  const TOTAL  = 15;
+  const TOTAL  = 14;
   let current  = 0;
 
   const slides  = document.querySelectorAll('.slide');
@@ -1023,7 +999,7 @@
   const zoomModal = document.getElementById('zoom-modal');
   const zoomImg   = document.getElementById('zoom-img');
   const zoomClose = document.getElementById('zoom-close');
-  const allImgs   = Array.from(document.querySelectorAll('.slide img'));
+  const allImgs   = Array.from(document.querySelectorAll('.slide img')).filter(img => !img.closest('a'));
   let zoomIdx = 0;
 
   function openZoom(i) {

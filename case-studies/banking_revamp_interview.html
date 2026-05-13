@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Revamping Retail Banking | Matti Hicks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    img { max-width: 100%; height: auto; display: block; }
+
+    :root {
+      --bg:       #FAF7F4;
+      --card:     #FFFFFF;
+      --subtle:   #F2EFE9;
+      --canvas:   #E8E4DC;
+      --dark:     #2A2825;
+      --accent:   #E86C3A;
+      --blue:     #4A6FA5;
+      --green:    #3A8A5A;
+      --amber:    #C08B30;
+      --ink:      #1A1A1A;
+      --muted:    #6B6B6B;
+      --faint:    #9B9B9B;
+      --border:   #E2DDD8;
+      --r:        10px;
+      --shadow:   0 2px 16px rgba(0,0,0,0.08);
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.65;
+      font-size: 16px;
+    }
+
+    /* ── Top nav ── */
+    .topnav {
+      position: sticky; top: 0;
+      height: 52px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px;
+      z-index: 100;
+    }
+    .topnav-brand { font-size: 14px; font-weight: 600; color: var(--ink); text-decoration: none; }
+    .topnav-link  { font-size: 13px; color: var(--muted); text-decoration: none; display: flex; align-items: center; gap: 6px; }
+    .topnav-link:hover { color: var(--ink); }
+
+    /* ── Layout ── */
+    .container       { max-width: 960px;  margin: 0 auto; padding: 0 48px; }
+    .container-wide  { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+
+    /* ── Sections ── */
+    .section { padding: 72px 0; border-top: 1px solid var(--border); }
+    .section-label {
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--faint); margin-bottom: 14px;
+    }
+    h2 { font-size: 26px; font-weight: 600; line-height: 1.25; margin-bottom: 20px; letter-spacing: -0.01em; }
+    h3 { font-size: 17px; font-weight: 600; line-height: 1.4; margin-bottom: 8px; }
+    h4 { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+
+    p { font-size: 15px; color: var(--muted); line-height: 1.75; margin-bottom: 14px; }
+    p:last-child { margin-bottom: 0; }
+    p strong { color: var(--ink); font-weight: 500; }
+
+    /* ── Hero ── */
+    .hero { padding: 64px 0 56px; }
+    .hero h1 { font-size: 38px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 8px; }
+    .hero-location { font-size: 15px; color: var(--faint); margin-bottom: 44px; }
+    .hero-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; }
+    .hero-col { padding: 20px 24px; background: var(--card); }
+    .hero-col + .hero-col { border-left: 1px solid var(--border); }
+    .hero-col-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); margin-bottom: 8px; }
+    .hero-col p { font-size: 15px; color: var(--muted); line-height: 1.65; margin: 0; }
+
+    /* ── Before & after ── */
+    .ba-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; }
+    .ba-pill {
+      display: inline-block;
+      font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em;
+      padding: 4px 10px; border-radius: 100px; margin-bottom: 12px;
+    }
+    .ba-pill.before { background: var(--subtle); color: var(--faint); }
+    .ba-pill.after  { background: rgba(58,138,90,0.12); color: var(--green); }
+    .ba-img { border-radius: 10px; box-shadow: var(--shadow); }
+
+    /* ── Two column ── */
+    .two-col       { display: grid; grid-template-columns: 3fr 2fr; gap: 48px; align-items: start; }
+    .two-col-even  { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
+
+    /* ── Bullet lists ── */
+    ul.list { list-style: disc; padding-left: 20px; display: flex; flex-direction: column; gap: 10px; }
+    ul.list li { font-size: 15px; color: var(--muted); line-height: 1.65; padding-left: 4px; }
+
+    ul.check { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    ul.check li { font-size: 15px; color: var(--muted); line-height: 1.65; padding-left: 24px; position: relative; }
+    ul.check li::before { content: '✓'; position: absolute; left: 0; color: var(--green); font-weight: 600; }
+
+    /* ── Discovery cards ── */
+    .disc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .disc-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--r); padding: 18px 20px; }
+    .disc-tag { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--accent); margin-bottom: 7px; }
+    .disc-card h4 { font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 5px; }
+    .disc-card p  { font-size: 13px; line-height: 1.55; margin: 0; }
+
+    /* ── Testing rounds ── */
+    .rounds-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .round-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--r); padding: 20px; }
+    .round-num { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--faint); margin-bottom: 10px; }
+    .round-card h4 { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+    .round-card p { font-size: 13px; line-height: 1.55; }
+    .round-result { font-size: 12px; font-weight: 500; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); }
+    .round-result.orange { color: var(--accent); }
+    .round-result.blue   { color: var(--blue); }
+    .round-result.green  { color: var(--green); }
+
+    /* ── Screens ── */
+    .screens-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+    .screen-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: var(--faint); margin-bottom: 8px; }
+    .screen-img { border-radius: var(--r); box-shadow: var(--shadow); width: 100%; }
+    .annotation {
+      background: var(--ink); color: #fff;
+      font-size: 13px; font-weight: 500; line-height: 1.45;
+      padding: 10px 14px; border-radius: 8px; margin-top: 12px;
+    }
+
+    /* ── Tension ── */
+    .tension-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 32px;
+    }
+    .tension-q { font-size: 19px; font-weight: 600; line-height: 1.35; color: var(--ink); margin-bottom: 20px; }
+    .outcome-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--accent); margin-bottom: 8px; }
+    .tension-outcome p { font-size: 14px; color: var(--muted); line-height: 1.7; margin: 0; }
+
+    /* ── Callout ── */
+    .callout { border-radius: 8px; padding: 14px 18px; font-size: 14px; line-height: 1.6; }
+    .callout.orange { background: rgba(232,108,58,0.08); border-left: 3px solid var(--accent); }
+    .callout.blue   { background: rgba(74,111,165,0.08);  border-left: 3px solid var(--blue); }
+    .callout.green  { background: rgba(58,138,90,0.08);   border-left: 3px solid var(--green); }
+    .callout p { font-size: 14px; color: var(--ink); margin: 0; }
+
+    /* ── Reflection ── */
+    .reflection { background: var(--dark); border-radius: 14px; padding: 48px; }
+    .reflection p { font-size: 18px; color: rgba(255,255,255,0.85); line-height: 1.75; font-style: italic; margin: 0; }
+
+    /* ── Workflow comparison ── */
+    .wf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 32px 0 28px; }
+    .wf-col { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 28px 28px 24px; }
+    .wf-col-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); margin-bottom: 18px; }
+    .wf-steps { display: flex; flex-direction: column; gap: 0; }
+    .wf-step { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+    .wf-step:last-child { border-bottom: none; padding-bottom: 0; }
+    .wf-step-num { flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; color: var(--muted); background: var(--subtle); margin-top: 1px; }
+    .wf-step-text { font-size: 13px; color: var(--ink); line-height: 1.5; }
+    .wf-col.highlight .wf-step-num { background: rgba(232,108,58,0.12); color: var(--accent); }
+    .wf-col.highlight { border-color: rgba(232,108,58,0.25); }
+    @media (max-width: 640px) { .wf-grid { grid-template-columns: 1fr; } }
+
+    /* ── Image captions ── */
+    .caption { font-size: 12px; color: var(--faint); text-align: center; margin-top: 8px; }
+
+    /* ── Footer ── */
+    .footer { padding: 32px 0; border-top: 1px solid var(--border); }
+
+    /* ── Image zoom ── */
+    .zoomable { cursor: zoom-in; }
+    #zoom-modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.88); z-index:999; align-items:center; justify-content:center; }
+    #zoom-modal.open { display:flex; }
+    #zoom-modal img { max-width:92vw; max-height:92vh; border-radius:8px; object-fit:contain; }
+    #zoom-close { position:fixed; top:18px; right:22px; background:none; border:none; color:#fff; font-size:30px; cursor:pointer; line-height:1; opacity:0.7; }
+    #zoom-close:hover { opacity:1; }
+
+    /* ── Video ── */
+    .video-container { position: relative; width: 100%; padding-bottom: 56.25%; border-radius: var(--r); overflow: hidden; box-shadow: var(--shadow); }
+    .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
+    /* ── Utility ── */
+    .gap-sm { height: 16px; }
+    .gap    { height: 28px; }
+    .gap-lg { height: 44px; }
+
+    /* ── Responsive ── */
+    @media (max-width: 800px) {
+      .topnav { padding: 0 24px; }
+      .container { padding: 0 24px; }
+      .hero h1 { font-size: 28px; }
+      .hero-cols, .ba-grid, .two-col, .two-col-even,
+      .rounds-grid, .disc-grid, .screens-pair { grid-template-columns: 1fr; }
+      .hero-col + .hero-col { border-left: none; border-top: 1px solid var(--border); }
+      .section { padding: 48px 0; }
+      .reflection { padding: 32px 24px; }
+      .reflection p { font-size: 16px; }
+    }
+
+    /* ── Password gate ── */
+    #password-gate {
+      position: fixed; inset: 0;
+      background: var(--bg);
+      z-index: 2000;
+      display: flex; align-items: center; justify-content: center;
+      transition: opacity 0.4s ease;
+    }
+    #password-gate.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .gate-card {
+      width: 100%; max-width: 360px;
+      padding: 40px;
+    }
+    .gate-card h2 {
+      font-size: 20px; font-weight: 600; color: var(--ink);
+      margin-bottom: 6px; letter-spacing: -0.01em;
+    }
+    .gate-card p {
+      font-size: 14px; color: var(--muted); margin-bottom: 24px; line-height: 1.6;
+    }
+    .gate-input {
+      width: 100%; padding: 10px 14px;
+      font-size: 15px; font-family: inherit;
+      border: 1px solid var(--border); border-radius: var(--r);
+      background: var(--card); color: var(--ink);
+      outline: none; margin-bottom: 12px;
+      transition: border-color 0.15s;
+    }
+    .gate-input:focus { border-color: var(--accent); }
+    .gate-input.error { border-color: #B83A30; }
+    .gate-btn {
+      width: 100%; padding: 10px;
+      background: var(--accent); color: #fff;
+      font-size: 14px; font-weight: 500; font-family: inherit;
+      border: none; border-radius: var(--r);
+      cursor: pointer; transition: opacity 0.15s;
+    }
+    .gate-btn:hover { opacity: 0.9; }
+    .gate-error {
+      font-size: 13px; color: #B83A30;
+      margin-top: 10px; display: none;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Password gate ── -->
+<div id="password-gate">
+  <div class="gate-card">
+    <h2>Revamping Retail Banking</h2>
+    <p>Matti Hicks · Case Study</p>
+    <input type="password" id="gate-input" class="gate-input" placeholder="Password" autofocus>
+    <button class="gate-btn" id="gate-btn">Enter</button>
+    <div class="gate-error" id="gate-error">Incorrect password. Please try again.</div>
+  </div>
+</div>
+
+<!-- ── Top nav ── -->
+<nav class="topnav">
+  <a href="https://mattihicks.com" class="topnav-brand">Matti Hicks</a>
+  <a href="https://mattihicks.com" class="topnav-link">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Home
+  </a>
+</nav>
+
+<!-- ── Hero ── -->
+<section class="hero">
+  <div class="container">
+    <h1>Revamping Retail Banking</h1>
+    <p class="hero-location">Backbase · Amsterdam</p>
+    <div class="hero-cols">
+      <div class="hero-col">
+        <div class="hero-col-label">Goal</div>
+        <p>Redesign the retail banking app's dashboard and information architecture to support an expanding feature set to drive customer satisfaction and sales growth.</p>
+      </div>
+      <div class="hero-col">
+        <div class="hero-col-label">My Role</div>
+        <p>Led UX design and research with a product designer. Collaborated with engineers, product managers, and leadership.</p>
+      </div>
+      <div class="hero-col">
+        <div class="hero-col-label">Impact &amp; Status</div>
+        <p>76% of clients preferred the revamped experience over the previous version. Established cross-functional practices and a research repository now used as standard across teams.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── Before ── -->
+<section class="section" id="before-after">
+  <div class="container">
+    <div class="ba-pill before">Before</div>
+    <div style="display: grid; grid-template-columns: 3fr 2fr; gap: 40px; align-items: center;">
+      <img src="../images/where-we-started-revamp.png"
+           alt="Before: the existing retail banking app"
+           style="width:100%; border-radius: 10px;">
+      <div>
+        <p style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); margin-bottom: 20px;">Overall</p>
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+          <div style="display: flex; gap: 14px; align-items: flex-start;">
+            <div style="flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: rgba(184,58,48,0.1); display: flex; align-items: center; justify-content: center; margin-top: 2px;">
+              <span style="font-size: 11px; font-weight: 700; color: #B83A30;">1</span>
+            </div>
+            <p style="margin: 0; font-size: 14px; color: var(--muted); line-height: 1.75;">Standalone features resulted in a fragmented user experience that failed to support strategic business goals such as cross-selling and upselling opportunities.</p>
+          </div>
+          <div style="display: flex; gap: 14px; align-items: flex-start;">
+            <div style="flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: rgba(184,58,48,0.1); display: flex; align-items: center; justify-content: center; margin-top: 2px;">
+              <span style="font-size: 11px; font-weight: 700; color: #B83A30;">2</span>
+            </div>
+            <p style="margin: 0; font-size: 14px; color: var(--muted); line-height: 1.75;">Clients expressed growing frustration with the app's usability, frequently raising concerns with the Customer Success team and questioning the company's ability to meet their needs effectively.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container" style="margin-top: 52px;">
+    <div class="ba-pill after">After</div>
+    <div style="display: grid; grid-template-columns: 3fr 2fr; gap: 40px; align-items: center;">
+      <img src="../images/retail_after.png"
+           alt="After: revamped retail banking app"
+           style="width:100%; border-radius: 10px;">
+      <div style="display: flex; flex-direction: column; gap: 24px;">
+
+        <div style="border-top: 2px solid var(--green); padding-top: 16px;">
+          <p style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--green); margin-bottom: 6px;">Client satisfaction</p>
+          <p style="font-size: 22px; font-weight: 700; color: var(--ink); letter-spacing: -0.02em; margin-bottom: 4px;">76%</p>
+          <p style="font-size: 13px; color: var(--muted); margin: 0; line-height: 1.6;">of clients preferred the new app experience</p>
+        </div>
+
+        <div style="border-top: 2px solid var(--border); padding-top: 16px;">
+          <p style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); margin-bottom: 6px;">Inconsistencies</p>
+          <p style="font-size: 22px; font-weight: 700; color: var(--ink); letter-spacing: -0.02em; margin-bottom: 4px;">40% less</p>
+          <p style="font-size: 13px; color: var(--muted); margin: 0; line-height: 1.6;">UX MAINTs</p>
+        </div>
+
+        <div style="border-top: 2px solid var(--border); padding-top: 16px;">
+          <p style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); margin-bottom: 6px;">Client requests</p>
+          <p style="font-size: 22px; font-weight: 700; color: var(--ink); letter-spacing: -0.02em; margin-bottom: 4px;">24% less</p>
+          <p style="font-size: 13px; color: var(--muted); margin: 0; line-height: 1.6;">UX RFFs</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── First steps ── -->
+<section class="section" id="first-steps">
+  <div class="container">
+    <div class="two-col">
+      <div>
+        <h2>First steps</h2>
+        <p>We started by aligning across product and engineering on what the redesign needed to solve — not just aesthetically, but structurally. The app had grown organically. Features accumulated without a coherent information architecture, and the "More" tab had become a symptom of that drift.</p>
+        <p>Early work focused on:</p>
+        <ul class="list" style="margin-bottom: 16px;">
+          <li>Analyzing sales data with product to set clear goals and identify key markets</li>
+          <li>Attending quarterly business reviews to understand priorities and get buy-in</li>
+          <li>Facilitating alignment between product and engineering on feature integration</li>
+          <li>Conducting interviews with clients and their customers</li>
+        </ul>
+      </div>
+      <div>
+        <img src="../images/Matti-developers-revamp.jpg"
+             alt="Presenting findings to engineering directors"
+             class="zoomable" style="border-radius: var(--r); box-shadow: var(--shadow); width:100%;">
+        <p class="caption">Presenting findings to engineering directors</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── Redefining the IA ── -->
+<section class="section" id="ia">
+  <div class="container">
+    <div class="section-label">Information architecture</div>
+    <h2>Redefining the IA</h2>
+    <p style="max-width:680px; margin-bottom: 28px;">Before designing anything, we needed to understand how users actually thought about their banking — and where the existing structure was failing them.</p>
+
+    <div class="disc-grid" style="margin-bottom: 28px;">
+      <div class="disc-card">
+        <div class="disc-tag">Content audit</div>
+        <h4>Cataloguing every screen</h4>
+        <p>Mapped every screen and feature in the existing app to identify gaps, redundancies, and structural problems before proposing anything new.</p>
+      </div>
+      <div class="disc-card">
+        <div class="disc-tag">Card sorting &amp; tree testing</div>
+        <h4>Mental models in the wild</h4>
+        <p>Asked bank customers and internal stakeholders to group banking features into categories that made sense to them. Surfaced natural mental models and gaps between app structure and user expectations.</p>
+      </div>
+      <div class="disc-card">
+        <div class="disc-tag">User journey mapping</div>
+        <h4>Tracing common tasks</h4>
+        <p>Traced common tasks — checking balances, transferring money, paying bills — to identify friction points and dead ends in the existing flow.</p>
+      </div>
+      <div class="disc-card">
+        <div class="disc-tag">Competitive review</div>
+        <h4>Best-in-class benchmarks</h4>
+        <p>Examined how leading apps organize complex financial feature sets without overwhelming users. Identified navigation patterns worth adopting.</p>
+      </div>
+    </div>
+
+    <img src="../images/Competitive_review_image.jpeg"
+         alt="Competitive review: dashboard layouts"
+         class="zoomable" style="width:100%; border-radius: var(--r); box-shadow: var(--shadow);">
+    <p class="caption">Competitive review: dashboard layouts</p>
+  </div>
+</section>
+
+
+<!-- ── Discovery ── -->
+<section class="section" id="discovery">
+  <div class="container">
+    <div class="section-label">Discovery</div>
+    <h2>Discovery</h2>
+
+    <div class="two-col" style="margin-bottom: 32px;">
+      <div>
+        <p>We began by asking two foundational questions:</p>
+        <ul class="list" style="margin-bottom: 20px;">
+          <li>What do consumers expect to see when they first open the app?</li>
+          <li>How do users organize and prioritize their interactions with retail banking features?</li>
+        </ul>
+        <p>Deep-dive interviews helped us understand how people actually used their mobile banking app day-to-day — the habits, shortcuts, and workarounds that the existing design hadn't anticipated.</p>
+        <p>From there, we designed potential solutions, shared them with PM and engineering before testing, then ran two rounds of concept testing with real bank customers.</p>
+      </div>
+      <div>
+        <div style="background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px 28px;">
+          <p style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); margin-bottom: 16px;">Research methods</p>
+          <ul class="check">
+            <li>Deep-dive interviews with bank customers</li>
+            <li>Card sorting with customers and internal stakeholders</li>
+            <li>Tree testing of proposed navigation structures</li>
+            <li>2 rounds of concept testing with iterative design</li>
+            <li>Competitive benchmarking</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── Key design decision ── -->
+<section class="section" id="key-decision">
+  <div class="container">
+    <div class="section-label">Concept testing</div>
+    <h2>The key design decision</h2>
+    <p style="max-width:680px; margin-bottom: 32px;">We tested two structural concepts using the same content to isolate the question of hierarchy, not visuals.</p>
+
+    <div style="display: flex; flex-direction: column; gap: 32px;">
+
+      <!-- Concept 1 -->
+      <div>
+        <p style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); margin-bottom: 8px;">Concept 1</p>
+        <p style="margin-bottom: 16px;"><strong>Category-based</strong> — organizes around what things are. Mental model: "I want to check my account balance."</p>
+        <div style="max-width: 100%;">
+          <img src="../images/Category-based-concept.png" alt="Concept 1: Category-based" class="zoomable" style="width:100%; border-radius: var(--r); box-shadow: var(--shadow);">
+        </div>
+      </div>
+
+      <!-- Concept 2 -->
+      <div>
+        <p style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); margin-bottom: 8px;">Concept 2</p>
+        <p style="margin-bottom: 16px;"><strong>Task-based</strong> — organizes around what the user wants to do or know. Mental model: "How much can I spend this month?"</p>
+        <div style="max-width: 100%;">
+          <img src="../images/Task-based-concept.png" alt="Concept 2: Task-based" class="zoomable" style="width:100%; border-radius: var(--r); box-shadow: var(--shadow);">
+        </div>
+      </div>
+
+    </div>
+
+    <div style="margin-top: 32px; background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--green); border-radius: 12px; padding: 24px 28px;">
+      <p style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--green); margin-bottom: 8px;">The verdict</p>
+      <p style="font-size: 14px; color: var(--ink); line-height: 1.75; margin: 0;">Neither concept won outright. Users relied on traditional categories when managing specific accounts, but wanted task-oriented answers for spending and goals. The final design uses category-based tabs in the main navigation (Accounts, Cards) while surfacing task-oriented content like spending insights and financial goals on the home dashboard.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── Plot twist ── -->
+<section class="section" id="plot-twist">
+  <div class="container">
+    <h2>Plot twist: Where's the "More" button?</h2>
+    <p style="max-width:680px; margin-bottom: 28px;">Our goal with the new information architecture was to eliminate vague sections like the "More" tab — which had become an easy-to-implement catch-all dumping ground.</p>
+
+    <div class="callout orange" style="margin-bottom: 28px;">
+      <p>However, our research had a blind spot: several clients still insisted on keeping the "More" tab in the bottom navigation, fearing that users wouldn't be able to find essential functions like settings and logout without it.</p>
+    </div>
+
+    <p style="max-width:680px; margin-bottom: 24px;">So, we developed a hybrid approach: we kept the "More" tab to address client concerns, but established a roadmap to phase it out over time. What mattered was that "More" would no longer be a catch-all for features that didn't fit — it would become a settings and utility drawer, deliberately scoped.</p>
+
+    <div style="margin-bottom: 8px;">
+      <div style="display: flex; justify-content: space-around; max-width: 600px; margin: 0 auto 8px auto;">
+        <p style="text-align: center; font-size: 13px; color: var(--faint); margin: 0; flex: 1;">More as a features catch-all</p>
+        <p style="text-align: center; font-size: 13px; color: var(--faint); margin: 0; flex: 1;">More in tab bar</p>
+        <p style="text-align: center; font-size: 13px; color: var(--faint); margin: 0; flex: 1;">More in Profile section</p>
+      </div>
+      <img src="../images/More_button_evolution.png"
+           alt="Evolution of the More section"
+           class="zoomable" style="max-width:600px; width:100%; display:block; margin: 0 auto; border-radius: var(--r); box-shadow: var(--shadow);">
+      <p class="caption">The three-phase evolution of the "More" section</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── Key product decisions ── -->
+<section class="section" id="decisions">
+  <div class="container">
+    <h2>Key product decision</h2>
+
+    <!-- Decision 03 -->
+    <div style="background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--amber); border-radius: 12px; padding: 28px 32px;">
+      <h3 style="margin-bottom: 12px;">Designing with business buy-in built in</h3>
+      <p>Design decisions that lack cross-functional alignment often get reversed. Attending QBRs and working from sales data meant that the design direction was grounded in business reality from the start.</p>
+      <p><strong>What changed:</strong> Engineering directors and product stakeholders were engaged early and shown research findings directly. Design wasn't a handoff, it was a shared journey throughout the process.</p>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px;">
+        <div style="background: rgba(58,138,90,0.07); border-radius: var(--r); padding: 14px 16px;">
+          <p style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--green); margin-bottom: 6px;">Kept</p>
+          <p style="font-size: 13px; margin: 0;">Durability. Decisions made with cross-functional input were more likely to survive engineering and client review.</p>
+        </div>
+        <div style="background: rgba(192,71,58,0.07); border-radius: var(--r); padding: 14px 16px;">
+          <p style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: #B83A30; margin-bottom: 6px;">Gave up</p>
+          <p style="font-size: 13px; margin: 0;">Speed. Early alignment took time and iteration that a faster, designer-led process would have avoided.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+<!-- ── Final screens ── -->
+<section class="section" id="final-screens">
+  <div class="container">
+    <div class="section-label">Final design</div>
+    <h2>Final screens</h2>
+
+    <div style="margin-bottom: 40px;">
+      <div class="screen-label">Dashboard</div>
+      <div style="display: flex; justify-content: space-around; margin-bottom: 8px;">
+        <p style="text-align: center; font-size: 13px; color: var(--faint); margin: 0; flex: 1;">Home</p>
+        <p style="text-align: center; font-size: 13px; color: var(--faint); margin: 0; flex: 1;">Insights</p>
+        <p style="text-align: center; font-size: 13px; color: var(--faint); margin: 0; flex: 1;">Cards</p>
+        <p style="text-align: center; font-size: 13px; color: var(--faint); margin: 0; flex: 1;">Help</p>
+      </div>
+      <img src="../images/final-design-revamp.png"
+           alt="Dashboard: Home, Insights, Cards, Help"
+           class="zoomable" style="width:100%; display:block;">
+    </div>
+
+    <div style="margin-bottom: 40px;">
+      <div class="screen-label">Move Money</div>
+      <div style="display: flex; justify-content: space-around; margin-bottom: 8px;">
+        <p style="text-align: center; font-size: 13px; color: var(--faint); margin: 0; flex: 1;">Transfer</p>
+        <p style="text-align: center; font-size: 13px; color: var(--faint); margin: 0; flex: 1;">Scheduled</p>
+        <p style="text-align: center; font-size: 13px; color: var(--faint); margin: 0; flex: 1;">History</p>
+        <p style="text-align: center; font-size: 13px; color: var(--faint); margin: 0; flex: 1;">Contacts</p>
+      </div>
+      <img src="../images/move_money_revamp.png"
+           alt="Move Money screens"
+           class="zoomable" style="width:100%; display:block;">
+    </div>
+
+    <div>
+      <div class="screen-label">Accounts</div>
+      <div style="display: flex; justify-content: space-around; max-width: 75%; margin-bottom: 8px;">
+        <p style="text-align: center; font-size: 13px; color: var(--faint); margin: 0; flex: 1;">Account list</p>
+        <p style="text-align: center; font-size: 13px; color: var(--faint); margin: 0; flex: 1;">Pockets</p>
+        <p style="text-align: center; font-size: 13px; color: var(--faint); margin: 0; flex: 1;">Statements</p>
+      </div>
+      <img src="../images/accounts_revamp.png"
+           alt="Accounts: Account list, Pockets, Statements"
+           class="zoomable" style="width:75%; display:block;">
+    </div>
+  </div>
+</section>
+
+
+<!-- ── Video ── -->
+<section class="section" id="video">
+  <div class="container">
+    <h2>The redesigned retail banking experience</h2>
+    <div class="video-container">
+      <iframe title="vimeo-player" src="https://player.vimeo.com/video/1156194840?h=881449472d" width="640" height="360" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" allowfullscreen></iframe>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- ── Impact ── -->
+<section class="section" id="impact">
+  <div class="container">
+    <h2>Impact</h2>
+
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 32px;">
+      <div style="background: var(--card); border: 1px solid var(--border); border-top: 3px solid var(--green); border-radius: 12px; padding: 24px 24px 20px;">
+        <p style="font-size: 28px; font-weight: 700; color: var(--ink); margin-bottom: 6px; letter-spacing: -0.02em;">76%</p>
+        <p style="font-size: 14px; color: var(--muted); margin: 0; line-height: 1.6;">of clients preferred the revamped experience over the previous version</p>
+      </div>
+      <div style="background: var(--card); border: 1px solid var(--border); border-top: 3px solid var(--blue); border-radius: 12px; padding: 24px 24px 20px;">
+        <p style="font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 8px;">Cross-functional collaboration</p>
+        <p style="font-size: 14px; color: var(--muted); margin: 0; line-height: 1.6;">Established ongoing collaboration between Retail and Business departments, leading to faster decision-making</p>
+      </div>
+      <div style="background: var(--card); border: 1px solid var(--border); border-top: 3px solid var(--amber); border-radius: 12px; padding: 24px 24px 20px;">
+        <p style="font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 8px;">Research repository</p>
+        <p style="font-size: 14px; color: var(--muted); margin: 0; line-height: 1.6;">Initiated a centralized research repository across teams, now used as standard practice at Backbase</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ── Footer ── -->
+<footer class="footer">
+  <div class="container">
+    <p style="font-size: 13px; color: var(--faint); margin: 0;">&copy; Matti Hicks</p>
+  </div>
+</footer>
+
+
+<!-- ── Image zoom modal ── -->
+<div id="zoom-modal">
+  <button id="zoom-close">&times;</button>
+  <img id="zoom-img" src="" alt="">
+</div>
+
+<script>
+  // ── Password gate ──
+  const gate      = document.getElementById('password-gate');
+  const gateInput = document.getElementById('gate-input');
+  const gateBtn   = document.getElementById('gate-btn');
+  const gateError = document.getElementById('gate-error');
+
+  function tryPassword() {
+    if (gateInput.value === 'tester') {
+      sessionStorage.setItem('unlocked', '1');
+      gate.classList.add('hidden');
+      setTimeout(() => gate.remove(), 400);
+    } else {
+      gateInput.classList.add('error');
+      gateError.style.display = 'block';
+      gateInput.value = '';
+      gateInput.focus();
+    }
+  }
+
+  if (sessionStorage.getItem('unlocked') === '1') {
+    gate.remove();
+  }
+
+  gateBtn.addEventListener('click', tryPassword);
+  gateInput.addEventListener('keydown', e => { if (e.key === 'Enter') tryPassword(); });
+  gateInput.addEventListener('input', () => {
+    gateInput.classList.remove('error');
+    gateError.style.display = 'none';
+  });
+
+  // ── Image zoom ──
+  const modal    = document.getElementById('zoom-modal');
+  const zoomImg  = document.getElementById('zoom-img');
+  const closeBtn = document.getElementById('zoom-close');
+  const imgs     = document.querySelectorAll('.zoomable');
+  let idx = 0;
+
+  imgs.forEach((img, i) => {
+    img.addEventListener('click', () => {
+      idx = i; zoomImg.src = img.src; zoomImg.alt = img.alt;
+      modal.classList.add('open');
+    });
+  });
+  closeBtn.addEventListener('click', () => modal.classList.remove('open'));
+  modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('open'); });
+  document.addEventListener('keydown', e => {
+    if (!modal.classList.contains('open')) return;
+    if (e.key === 'Escape') modal.classList.remove('open');
+    if (e.key === 'ArrowRight' && idx < imgs.length - 1) { idx++; zoomImg.src = imgs[idx].src; }
+    if (e.key === 'ArrowLeft'  && idx > 0)               { idx--; zoomImg.src = imgs[idx].src; }
+  });
+</script>
+</body>
+</html>
