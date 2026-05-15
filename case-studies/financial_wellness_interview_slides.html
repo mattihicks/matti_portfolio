@@ -611,12 +611,23 @@
       <div style="display: grid; grid-template-columns: 3fr 2fr; gap: 44px; align-items: start;">
         <div>
           <div class="round-label">Round 1</div>
-          <p class="body" style="margin-bottom: 14px;">Round 1 surfaced that the "available to spend" calculation was opaque and the editable field needed more affordance. Both were fixed before Round 2.</p>
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div style="background: var(--subtle); border-radius: var(--r); padding: 16px 18px;">
+              <div style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 5px;">01</div>
+              <div style="font-size: 15px; font-weight: 600; color: var(--ink);">AI trust &amp; transparency</div>
+              <p class="body-sm" style="margin-top: 4px;">Testing whether users understood and trusted AI-generated financial guidance, and how much visibility they needed into the underlying logic.</p>
+            </div>
+            <div style="background: var(--subtle); border-radius: var(--r); padding: 16px 18px;">
+              <div style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 5px;">02</div>
+              <div style="font-size: 15px; font-weight: 600; color: var(--ink);">Dashboard concept feedback</div>
+              <p class="body-sm" style="margin-top: 4px;">Getting early feedback on the new layout structure and whether the hierarchy felt clear.</p>
+            </div>
+          </div>
         </div>
         <div>
           <img src="../images/initial_prototype.png"
                alt="Round 1: Initial prototype"
-               style="width: 100%; border-radius: var(--r); box-shadow: var(--shadow);">
+               style="width: 100%;">
           <a href="https://sunset-donkey-14427650.figma.site/" target="_blank" class="proto-link">
             View prototype
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
@@ -628,21 +639,32 @@
 
 
   <!-- ═══════════════════════════════════════════════════
-       SLIDE 8 — Research & Iteration: Rounds 2 & 3
+       SLIDE 8 — Research & Iteration: Round 2
   ═══════════════════════════════════════════════════ -->
   <div class="slide" id="s8">
     <div class="slide-inner">
       <div class="label accent">Research &amp; Iteration</div>
-      <div class="cols-1-1">
+      <div style="display: grid; grid-template-columns: 3fr 2fr; gap: 44px; align-items: start;">
         <div>
           <div class="round-label">Round 2</div>
-          <p class="body-sm" style="margin-bottom: 14px;">Comparing a simpler Control against a richer Variant — 60% preferred the Variant but 40% disengaged: <em>"It looks like I'm now a data analyst."</em> Users asked for the best of both.</p>
-          <div style="display: flex; gap: 10px;">
+          <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 0;">
+            <div style="background: var(--subtle); border-radius: var(--r); padding: 16px 18px;">
+              <div style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 5px;">01</div>
+              <div style="font-size: 15px; font-weight: 600; color: var(--ink);">Evaluate Round 1 improvements</div>
+              <p class="body-sm" style="margin-top: 4px;">Testing whether the fixes from Round 1, such as improved focus and clearer card info affordance, landed as intended.</p>
+            </div>
+            <div style="background: var(--subtle); border-radius: var(--r); padding: 16px 18px;">
+              <div style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 5px;">02</div>
+              <div style="font-size: 15px; font-weight: 600; color: var(--ink);">Compare current experience (control) vs. variant</div>
+              <p class="body-sm" style="margin-top: 4px;">Introducing a richer variant alongside the familiar control to understand which information hierarchy users preferred.</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div style="display: flex; gap: 12px;">
             <div style="flex: 1;">
               <a href="https://taffy-judge-98528828.figma.site/" target="_blank" style="display: block; position: relative; z-index: 55;">
-                <img src="../images/control_prototype.png"
-                     alt="Round 2: Control"
-                     style="width: 100%; border-radius: var(--r); box-shadow: var(--shadow); cursor: pointer;">
+                <img src="../images/control_prototype.png" alt="Round 2: Control" style="width: 100%; cursor: pointer;">
               </a>
               <a href="https://taffy-judge-98528828.figma.site/" target="_blank" class="proto-link">
                 Control
@@ -650,9 +672,7 @@
               </a>
             </div>
             <div style="flex: 1;">
-              <img src="../images/variant_prototype.png"
-                   alt="Round 2: Variant"
-                   style="width: 100%; border-radius: var(--r); box-shadow: var(--shadow);">
+              <img src="../images/variant_prototype.png" alt="Round 2: Variant" style="width: 100%;">
               <a href="https://box-rouge-83601612.figma.site/" target="_blank" class="proto-link">
                 Variant
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
@@ -660,23 +680,43 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 9 — Research & Iteration: Round 3
+  ═══════════════════════════════════════════════════ -->
+  <div class="slide" id="s8b">
+    <div class="slide-inner">
+      <div class="label accent">Research &amp; Iteration</div>
+      <div style="display: grid; grid-template-columns: 3fr 2fr; gap: 44px; align-items: start;">
         <div>
           <div class="round-label">Round 3</div>
-          <p class="body-sm" style="margin-bottom: 14px;">The Hybrid resolved this through progressive disclosure — <strong style="color: var(--ink);">90% chose it</strong> in the final round. Calm by default, revealing depth on demand.</p>
-          <div style="display: flex; gap: 10px;">
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div style="background: var(--subtle); border-radius: var(--r); padding: 16px 18px;">
+              <div style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 5px;">01</div>
+              <div style="font-size: 15px; font-weight: 600; color: var(--ink);">Evaluate Round 2 improvements</div>
+            </div>
+            <div style="background: var(--subtle); border-radius: var(--r); padding: 16px 18px;">
+              <div style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 5px;">02</div>
+              <div style="font-size: 15px; font-weight: 600; color: var(--ink);">Compare control vs. Hybrid</div>
+              <p class="body-sm" style="margin-top: 4px;">Introducing the Hybrid design, which used progressive disclosure to offer calm defaults with deeper insight available on demand.</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div style="display: flex; gap: 12px;">
             <div style="flex: 1;">
-              <img src="../images/hybrid_collapsed.png"
-                   alt="Round 3: Hybrid"
-                   style="width: 100%; border-radius: var(--r); box-shadow: var(--shadow);">
+              <img src="../images/hybrid_collapsed.png" alt="Round 3: Hybrid" style="width: 100%;">
               <a href="https://affix-wild-87484619.figma.site/" target="_blank" class="proto-link">
                 Hybrid prototype
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
               </a>
             </div>
             <div style="flex: 1;">
-              <img src="../images/hybrid_show_more.png"
-                   alt="Round 3: Hybrid expanded"
-                   style="width: 100%; border-radius: var(--r); box-shadow: var(--shadow);">
+              <img src="../images/hybrid_show_more.png" alt="Round 3: Hybrid expanded" style="width: 100%;">
               <p class="caption" style="text-align: left;">Show more</p>
             </div>
           </div>
@@ -902,6 +942,31 @@
     </div>
   </div>
 
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 16 — What success might look like
+  ═══════════════════════════════════════════════════ -->
+  <div class="slide" id="s16">
+    <div class="slide-inner">
+      <div class="label">Looking ahead</div>
+      <h2 class="slide-h">What success might look like</h2>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+        <div style="background: var(--card); border: 1px solid var(--border); border-top: 3px solid var(--accent); border-radius: 12px; padding: 24px 24px 20px;">
+          <div style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 10px;">Client adoption</div>
+          <p class="body-sm">Positive feedback from client conversations. Banks choosing to integrate the Financial Wellness experience, and bringing it into their own roadmap planning.</p>
+        </div>
+        <div style="background: var(--card); border: 1px solid var(--border); border-top: 3px solid var(--blue); border-radius: 12px; padding: 24px 24px 20px;">
+          <div style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--blue); margin-bottom: 10px;">End user engagement</div>
+          <p class="body-sm">Users returning to the dashboard regularly and an increase in overall engagement.</p>
+        </div>
+        <div style="background: var(--card); border: 1px solid var(--border); border-top: 3px solid var(--green); border-radius: 12px; padding: 24px 24px 20px;">
+          <div style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--green); margin-bottom: 10px;">Broader product influence</div>
+          <p class="body-sm">The design shaping how AI guidance is introduced progressively across other products, informing the design system.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div><!-- /deck -->
 
 
@@ -964,7 +1029,7 @@
     gateError.style.display = 'none';
   });
 
-  const TOTAL  = 14;
+  const TOTAL  = 16;
   let current  = 0;
 
   const slides  = document.querySelectorAll('.slide');
