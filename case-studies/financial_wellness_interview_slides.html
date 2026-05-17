@@ -602,132 +602,78 @@
 
 
   <!-- ═══════════════════════════════════════════════════
-       SLIDE 7 — Research & Iteration: Round 1
+       SLIDE 7 — Research approach
   ═══════════════════════════════════════════════════ -->
-  <div class="slide" id="s7">
+  <div class="slide" id="s7intro">
     <div class="slide-inner">
       <div class="label accent">Research &amp; Iteration</div>
-      <h2 class="slide-h">Three rounds of testing with 26 UK-based users</h2>
-      <div style="display: grid; grid-template-columns: 3fr 2fr; gap: 44px; align-items: start;">
-        <div>
-          <div class="round-label">Round 1</div>
-          <div style="display: flex; flex-direction: column; gap: 12px;">
-            <div style="background: var(--subtle); border-radius: var(--r); padding: 16px 18px;">
-              <div style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 5px;">01</div>
-              <div style="font-size: 15px; font-weight: 600; color: var(--ink);">AI trust &amp; transparency</div>
-              <p class="body-sm" style="margin-top: 4px;">Testing whether users understood and trusted AI-generated financial guidance, and how much visibility they needed into the underlying logic.</p>
-            </div>
-            <div style="background: var(--subtle); border-radius: var(--r); padding: 16px 18px;">
-              <div style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 5px;">02</div>
-              <div style="font-size: 15px; font-weight: 600; color: var(--ink);">Dashboard concept feedback</div>
-              <p class="body-sm" style="margin-top: 4px;">Getting early feedback on the new layout structure and whether the hierarchy felt clear.</p>
-            </div>
-          </div>
-        </div>
-        <div>
-          <img src="../images/initial_prototype.png"
-               alt="Round 1: Initial prototype"
-               style="width: 100%;">
-          <a href="https://sunset-donkey-14427650.figma.site/" target="_blank" class="proto-link">
+      <h2 class="slide-h" style="margin-bottom: 20px;">Research approach</h2>
+
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 18px;">
+
+        <div style="background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 22px; display: flex; flex-direction: column;">
+          <div style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 8px;">Round 1</div>
+          <div style="font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 12px; line-height: 1.35;">Exploratory moderated testing</div>
+          <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 7px; flex: 1;">
+            <li style="font-size: 13px; color: var(--muted); line-height: 1.55; padding-left: 14px; position: relative;"><span style="position: absolute; left: 0; color: var(--accent);">–</span>6 retail banking users</li>
+            <li style="font-size: 13px; color: var(--muted); line-height: 1.55; padding-left: 14px; position: relative;"><span style="position: absolute; left: 0; color: var(--accent);">–</span>AI trust, transparency, and initial hierarchy comprehension</li>
+          </ul>
+          <a href="https://sunset-donkey-14427650.figma.site/" target="_blank" class="proto-link" style="margin-top: 14px;">
             View prototype
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
           </a>
         </div>
+
+        <div style="background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 22px; display: flex; flex-direction: column;">
+          <div style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 8px;">Round 2</div>
+          <div style="font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 12px; line-height: 1.35;">Comparative unmoderated testing</div>
+          <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 7px; flex: 1;">
+            <li style="font-size: 13px; color: var(--muted); line-height: 1.55; padding-left: 14px; position: relative;"><span style="position: absolute; left: 0; color: var(--accent);">–</span>10 users</li>
+            <li style="font-size: 13px; color: var(--muted); line-height: 1.55; padding-left: 14px; position: relative;"><span style="position: absolute; left: 0; color: var(--accent);">–</span>Compared the current dashboard against a richer AI-assisted concept</li>
+          </ul>
+          <div style="display: flex; gap: 14px; margin-top: 14px;">
+            <a href="https://taffy-judge-98528828.figma.site/" target="_blank" class="proto-link" style="margin-top: 0;">
+              Control
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+            </a>
+            <a href="https://box-rouge-83601612.figma.site/" target="_blank" class="proto-link" style="margin-top: 0;">
+              Variant
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div style="background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 22px; display: flex; flex-direction: column;">
+          <div style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 8px;">Round 3</div>
+          <div style="font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 12px; line-height: 1.35;">Hybrid iteration testing</div>
+          <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 7px; flex: 1;">
+            <li style="font-size: 13px; color: var(--muted); line-height: 1.55; padding-left: 14px; position: relative;"><span style="position: absolute; left: 0; color: var(--accent);">–</span>10 users</li>
+            <li style="font-size: 13px; color: var(--muted); line-height: 1.55; padding-left: 14px; position: relative;"><span style="position: absolute; left: 0; color: var(--accent);">–</span>Tested a simplified hybrid version against the control</li>
+          </ul>
+          <a href="https://affix-wild-87484619.figma.site/" target="_blank" class="proto-link" style="margin-top: 14px;">
+            Hybrid prototype
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+          </a>
+        </div>
+
       </div>
+
+      <div style="background: var(--subtle); border-radius: 10px; padding: 16px 20px; display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: start;">
+        <div style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); white-space: nowrap; padding-top: 1px;">Participant considerations</div>
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <span style="font-size: 13px; color: var(--muted); padding-left: 12px; position: relative;"><span style="position: absolute; left: 0; color: var(--faint);">–</span>Active mobile/web banking users</span>
+          <span style="font-size: 13px; color: var(--muted); padding-left: 12px; position: relative;"><span style="position: absolute; left: 0; color: var(--faint);">–</span>Segmented across income ranges according to personas</span>
+          <span style="font-size: 13px; color: var(--muted); padding-left: 12px; position: relative;"><span style="position: absolute; left: 0; color: var(--faint);">–</span>Screened for varying familiarity with AI-enabled experiences and financial priorities</span>
+          <span style="font-size: 13px; color: var(--muted); padding-left: 12px; position: relative;"><span style="position: absolute; left: 0; color: var(--faint);">–</span>Focused on directional learning rather than statistical significance</span>
+        </div>
+      </div>
+
     </div>
   </div>
 
 
   <!-- ═══════════════════════════════════════════════════
-       SLIDE 8 — Research & Iteration: Round 2
-  ═══════════════════════════════════════════════════ -->
-  <div class="slide" id="s8">
-    <div class="slide-inner">
-      <div class="label accent">Research &amp; Iteration</div>
-      <div style="display: grid; grid-template-columns: 3fr 2fr; gap: 44px; align-items: start;">
-        <div>
-          <div class="round-label">Round 2</div>
-          <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 0;">
-            <div style="background: var(--subtle); border-radius: var(--r); padding: 16px 18px;">
-              <div style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 5px;">01</div>
-              <div style="font-size: 15px; font-weight: 600; color: var(--ink);">Evaluate Round 1 improvements</div>
-              <p class="body-sm" style="margin-top: 4px;">Testing whether the fixes from Round 1, such as improved focus and clearer card info affordance, landed as intended.</p>
-            </div>
-            <div style="background: var(--subtle); border-radius: var(--r); padding: 16px 18px;">
-              <div style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 5px;">02</div>
-              <div style="font-size: 15px; font-weight: 600; color: var(--ink);">Compare current experience (control) vs. variant</div>
-              <p class="body-sm" style="margin-top: 4px;">Introducing a richer variant alongside the familiar control to understand which information hierarchy users preferred.</p>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div style="display: flex; gap: 12px;">
-            <div style="flex: 1;">
-              <a href="https://taffy-judge-98528828.figma.site/" target="_blank" style="display: block; position: relative; z-index: 55;">
-                <img src="../images/control_prototype.png" alt="Round 2: Control" style="width: 100%; cursor: pointer;">
-              </a>
-              <a href="https://taffy-judge-98528828.figma.site/" target="_blank" class="proto-link">
-                Control
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
-              </a>
-            </div>
-            <div style="flex: 1;">
-              <img src="../images/variant_prototype.png" alt="Round 2: Variant" style="width: 100%;">
-              <a href="https://box-rouge-83601612.figma.site/" target="_blank" class="proto-link">
-                Variant
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- ═══════════════════════════════════════════════════
-       SLIDE 9 — Research & Iteration: Round 3
-  ═══════════════════════════════════════════════════ -->
-  <div class="slide" id="s8b">
-    <div class="slide-inner">
-      <div class="label accent">Research &amp; Iteration</div>
-      <div style="display: grid; grid-template-columns: 3fr 2fr; gap: 44px; align-items: start;">
-        <div>
-          <div class="round-label">Round 3</div>
-          <div style="display: flex; flex-direction: column; gap: 12px;">
-            <div style="background: var(--subtle); border-radius: var(--r); padding: 16px 18px;">
-              <div style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 5px;">01</div>
-              <div style="font-size: 15px; font-weight: 600; color: var(--ink);">Evaluate Round 2 improvements</div>
-            </div>
-            <div style="background: var(--subtle); border-radius: var(--r); padding: 16px 18px;">
-              <div style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 5px;">02</div>
-              <div style="font-size: 15px; font-weight: 600; color: var(--ink);">Compare control vs. Hybrid</div>
-              <p class="body-sm" style="margin-top: 4px;">Introducing the Hybrid design, which used progressive disclosure to offer calm defaults with deeper insight available on demand.</p>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div style="display: flex; gap: 12px;">
-            <div style="flex: 1;">
-              <img src="../images/hybrid_collapsed.png" alt="Round 3: Hybrid" style="width: 100%;">
-              <a href="https://affix-wild-87484619.figma.site/" target="_blank" class="proto-link">
-                Hybrid prototype
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
-              </a>
-            </div>
-            <div style="flex: 1;">
-              <img src="../images/hybrid_show_more.png" alt="Round 3: Hybrid expanded" style="width: 100%;">
-              <p class="caption" style="text-align: left;">Show more</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- ═══════════════════════════════════════════════════
-       SLIDE 9 — Decision 01: Show the Calculation
+       SLIDE 8 — Decision 01: Show the Calculation
   ═══════════════════════════════════════════════════ -->
   <div class="slide" id="s9">
     <div class="slide-inner">
@@ -1029,7 +975,7 @@
     gateError.style.display = 'none';
   });
 
-  const TOTAL  = 16;
+  const TOTAL  = 14;
   let current  = 0;
 
   const slides  = document.querySelectorAll('.slide');
