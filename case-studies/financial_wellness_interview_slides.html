@@ -191,7 +191,7 @@
     }
 
     /* ── Caption ── */
-    .caption { font-size: 11px; color: var(--faint); margin-top: 7px; text-align: center; }
+    .caption { font-size: 11px; color: #767676; margin-top: 7px; text-align: center; }
 
     /* ── Concept cards (layout exploration) ── */
     .concept-card { background: var(--subtle); border-radius: var(--r); padding: 14px 16px; }
@@ -434,7 +434,7 @@
   ═══════════════════════════════════════════════════ -->
   <div class="slide" id="s1">
     <div class="slide-inner">
-      <div class="label">Case Study · Backbase · Amsterdam</div>
+      <div class="label accent">Case Study · Backbase · Amsterdam</div>
       <h1 class="slide-title">Financial Insights<br>Dashboard</h1>
       <p class="body" style="margin-top: 12px; max-width: 560px;">A Financial Wellness experience designed to help users understand not just where their money went, but what to do next.</p>
       <div class="hero-cards">
@@ -456,7 +456,45 @@
 
 
   <!-- ═══════════════════════════════════════════════════
-       SLIDE 2 — Before & After
+       SLIDE 2 — Project Scope & Focus
+  ═══════════════════════════════════════════════════ -->
+  <div class="slide" id="s1b">
+    <div class="slide-inner">
+      <div class="label accent">Context</div>
+      <h2 class="slide-h" style="margin-bottom: 20px;">Project scope &amp; focus</h2>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px;">
+        <div style="background: var(--card); border: 1px solid var(--border); border-top: 3px solid var(--accent); border-radius: 12px; padding: 22px 24px;">
+          <div style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 12px;">Project focus</div>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div style="font-size: 14px; color: var(--ink); padding-left: 14px; position: relative;"><span style="position: absolute; left: 0; color: var(--accent);">–</span>Dashboard hierarchy redesign</div>
+            <div style="font-size: 14px; color: var(--ink); padding-left: 14px; position: relative;"><span style="position: absolute; left: 0; color: var(--accent);">–</span>Actionable financial guidance</div>
+            <div style="font-size: 14px; color: var(--ink); padding-left: 14px; position: relative;"><span style="position: absolute; left: 0; color: var(--accent);">–</span>AI trust and transparency</div>
+            <div style="font-size: 14px; color: var(--ink); padding-left: 14px; position: relative;"><span style="position: absolute; left: 0; color: var(--accent);">–</span>Progressive disclosure as a UX pattern</div>
+          </div>
+        </div>
+        <div style="background: var(--card); border: 1px solid var(--border); border-top: 3px solid var(--border); border-radius: 12px; padding: 22px 24px;">
+          <div style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); margin-bottom: 12px;">Adjacent / not fully in scope</div>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div style="font-size: 14px; color: var(--muted); padding-left: 14px; position: relative;"><span style="position: absolute; left: 0; color: var(--faint);">–</span>Long-term personalization</div>
+            <div style="font-size: 14px; color: var(--muted); padding-left: 14px; position: relative;"><span style="position: absolute; left: 0; color: var(--faint);">–</span>Onboarding strategy</div>
+            <div style="font-size: 14px; color: var(--muted); padding-left: 14px; position: relative;"><span style="position: absolute; left: 0; color: var(--faint);">–</span>Financial forecasting</div>
+            <div style="font-size: 14px; color: var(--muted); padding-left: 14px; position: relative;"><span style="position: absolute; left: 0; color: var(--faint);">–</span>Adaptive dashboard logic</div>
+          </div>
+        </div>
+      </div>
+      <div style="background: var(--subtle); border-radius: 10px; padding: 16px 20px; display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: start;">
+        <div style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #767676; white-space: nowrap; padding-top: 1px;">Starting assumptions</div>
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <span style="font-size: 13px; color: var(--muted); padding-left: 12px; position: relative;"><span style="position: absolute; left: 0; color: #767676;">–</span>Users need a clearer sense of available spend, not just balance</span>
+          <span style="font-size: 13px; color: var(--muted); padding-left: 12px; position: relative;"><span style="position: absolute; left: 0; color: #767676;">–</span>Guided insight increases engagement more than passive reporting</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 3 — Before & After
   ═══════════════════════════════════════════════════ -->
   <div class="slide" id="s2">
     <div class="slide-inner">
@@ -752,7 +790,7 @@
   <div class="slide" id="s11">
     <div class="slide-inner">
       <div class="decision-badge amber">Decision 03</div>
-      <h2 class="slide-h">Designing AI interactions thoughtfully</h2>
+      <h2 class="slide-h">AI as context, not centerpiece</h2>
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: start;">
         <div>
           <p class="body" style="margin-bottom: 12px;">Users were generally comfortable with AI-driven financial guidance, but excessive AI labeling made the interface feel noisy and self-conscious.</p>
@@ -816,7 +854,7 @@
 
 
   <!-- ═══════════════════════════════════════════════════
-       SLIDE 15 — How My Workflow Evolved
+       SLIDE 13 — How My Workflow Evolved
   ═══════════════════════════════════════════════════ -->
   <div class="slide" id="s15">
     <div class="slide-inner">
@@ -890,11 +928,45 @@
 
 
   <!-- ═══════════════════════════════════════════════════
+       SLIDE 15 — What I'm doing next
+  ═══════════════════════════════════════════════════ -->
+  <div class="slide" id="s16next">
+    <div class="slide-inner">
+      <div class="label accent">Looking ahead</div>
+      <h2 class="slide-h" style="margin-bottom: 8px;">What I'm doing next</h2>
+      <p class="body" style="max-width: 600px; margin-bottom: 24px;">A few areas worth digging into as this work continues.</p>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;">
+        <div style="background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 22px;">
+          <div style="font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 6px;">Deeper personalization strategy</div>
+          <p style="font-size: 13px; color: var(--muted); line-height: 1.55; margin: 0;">Understanding whether personas should shape hierarchy, content priority, or both — and how that changes with data richness over time.</p>
+        </div>
+        <div style="background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 22px;">
+          <div style="font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 6px;">Payday-aware forecasting</div>
+          <p style="font-size: 13px; color: var(--muted); line-height: 1.55; margin: 0;">The data infrastructure is close. The design question is how to introduce it without raising anxiety around uncertainty.</p>
+        </div>
+        <div style="background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 22px;">
+          <div style="font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 6px;">Longitudinal engagement</div>
+          <p style="font-size: 13px; color: var(--muted); line-height: 1.55; margin: 0;">Does the Hybrid design hold up over time, or does novelty fade? That's still an open question.</p>
+        </div>
+        <div style="background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 22px;">
+          <div style="font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 6px;">Terminology validation</div>
+          <p style="font-size: 13px; color: var(--muted); line-height: 1.55; margin: 0;">"Left to Spend" tested well in the UK. Needs validation across other markets before it can scale.</p>
+        </div>
+        <div style="background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 22px;">
+          <div style="font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 6px;">Dashboard customization</div>
+          <p style="font-size: 13px; color: var(--muted); line-height: 1.55; margin: 0;">There's appetite for it. The question is whether the cognitive cost of configuration is worth the personalization payoff.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════
        SLIDE 16 — What success might look like
   ═══════════════════════════════════════════════════ -->
-  <div class="slide" id="s16">
+  <div class="slide" id="s16success">
     <div class="slide-inner">
-      <div class="label">Looking ahead</div>
+      <div class="label accent">Potential metrics</div>
       <h2 class="slide-h">What success might look like</h2>
       <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
         <div style="background: var(--card); border: 1px solid var(--border); border-top: 3px solid var(--accent); border-radius: 12px; padding: 24px 24px 20px;">
@@ -975,7 +1047,7 @@
     gateError.style.display = 'none';
   });
 
-  const TOTAL  = 14;
+  const TOTAL  = 16;
   let current  = 0;
 
   const slides  = document.querySelectorAll('.slide');
