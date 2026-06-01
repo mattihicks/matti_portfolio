@@ -537,13 +537,42 @@
             <li>Frustrations with existing banking tools</li>
           </ul>
           <div class="gap-sm"></div>
-          <p class="body">I also <strong>revisited analytics</strong> from the existing Insights experience and prior research from the broader retail banking redesign. Engagement was low — users briefly checked spending categories or budgets, but deeper interaction was rare.</p>
+          <p class="body">I also <strong>revisited analytics</strong> from the existing Insights experience and <strong>prior personas research</strong> from the broader retail banking redesign. Engagement was low — users briefly checked spending categories or budgets, but deeper interaction was rare.</p>
         </div>
         <div>
           <img src="../images/report_financial_wellness.png"
                alt="Financial insights research report"
                style="border-radius: var(--r); box-shadow: var(--shadow); width: 100%;">
           <p class="caption">Financial insights research report</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 2b — How Personas Shaped the Work
+  ═══════════════════════════════════════════════════ -->
+  <div class="slide slide-aside" id="s1c">
+    <div class="slide-inner">
+      <div class="label accent">Research framing</div>
+      <h2 class="slide-h" style="margin-bottom: 20px;">How personas shaped the work</h2>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px;">
+        <div style="background: var(--card); border: 1px solid var(--border); border-top: 3px solid var(--accent); border-radius: 12px; padding: 22px 24px;">
+          <div style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 12px;">Personas informed</div>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div style="font-size: 14px; color: var(--ink); padding-left: 14px; position: relative;"><span style="position: absolute; left: 0; color: var(--accent);">–</span>Participant recruitment screened across persona financial profiles</div>
+            <div style="font-size: 14px; color: var(--ink); padding-left: 14px; position: relative;"><span style="position: absolute; left: 0; color: var(--accent);">–</span>Persona segments shaped early onboarding concept work</div>
+          </div>
+        </div>
+        <div style="background: var(--card); border: 1px solid var(--border); border-top: 3px solid var(--border); border-radius: 12px; padding: 22px 24px;">
+          <div style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); margin-bottom: 12px;">Personas do not yet drive</div>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div style="font-size: 14px; color: var(--muted); padding-left: 14px; position: relative;"><span style="position: absolute; left: 0; color: var(--faint);">–</span>Dashboard hierarchy per persona</div>
+            <div style="font-size: 14px; color: var(--muted); padding-left: 14px; position: relative;"><span style="position: absolute; left: 0; color: var(--faint);">–</span>Adaptive content ranking or card ordering</div>
+            <div style="font-size: 14px; color: var(--muted); padding-left: 14px; position: relative;"><span style="position: absolute; left: 0; color: var(--faint);">–</span>Structural UI differentiation between users</div>
+            <div style="font-size: 14px; color: var(--muted); padding-left: 14px; position: relative;"><span style="position: absolute; left: 0; color: var(--faint);">–</span>Long-term personalization logic</div>
+          </div>
         </div>
       </div>
     </div>
@@ -884,7 +913,7 @@
         </div>
       </div>
       <p class="body" style="max-width: 640px; margin-bottom: 10px;">Concept generation, prototyping, and validation have moved much closer together. Interactive browser prototypes have become more effective for discussing behavior and hierarchy directly with product and engineering than static flows ever were.</p>
-      <p class="body" style="max-width: 640px;">Human judgment still drives every decision. AI accelerates exploration and synthesis.</p>
+      <p class="body" style="max-width: 640px;"><strong>Human judgment still drives every decision.</strong> AI accelerates exploration and synthesis.</p>
     </div>
   </div>
 
@@ -1047,10 +1076,10 @@
     gateError.style.display = 'none';
   });
 
-  const TOTAL  = 16;
-  let current  = 0;
+  const slides  = Array.from(document.querySelectorAll('.slide:not(.slide-aside)'));
+  const TOTAL   = slides.length;
+  let current   = 0;
 
-  const slides  = document.querySelectorAll('.slide');
   const counter = document.getElementById('counter');
   const bar     = document.getElementById('progress-bar');
 
@@ -1067,11 +1096,9 @@
     updateUI();
   }
 
-  // Initialise first slide
   slides[0].classList.add('active');
   updateUI();
 
-  // Click zones
   document.getElementById('zone-prev').addEventListener('click', () => goTo(current - 1));
   document.getElementById('zone-next').addEventListener('click', () => goTo(current + 1));
 

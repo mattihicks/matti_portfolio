@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How Personas Shaped the Work | Matti Hicks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:     #FAF7F4;
+      --card:   #FFFFFF;
+      --subtle: #F2EFE9;
+      --accent: #E86C3A;
+      --ink:    #1A1A1A;
+      --muted:  #6B6B6B;
+      --faint:  #9B9B9B;
+      --border: #E2DDD8;
+      --r:      10px;
+    }
+
+    html, body {
+      width: 100%; height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+    }
+
+    .slide-inner {
+      width: 100%;
+      max-width: 920px;
+      padding: 48px 40px;
+    }
+
+    .label {
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--accent); margin-bottom: 12px;
+    }
+
+    h2.slide-h {
+      font-size: 28px; font-weight: 600; letter-spacing: -0.015em;
+      line-height: 1.2; color: var(--ink); margin-bottom: 20px;
+    }
+
+    .back-link {
+      position: fixed;
+      top: 18px;
+      left: 22px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 5px 12px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .back-link:hover { color: var(--ink); border-color: var(--ink); }
+  </style>
+</head>
+<body>
+
+  <a class="back-link" href="financial_wellness_interview_slides.html">← Back to deck</a>
+
+  <div class="slide-inner">
+    <div class="label">Research framing</div>
+    <h2 class="slide-h">How personas shaped the work</h2>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px;">
+      <div style="background: var(--card); border: 1px solid var(--border); border-top: 3px solid var(--accent); border-radius: 12px; padding: 22px 24px;">
+        <div style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 12px;">Personas informed</div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div style="font-size: 14px; color: var(--ink); padding-left: 14px; position: relative;"><span style="position: absolute; left: 0; color: var(--accent);">–</span>Participant recruitment screened across persona financial profiles</div>
+          <div style="font-size: 14px; color: var(--ink); padding-left: 14px; position: relative;"><span style="position: absolute; left: 0; color: var(--accent);">–</span>Persona segments shaped early onboarding concept work</div>
+        </div>
+      </div>
+      <div style="background: var(--card); border: 1px solid var(--border); border-top: 3px solid var(--border); border-radius: 12px; padding: 22px 24px;">
+        <div style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); margin-bottom: 12px;">Personas do not yet drive</div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div style="font-size: 14px; color: var(--muted); padding-left: 14px; position: relative;"><span style="position: absolute; left: 0; color: var(--faint);">–</span>Dashboard hierarchy per persona</div>
+          <div style="font-size: 14px; color: var(--muted); padding-left: 14px; position: relative;"><span style="position: absolute; left: 0; color: var(--faint);">–</span>Adaptive content ranking or card ordering</div>
+          <div style="font-size: 14px; color: var(--muted); padding-left: 14px; position: relative;"><span style="position: absolute; left: 0; color: var(--faint);">–</span>Structural UI differentiation between users</div>
+          <div style="font-size: 14px; color: var(--muted); padding-left: 14px; position: relative;"><span style="position: absolute; left: 0; color: var(--faint);">–</span>Long-term personalization logic</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
